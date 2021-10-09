@@ -16,10 +16,10 @@ namespace SIPI_web.Servicios
             _context = context;
         }
 
-        //public string agregarRegistro(tbl_usuario nuevoRegistro)
-        //{
-        //    _context.tbl
-        //}
+        public string agregarRegistro(tbl_usuario nuevoRegistro)
+        {
+            return "";
+        }
 
         public object buscaRegistro(string id)
         {

@@ -19,7 +19,7 @@ namespace SIPI_web.Models
         [Key]
         public int id_carrera { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string carrera_nombre { get; set; }
 
         [InverseProperty(nameof(tbl_estudianteCarrera.id_carreraNavigation))]

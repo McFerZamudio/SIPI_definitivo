@@ -1,0 +1,14 @@
+﻿@model IEnumerable<SIPI_web.Models.tbl_metodologiaEstatus>
+
+<table>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.metodologiaEstatus_nombre)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

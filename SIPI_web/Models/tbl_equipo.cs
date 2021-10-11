@@ -21,6 +21,9 @@ namespace SIPI_web.Models
         [Required]
         [StringLength(50)]
         public string equipo_nombre { get; set; }
+        [Required]
+        [StringLength(10)]
+        public string equipo_siglas { get; set; }
 
         [InverseProperty(nameof(tbl_estudiante.id_equipoNavigation))]
         public virtual ICollection<tbl_estudiante> tbl_estudiantes { get; set; }

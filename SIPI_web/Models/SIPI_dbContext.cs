@@ -25,13 +25,17 @@ namespace SIPI_web.Models
         public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
         public virtual DbSet<tbl_carrera> tbl_carreras { get; set; }
+        public virtual DbSet<tbl_ciudad> tbl_ciudads { get; set; }
         public virtual DbSet<tbl_consultor> tbl_consultors { get; set; }
+        public virtual DbSet<tbl_empresa> tbl_empresas { get; set; }
         public virtual DbSet<tbl_equipo> tbl_equipos { get; set; }
+        public virtual DbSet<tbl_estado> tbl_estados { get; set; }
         public virtual DbSet<tbl_estudiante> tbl_estudiantes { get; set; }
         public virtual DbSet<tbl_estudianteCarrera> tbl_estudianteCarreras { get; set; }
         public virtual DbSet<tbl_estudianteEstatus> tbl_estudianteEstatuses { get; set; }
         public virtual DbSet<tbl_informeAcademicoEstatus> tbl_informeAcademicoEstatuses { get; set; }
         public virtual DbSet<tbl_metodologiaEstatus> tbl_metodologiaEstatuses { get; set; }
+        public virtual DbSet<tbl_pai> tbl_pais { get; set; }
         public virtual DbSet<tbl_pasantiaEstatus> tbl_pasantiaEstatuses { get; set; }
         public virtual DbSet<tbl_persona> tbl_personas { get; set; }
         public virtual DbSet<tbl_rolesTeg> tbl_rolesTegs { get; set; }
@@ -79,6 +83,15 @@ namespace SIPI_web.Models
                     .HasName("PK_tbl_adminCarrera");
             });
 
+            modelBuilder.Entity<tbl_ciudad>(entity =>
+            {
+                entity.HasOne(d => d.id_estadoNavigation)
+                    .WithMany(p => p.tbl_ciudads)
+                    .HasForeignKey(d => d.id_estado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un estado tiene ciudades");
+            });
+
             modelBuilder.Entity<tbl_consultor>(entity =>
             {
                 entity.HasOne(d => d.id_consultorNavigation)
@@ -86,6 +99,26 @@ namespace SIPI_web.Models
                     .HasForeignKey<tbl_consultor>(d => d.id_consultor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Un consultor es una persona");
+            });
+
+            modelBuilder.Entity<tbl_empresa>(entity =>
+            {
+                entity.HasOne(d => d.id_empresaNavigation)
+                    .WithOne(p => p.tbl_empresa)
+                    .HasForeignKey<tbl_empresa>(d => d.id_empresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Una empresa es un usuario");
+            });
+
+            modelBuilder.Entity<tbl_estado>(entity =>
+            {
+                entity.Property(e => e.id_estado).ValueGeneratedNever();
+
+                entity.HasOne(d => d.id_paisNavigation)
+                    .WithMany(p => p.tbl_estados)
+                    .HasForeignKey(d => d.id_pais)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un pais tiene estados");
             });
 
             modelBuilder.Entity<tbl_estudiante>(entity =>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SIPI_web.Models.tbl_equipo>
+﻿@model IEnumerable<SIPI_web.Models.tbl_sede>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,10 +14,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.equipo_nombre)
+                @Html.DisplayNameFor(model => model.sede_codigo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.equipo_siglas)
+                @Html.DisplayNameFor(model => model.sede_nombre)
             </th>
             <th></th>
         </tr>
@@ -26,15 +26,15 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.equipo_nombre)
+                @Html.DisplayFor(modelItem => item.sede_codigo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.equipo_siglas)
+                @Html.DisplayFor(modelItem => item.sede_nombre)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id_equipo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id_equipo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id_equipo">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.id_sede">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id_sede">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id_sede">Delete</a>
             </td>
         </tr>
 }

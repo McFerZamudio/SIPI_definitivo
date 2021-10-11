@@ -23,6 +23,7 @@ namespace SIPI_web.Controllers
             ViewBag.sede = _context.tbl_sedes.OrderBy(x => x.sede_nombre).ToList();
             ViewBag.estudianteEstatus = _context.tbl_estudianteEstatuses.OrderBy(x => x.estudianteEstatus_nombre).ToList();
             ViewBag.metodologiaEstatus = _context.tbl_metodologiaEstatuses.OrderBy(x => x.metodologiaEstatus_codigo).ToList();
+            ViewBag.informeAcademicoEstatus = _context.tbl_informeAcademicoEstatuses.OrderBy(x => x.informeAcademicoEstatus_codigo).ToList();
 
             return View();
         }

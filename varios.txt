@@ -1,0 +1,1 @@
+Scaffold-DbContext "Data Source=KyloZ\masterServer;Initial Catalog=SIPI_db;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring  -DataAnnotations -force -UseDatabaseNames

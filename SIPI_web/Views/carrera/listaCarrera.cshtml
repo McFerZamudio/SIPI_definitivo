@@ -1,0 +1,13 @@
+﻿@model IEnumerable<SIPI_web.Models.tbl_carrera>
+
+<table>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.carrera_nombre)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

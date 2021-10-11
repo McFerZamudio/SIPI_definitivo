@@ -1,0 +1,90 @@
+﻿@model IEnumerable<SIPI_web.Models.tbl_estudiante>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.estudiante_fechaIngreaso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estudiante_fechaActualizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estudiante_cohorte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_equipoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_estudianteEstatusNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_estudianteNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_informeAcademicoEstatusNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_metodologiaEstatusNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_pasantiaEstatusNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_sedeNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.estudiante_fechaIngreaso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estudiante_fechaActualizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estudiante_cohorte)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_equipoNavigation.equipo_nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_estudianteEstatusNavigation.estudianteEstatus_codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_estudianteNavigation.id_persona)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_informeAcademicoEstatusNavigation.informeAcademicoEstatus_codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_metodologiaEstatusNavigation.metodologiaEstatus_codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_pasantiaEstatusNavigation.pasantiaEstatus_codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_sedeNavigation.sede_codigo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id_estudiante">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id_estudiante">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id_estudiante">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

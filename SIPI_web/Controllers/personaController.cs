@@ -6,13 +6,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SIPI_web.Interface;
 using SIPI_web.Models;
 using SIPI_web.Servicios;
 
 namespace SIPI_web.Controllers
 {
-    public class usuarioController : Controller
+    public class personaController : Controller
     {
+
+        private personaServices _persona = new();
 
         private string idUser;
         private void cargaIdUser()
@@ -20,23 +23,21 @@ namespace SIPI_web.Controllers
             idUser = HttpContext.Session.GetString("idUser");
         }
 
-        usuarioServices _usuario = new();
         private readonly SIPI_dbContext _context;
-
-        public usuarioController(SIPI_dbContext context)
+        public personaController(SIPI_dbContext context)
         {
             _context = context;
-            _usuario = new(_context);
+            _persona = new(context);
         }
 
-        // GET: usuario
+        // GET: persona
         public async Task<IActionResult> Index()
         {
-            await _usuario.listarRegistro();
-            return View(_usuario.Lista);
+            await _persona.listarRegistro();
+            return View(_persona.ListaPersona.ToList());
         }
 
-        // GET: usuario/Details/5
+        // GET: persona/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -44,39 +45,40 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
-            var tbl_usuario = await _usuario.buscarRegistro(id);
-            if (tbl_usuario == null)
+            var tbl_persona = await  _persona.buscarRegistro(id);
+            if (tbl_persona == null)
             {
                 return NotFound();
             }
 
-            return View(tbl_usuario);
+            return View(tbl_persona);
         }
 
-        // GET: usuario/Create
+        // GET: persona/Create
         public IActionResult Create()
         {
-            ViewData["id_usuario"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+            ViewData["id_persona"] = new SelectList(_context.tbl_usuarios, "id_usuario", "id_usuario");
             return View();
         }
 
-        // POST: usuario/Create
+        // POST: persona/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id_usuario,usuario_fechaNacimiento,usuario_ciudadNacimiento,usuario_ciudadUbicacion")] tbl_usuario tbl_usuario)
+        public async Task<IActionResult> Create([Bind("id_persona,persona_nombre,persona_apellido,persona_identificacion,peresona_nombreCompleto,persona_tipoSangre")] tbl_persona tbl_persona)
         {
             if (ModelState.IsValid)
             {
-                await _usuario.agregarRegistro(tbl_usuario, idUser);
+                cargaIdUser();
+                await _persona.agregarRegistro(tbl_persona, idUser);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["id_usuario"] = new SelectList(_context.AspNetUsers, "Id", "Id", tbl_usuario.id_usuario);
-            return View(tbl_usuario);
+            ViewData["id_persona"] = new SelectList(_context.tbl_usuarios, "id_usuario", "id_usuario", tbl_persona.id_persona);
+            return View(tbl_persona);
         }
 
-        // GET: usuario/Edit/5
+        // GET: persona/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -84,23 +86,23 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
-            var tbl_usuario = (tbl_usuario)await _usuario.buscarRegistro(id);
-            if (tbl_usuario == null)
+            tbl_persona tbl_persona = (tbl_persona)await _persona.buscarRegistro(id);
+            if (tbl_persona == null)
             {
                 return NotFound();
             }
-            ViewData["id_usuario"] = new SelectList(_context.AspNetUsers, "Id", "Id", tbl_usuario.id_usuario);
-            return View(tbl_usuario);
+            ViewData["id_persona"] = new SelectList(_context.tbl_usuarios, "id_usuario", "id_usuario", tbl_persona.id_persona);
+            return View(tbl_persona);
         }
 
-        // POST: usuario/Edit/5
+        // POST: persona/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("id_usuario,usuario_fechaNacimiento,usuario_ciudadNacimiento,usuario_ciudadUbicacion")] tbl_usuario tbl_usuario)
+        public async Task<IActionResult> Edit(string id, [Bind("id_persona,persona_nombre,persona_apellido,persona_identificacion,peresona_nombreCompleto,persona_tipoSangre")] tbl_persona tbl_persona)
         {
-            if (id != tbl_usuario.id_usuario)
+            if (id != tbl_persona.id_persona)
             {
                 return NotFound();
             }
@@ -109,11 +111,11 @@ namespace SIPI_web.Controllers
             {
                 try
                 {
-                    await _usuario.modificarRegistro(tbl_usuario);
+                     await _persona.modificarRegistro(tbl_persona);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!tbl_usuarioExists(tbl_usuario.id_usuario))
+                    if (!tbl_personaExists(tbl_persona.id_persona))
                     {
                         return NotFound();
                     }
@@ -124,11 +126,11 @@ namespace SIPI_web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["id_usuario"] = new SelectList(_context.AspNetUsers, "Id", "Id", tbl_usuario.id_usuario);
-            return View(tbl_usuario);
+            ViewData["id_persona"] = new SelectList(_context.tbl_usuarios, "id_usuario", "id_usuario", tbl_persona.id_persona);
+            return View(tbl_persona);
         }
 
-        // GET: usuario/Delete/5
+        // GET: persona/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -136,27 +138,27 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
-            var tbl_usuario = await _usuario.buscarRegistro(id);
-            if (tbl_usuario == null)
+            var tbl_persona = await _persona.buscarRegistro(id);
+            if (tbl_persona == null)
             {
                 return NotFound();
             }
 
-            return View(tbl_usuario);
+            return View(tbl_persona);
         }
 
-        // POST: usuario/Delete/5
+        // POST: persona/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            await _usuario.eliminarRegistro(id);
+            await _persona.eliminarRegistro(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool tbl_usuarioExists(string id)
+        private bool tbl_personaExists(string id)
         {
-            return _context.tbl_usuarios.Any(e => e.id_usuario == id);
+            return _persona.existeRegistro(id);
         }
     }
 }

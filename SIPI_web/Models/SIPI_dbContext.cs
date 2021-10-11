@@ -24,6 +24,20 @@ namespace SIPI_web.Models
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
+        public virtual DbSet<tbl_carrera> tbl_carreras { get; set; }
+        public virtual DbSet<tbl_consultor> tbl_consultors { get; set; }
+        public virtual DbSet<tbl_equipo> tbl_equipos { get; set; }
+        public virtual DbSet<tbl_estudiante> tbl_estudiantes { get; set; }
+        public virtual DbSet<tbl_estudianteCarrera> tbl_estudianteCarreras { get; set; }
+        public virtual DbSet<tbl_estudianteEstatus> tbl_estudianteEstatuses { get; set; }
+        public virtual DbSet<tbl_informeAcademicoEstatus> tbl_informeAcademicoEstatuses { get; set; }
+        public virtual DbSet<tbl_metodologiaEstatus> tbl_metodologiaEstatuses { get; set; }
+        public virtual DbSet<tbl_pasantiaEstatus> tbl_pasantiaEstatuses { get; set; }
+        public virtual DbSet<tbl_persona> tbl_personas { get; set; }
+        public virtual DbSet<tbl_rolesTeg> tbl_rolesTegs { get; set; }
+        public virtual DbSet<tbl_sede> tbl_sedes { get; set; }
+        public virtual DbSet<tbl_teg> tbl_tegs { get; set; }
+        public virtual DbSet<tbl_tegistum> tbl_tegista { get; set; }
         public virtual DbSet<tbl_usuario> tbl_usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,13 +73,132 @@ namespace SIPI_web.Models
                 entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
             });
 
+            modelBuilder.Entity<tbl_carrera>(entity =>
+            {
+                entity.HasKey(e => e.id_carrera)
+                    .HasName("PK_tbl_adminCarrera");
+            });
+
+            modelBuilder.Entity<tbl_consultor>(entity =>
+            {
+                entity.HasOne(d => d.id_consultorNavigation)
+                    .WithOne(p => p.tbl_consultor)
+                    .HasForeignKey<tbl_consultor>(d => d.id_consultor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un consultor es una persona");
+            });
+
+            modelBuilder.Entity<tbl_estudiante>(entity =>
+            {
+                entity.HasOne(d => d.id_equipoNavigation)
+                    .WithMany(p => p.tbl_estudiantes)
+                    .HasForeignKey(d => d.id_equipo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un estudiante perteence a un equipo");
+
+                entity.HasOne(d => d.id_estudianteNavigation)
+                    .WithOne(p => p.tbl_estudiante)
+                    .HasForeignKey<tbl_estudiante>(d => d.id_estudiante)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un estudiante es una persona");
+
+                entity.HasOne(d => d.id_estudianteEstatusNavigation)
+                    .WithMany(p => p.tbl_estudiantes)
+                    .HasForeignKey(d => d.id_estudianteEstatus)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un estudiante tiene un estatus");
+
+                entity.HasOne(d => d.id_informeAcademicoEstatusNavigation)
+                    .WithMany(p => p.tbl_estudiantes)
+                    .HasForeignKey(d => d.id_informeAcademicoEstatus)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un estudiante tiene un status en el Informe Academico");
+
+                entity.HasOne(d => d.id_metodologiaEstatusNavigation)
+                    .WithMany(p => p.tbl_estudiantes)
+                    .HasForeignKey(d => d.id_metodologiaEstatus)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un estudiante tiene un status en Metodologia");
+
+                entity.HasOne(d => d.id_pasantiaEstatusNavigation)
+                    .WithMany(p => p.tbl_estudiantes)
+                    .HasForeignKey(d => d.id_pasantiaEstatus)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un estudiante tiene un status en su pasantia");
+
+                entity.HasOne(d => d.id_sedeNavigation)
+                    .WithMany(p => p.tbl_estudiantes)
+                    .HasForeignKey(d => d.id_sede)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un estudiante va a una sede");
+            });
+
+            modelBuilder.Entity<tbl_estudianteCarrera>(entity =>
+            {
+                entity.HasOne(d => d.id_carreraNavigation)
+                    .WithMany(p => p.tbl_estudianteCarreras)
+                    .HasForeignKey(d => d.id_carrera)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Mas de una carrera puede ser cursada por un estudiante");
+
+                entity.HasOne(d => d.id_estudianteNavigation)
+                    .WithMany(p => p.tbl_estudianteCarreras)
+                    .HasForeignKey(d => d.id_estudiante)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un estudiante cursa una o mas carreras");
+            });
+
+            modelBuilder.Entity<tbl_persona>(entity =>
+            {
+                entity.HasOne(d => d.id_personaNavigation)
+                    .WithOne(p => p.tbl_persona)
+                    .HasForeignKey<tbl_persona>(d => d.id_persona)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Una persona es un usuario");
+            });
+
+            modelBuilder.Entity<tbl_teg>(entity =>
+            {
+                entity.Property(e => e.id_teg).ValueGeneratedNever();
+
+                entity.HasOne(d => d.id_consultorAcademicoNavigation)
+                    .WithMany(p => p.tbl_tegid_consultorAcademicoNavigations)
+                    .HasForeignKey(d => d.id_consultorAcademico)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un consultor Academico es una persona");
+
+                entity.HasOne(d => d.id_consultorMetodologiaNavigation)
+                    .WithMany(p => p.tbl_tegid_consultorMetodologiaNavigations)
+                    .HasForeignKey(d => d.id_consultorMetodologia)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un consultor Metodologico es una persona");
+            });
+
+            modelBuilder.Entity<tbl_tegistum>(entity =>
+            {
+                entity.HasKey(e => e.id_tegista)
+                    .HasName("PK_tbl_tegista_1");
+
+                entity.HasOne(d => d.id_estudianteNavigation)
+                    .WithMany(p => p.tbl_tegista)
+                    .HasForeignKey(d => d.id_estudiante)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un TEGISTA es un estudiante");
+
+                entity.HasOne(d => d.id_tegNavigation)
+                    .WithMany(p => p.tbl_tegista)
+                    .HasForeignKey(d => d.id_teg)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Uno mas mas TEGISTAS realizan una TEG");
+            });
+
             modelBuilder.Entity<tbl_usuario>(entity =>
             {
                 entity.HasOne(d => d.id_usuarioNavigation)
                     .WithOne(p => p.tbl_usuario)
                     .HasForeignKey<tbl_usuario>(d => d.id_usuario)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_usuario_AspNetUsers");
+                    .HasConstraintName("Un usuario es miembro del Portal Portal");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -1,5 +1,4 @@
 ﻿using SIPI_web.Interface;
-using SIPI_web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +8,32 @@ namespace SIPI_web.Servicios
 {
     public class carreraServices : Iactor
     {
-
-        private readonly SIPI_dbContext _context;
-        public carreraServices(SIPI_dbContext context)
-        {
-            _context = context;
-        }
-
-        public string agregarRegistro(tbl_usuario nuevoRegistro)
-        {
-            return "";
-        }
-
-        public object buscaRegistro(string id)
+        public Task<string> agregarRegistro(object nuevoRegistro, string id)
         {
             throw new NotImplementedException();
         }
 
-        public string eliminarRegistro(string id)
+        public Task<object> buscarRegistro(string id)
         {
             throw new NotImplementedException();
         }
 
-        public List<tbl_usuario> listarRegistro()
+        public Task<int> eliminarRegistro(string id)
         {
             throw new NotImplementedException();
         }
 
-        public string modificarRegistro(string id, tbl_usuario nuevoRegistro)
+        public bool existeRegistro(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> listarRegistro()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> modificarRegistro(object nuevoRegistro)
         {
             throw new NotImplementedException();
         }

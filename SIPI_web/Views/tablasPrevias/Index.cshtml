@@ -1,0 +1,27 @@
+﻿
+<div style="display: grid; grid-template-columns: 1fr 1fr; ">
+
+    <div>
+        <h5>Listado de Carreras</h5>
+        <a asp-action="Index" asp-controller="carrera">Modificar Carreras</a>
+        <div style="width: auto; height: 150px; overflow-y: scroll; border: solid; border-width: 1px; border-color: gray; gap: 10px; ">
+            <partial name="~/Views/carrera/listaCarrera.cshtml" model="ViewBag.carrera" />
+        </div>
+    </div>
+
+    <div>
+        <h5>Listado de Equipos</h5>
+        <a asp-action="Index" asp-controller="equipo">Modificar Equipos</a>
+        <div style="width: auto; height: 150px; overflow-y: scroll; border: solid; border-width: 1px; border-color: gray; gap: 10px; ">
+            <partial name="~/Views/equipo/listaEquipo.cshtml" model="ViewBag.equipo" />
+        </div>
+    </div>
+
+    <div>
+        <h5>Listado de Sede</h5>
+        <a asp-action="Index" asp-controller="equipo">Modificar Equipos</a>
+        <div style="width: 50%; height: 150px; overflow-y:scroll; border:solid ">
+            <partial name="~/Views/equipo/listaEquipo.cshtml" model="ViewBag.equipo" />
+        </div>
+    </div>
+</div>

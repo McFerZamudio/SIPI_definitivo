@@ -79,3 +79,9 @@ body {
     border-color: gray; 
     gap: 10px;
 }
+
+.miTabla {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}

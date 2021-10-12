@@ -46,6 +46,14 @@
         </div>
     </div>
 
+    <div>
+        <h5>Listado de Estatus Pasantia</h5>
+        <a asp-action="Index" asp-controller="pasantiaEstatus">Modificar Estatus Pasantia</a>
+        <div class="tablasPrevias">
+            <partial name="~/Views/tablasPrevias/listaPasantiaEstatus.cshtml" model="ViewBag.pasantiaEstatus" />
+        </div>
+    </div>
 
+    
 </div>
 @*<a asp-action="Index" asp-controller="tablasPrevias">Regresar a Tablas Previas</a>*@

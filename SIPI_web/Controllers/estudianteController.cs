@@ -70,12 +70,12 @@ namespace SIPI_web.Controllers
         public IActionResult Create()
         {
             ViewData["id_equipo"] = new SelectList(_context.tbl_equipos, "id_equipo", "equipo_nombre");
-            ViewData["id_estudianteEstatus"] = new SelectList(_context.tbl_estudianteEstatuses, "id_estudianteEstatus", "estudianteEstatus_codigo");
-            ViewData["id_estudiante"] = new SelectList(_context.tbl_personas, "id_persona", "id_persona");
-            ViewData["id_informeAcademicoEstatus"] = new SelectList(_context.tbl_informeAcademicoEstatuses, "id_informeAcademicoEstatus", "informeAcademicoEstatus_codigo");
-            ViewData["id_metodologiaEstatus"] = new SelectList(_context.tbl_metodologiaEstatuses, "id_metodologiaEstatus", "metodologiaEstatus_codigo");
-            ViewData["id_pasantiaEstatus"] = new SelectList(_context.tbl_pasantiaEstatuses, "id_pasantiaEstatus", "pasantiaEstatus_codigo");
-            ViewData["id_sede"] = new SelectList(_context.tbl_sedes, "id_sede", "sede_codigo");
+            ViewData["id_estudianteEstatus"] = new SelectList(_context.tbl_estudianteEstatuses, "id_estudianteEstatus", "estudianteEstatus_nombre");
+            ViewData["id_estudiante"] = idUser;
+            ViewData["id_informeAcademicoEstatus"] = new SelectList(_context.tbl_informeAcademicoEstatuses, "id_informeAcademicoEstatus", "informeAcademicoEstatus_nombre");
+            ViewData["id_metodologiaEstatus"] = new SelectList(_context.tbl_metodologiaEstatuses, "id_metodologiaEstatus", "metodologiaEstatus_nombre");
+            ViewData["id_pasantiaEstatus"] = new SelectList(_context.tbl_pasantiaEstatuses, "id_pasantiaEstatus", "pasantiaEstatus_nombre");
+            ViewData["id_sede"] = new SelectList(_context.tbl_sedes, "id_sede", "sede_nombre");
             return View();
         }
 

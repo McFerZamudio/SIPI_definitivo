@@ -22,7 +22,7 @@ namespace SIPI_web.Models
         [StringLength(10)]
         public string informeAcademicoEstatus_codigo { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string informeAcademicoEstatus_nombre { get; set; }
 
         [InverseProperty(nameof(tbl_estudiante.id_informeAcademicoEstatusNavigation))]

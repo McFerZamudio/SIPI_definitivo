@@ -17,6 +17,10 @@ namespace SIPI_web.Models
         [StringLength(450)]
         public string id_estudiante { get; set; }
         public int id_carrera { get; set; }
+        [Required]
+        public string estudianteCarrera_situacionActual { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime estudianteCarrera_fechaActualizacion { get; set; }
 
         [ForeignKey(nameof(id_carrera))]
         [InverseProperty(nameof(tbl_carrera.tbl_estudianteCarreras))]

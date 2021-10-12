@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SIPI_web.Servicios
 {
-    public class carreraServices : Iactor
+    public class carreraServices
     {
-        public Task<string> agregarRegistro(object nuevoRegistro, string id)
+        public Task<string> agregarRegistro(object nuevoRegistro)
         {
             throw new NotImplementedException();
         }

@@ -73,3 +73,17 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    function armaNombre() {
+        var apellido = document.getElementById("persona_apellido").value;
+        var nombre = document.getElementById("persona_nombre").value;
+
+        document.getElementById("persona_apellido").value = apellido.toUpperCase();
+        document.getElementById("persona_nombre").value = nombre.toUpperCase();
+
+        var nombreCompleto = apellido.toUpperCase() + ', ' + nombre.toUpperCase();
+
+        document.getElementById("persona_nombreCompleto").value = nombreCompleto.toUpperCase();
+    }
+</script>  

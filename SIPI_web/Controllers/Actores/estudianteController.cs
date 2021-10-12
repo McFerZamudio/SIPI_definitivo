@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SIPI_web.Interface;
 using SIPI_web.Models;
 using SIPI_web.Servicios;
 
@@ -69,9 +70,11 @@ namespace SIPI_web.Controllers
         // GET: estudiante/Create
         public IActionResult Create()
         {
+            cargaIdUser();
+            ViewData["id_estudiante"] = idUser;
+            ViewData["UserName"] = ((Iusuario)_estudiante).buscaNombreUsuario(idUser, _context);
             ViewData["id_equipo"] = new SelectList(_context.tbl_equipos, "id_equipo", "equipo_nombre");
             ViewData["id_estudianteEstatus"] = new SelectList(_context.tbl_estudianteEstatuses, "id_estudianteEstatus", "estudianteEstatus_nombre");
-            ViewData["id_estudiante"] = idUser;
             ViewData["id_informeAcademicoEstatus"] = new SelectList(_context.tbl_informeAcademicoEstatuses, "id_informeAcademicoEstatus", "informeAcademicoEstatus_nombre");
             ViewData["id_metodologiaEstatus"] = new SelectList(_context.tbl_metodologiaEstatuses, "id_metodologiaEstatus", "metodologiaEstatus_nombre");
             ViewData["id_pasantiaEstatus"] = new SelectList(_context.tbl_pasantiaEstatuses, "id_pasantiaEstatus", "pasantiaEstatus_nombre");
@@ -86,12 +89,17 @@ namespace SIPI_web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id_estudiante,estudiante_fechaIngreaso,estudiante_fechaActualizacion,id_equipo,id_sede,id_metodologiaEstatus,id_pasantiaEstatus,id_informeAcademicoEstatus,estudiante_cohorte,id_estudianteEstatus")] tbl_estudiante tbl_estudiante)
         {
+
+ 
+            tbl_estudiante.estudiante_fechaActualizacion = DateTime.Now.Date;
+
             if (ModelState.IsValid)
             {
                 _context.Add(tbl_estudiante);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["id_equipo"] = new SelectList(_context.tbl_equipos, "id_equipo", "equipo_nombre", tbl_estudiante.id_equipo);
             ViewData["id_estudianteEstatus"] = new SelectList(_context.tbl_estudianteEstatuses, "id_estudianteEstatus", "estudianteEstatus_codigo", tbl_estudiante.id_estudianteEstatus);
             ViewData["id_estudiante"] = new SelectList(_context.tbl_personas, "id_persona", "id_persona", tbl_estudiante.id_estudiante);

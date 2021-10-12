@@ -1,1 +1,5 @@
 Scaffold-DbContext "Data Source=KyloZ\masterServer;Initial Catalog=SIPI_db;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring  -DataAnnotations -force -UseDatabaseNames
+
+<input type="hidden" id="id_estudiante" name="id_estudiante" asp-for="id_estudiante" value="@ViewData["id_estudiante"]" />
+
+<h5>Crear datos del ***actor*** @ViewData["nombreActor"]</h5>

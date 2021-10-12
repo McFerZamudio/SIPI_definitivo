@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SIPI_web.Servicios
 {
-    public class estudianteServices : Iactor
+    public class estudianteServices : Iestudiante
     {
 
         public estudianteServices()
@@ -21,8 +21,6 @@ namespace SIPI_web.Servicios
         {
             _context = context;
         }
-
-        //public List<tbl_estudiante> Lista = new();
 
         public object Lista = new();
 
@@ -42,7 +40,6 @@ namespace SIPI_web.Servicios
         public async Task<string> agregarRegistro(object nuevoRegistro, string id)
         {
             tbl_estudiante _registro = (tbl_estudiante)nuevoRegistro;
-            _registro.id_estudiante = id;
             _context.tbl_estudiantes.Add(_registro);
             await _context.SaveChangesAsync();
             _registro = (tbl_estudiante)await buscarRegistro(id);

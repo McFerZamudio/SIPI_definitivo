@@ -5,40 +5,38 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h5><b>Crear datos Personales del Usuario:</b> @ViewData["nombreUsuario"]</h5>
 
-<h4>tbl_persona</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" id="id_persona" name="id_persona" asp-for="id_persona" value="@ViewData["id_persona"]" />
+
             <div class="form-group">
-                <label asp-for="id_persona" class="control-label"></label>
-                <select asp-for="id_persona" class ="form-control" asp-items="ViewBag.id_persona"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="persona_nombre" class="control-label"></label>
-                <input asp-for="persona_nombre" class="form-control" />
+                <label asp-for="persona_nombre" class="control-label">Primer y segundo nombre</label>
+                <input asp-for="persona_nombre" id="persona_nombre" class="form-control" onblur="armaNombre()" />
                 <span asp-validation-for="persona_nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="persona_apellido" class="control-label"></label>
-                <input asp-for="persona_apellido" class="form-control" />
+                <label asp-for="persona_apellido" class="control-label">Tus Apellidos</label>
+                <input asp-for="persona_apellido" id="persona_apellido" class="form-control" onblur="armaNombre()" />
                 <span asp-validation-for="persona_apellido" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="persona_identificacion" class="control-label"></label>
+                <label asp-for="peresona_nombreCompleto" class="control-label">Tu nombre Completo</label>
+                <input asp-for="peresona_nombreCompleto" id="persona_nombreCompleto" readonly class="form-control"  />
+                <span asp-validation-for="peresona_nombreCompleto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="persona_identificacion" class="control-label">Documento de Identificación</label>
                 <input asp-for="persona_identificacion" class="form-control" />
                 <span asp-validation-for="persona_identificacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="peresona_nombreCompleto" class="control-label"></label>
-                <input asp-for="peresona_nombreCompleto" class="form-control" />
-                <span asp-validation-for="peresona_nombreCompleto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="persona_tipoSangre" class="control-label"></label>
+                <label asp-for="persona_tipoSangre" class="control-label">Tipo de Sangre</label>
                 <input asp-for="persona_tipoSangre" class="form-control" />
                 <span asp-validation-for="persona_tipoSangre" class="text-danger"></span>
             </div>
@@ -56,3 +54,17 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    function armaNombre() {
+        var apellido = document.getElementById("persona_apellido").value;
+        var nombre = document.getElementById("persona_nombre").value;
+
+        document.getElementById("persona_apellido").value = apellido.toUpperCase();
+        document.getElementById("persona_nombre").value = nombre.toUpperCase();
+
+        var nombreCompleto = apellido.toUpperCase() + ', ' + nombre.toUpperCase();
+        
+        document.getElementById("persona_nombreCompleto").value = nombreCompleto.toUpperCase();
+    }
+</script>  

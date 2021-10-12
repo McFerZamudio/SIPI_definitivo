@@ -6,13 +6,24 @@ using System.Threading.Tasks;
 
 namespace SIPI_web.Interface
 {
-    interface Iactor
+    interface Iusuario : IbaseDeDatos
     {
-        Task<int> listarRegistro();
-        Task<string> agregarRegistro(object nuevoRegistro, string id);
-        Task<object> buscarRegistro(string id);
-        Task<int> eliminarRegistro(string id);
-        Task<int> modificarRegistro(object nuevoRegistro);
-        bool existeRegistro(string id);
+        public string buscaNombreUsuario(string id, SIPI_dbContext _context)
+        {
+            return _context.AspNetUsers.FirstOrDefault (x => x.Id.Equals(id)).UserName.ToString();
+        }
+    }
+
+    interface Ipersona : Iusuario
+    {
+        public string buscaNombreCompleto(string id, SIPI_dbContext _context)
+        {
+            return _context.tbl_personas.FirstOrDefault(x => x.id_persona.Equals(id)).peresona_nombreCompleto.ToString();
+        }
+    }
+
+    interface Iestudiante : Ipersona
+    {
+
     }
 }

@@ -57,7 +57,10 @@ namespace SIPI_web.Controllers
         // GET: persona/Create
         public IActionResult Create()
         {
-            ViewData["id_persona"] = new SelectList(_context.tbl_usuarios, "id_usuario", "id_usuario");
+            cargaIdUser();
+            ViewData["id_persona"] = idUser;
+            ViewData["nombreUsuario"] = ((Ipersona)_persona).buscaNombreUsuario(idUser,_context);
+
             return View();
         }
 

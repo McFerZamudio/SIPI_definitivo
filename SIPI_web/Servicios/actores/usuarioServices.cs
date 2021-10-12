@@ -1,4 +1,7 @@
-﻿using SIPI_web.Interface;
+﻿// tbl_usuario = tbl_usuario
+
+
+using SIPI_web.Interface;
 using SIPI_web.Models;
 using System;
 using System.Collections.Generic;
@@ -8,55 +11,54 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SIPI_web.Servicios
 {
-    public class personaServices : Iactor
+    public class usuarioServices : Iusuario
     {
-
-        public personaServices()
+        
+        public usuarioServices()
         {
 
         }
 
         private readonly SIPI_dbContext _context;
-        public personaServices(SIPI_dbContext context)
+        public usuarioServices(SIPI_dbContext context)
         {
             _context = context;
         }
 
-        public List<tbl_persona> ListaPersona = new();
+        public List<tbl_usuario> Lista = new();
         public async Task<int> listarRegistro()
         {
-            ListaPersona = await _context.tbl_personas.ToListAsync();
-            return ListaPersona.Count();
+            Lista = await _context.tbl_usuarios.ToListAsync();
+            return Lista.Count();
         }
 
         public async Task<string> agregarRegistro(object nuevoRegistro, string id)
         {
-            tbl_persona _persona = (tbl_persona)nuevoRegistro;
-            _persona.id_persona = id;
-            _context.tbl_personas.Add(_persona);
+            tbl_usuario _registro = (tbl_usuario)nuevoRegistro;
+            _context.tbl_usuarios.Add(_registro);
             await _context.SaveChangesAsync();
-            _persona = (tbl_persona)await buscarRegistro(id);
-            return _persona.id_persona;
+            _registro = (tbl_usuario)await buscarRegistro(id);
+            return _registro.id_usuario;
         }
 
         public async Task<object> buscarRegistro(string id)
         {
-            var _persona = await _context.tbl_personas 
-                .Include(t => t.id_personaNavigation)
-                .FirstOrDefaultAsync(m => m.id_persona == id);
-            return _persona;
+            var _registro = await _context.tbl_usuarios
+                .Include(t => t.id_usuarioNavigation)
+                .FirstOrDefaultAsync(m => m.id_usuario == id);
+            return _registro;
         }
 
         public async Task<int> eliminarRegistro(string id)
         {
-            var tbl_persona = await _context.tbl_personas.FindAsync(id);
-            _context.tbl_personas.Remove(tbl_persona);
+            var tbl_usuario = await _context.tbl_personas.FindAsync(id);
+            _context.tbl_personas.Remove(tbl_usuario);
             return await _context.SaveChangesAsync();
         }
 
         public async Task<int> modificarRegistro(object nuevoRegistro)
         {
-            _context.Update((tbl_persona)nuevoRegistro);
+            _context.Update((tbl_usuario)nuevoRegistro);
             return await _context.SaveChangesAsync();
         }
 

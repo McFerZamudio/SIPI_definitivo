@@ -16,12 +16,12 @@
             <input type="hidden" asp-for="id_persona" />
             <div class="form-group">
                 <label asp-for="persona_nombre" class="control-label"></label>
-                <input asp-for="persona_nombre" class="form-control" />
+                <input asp-for="persona_nombre" id="persona_nombre" class="form-control" onblur="armaNombre()" />
                 <span asp-validation-for="persona_nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="persona_apellido" class="control-label"></label>
-                <input asp-for="persona_apellido" class="form-control" />
+                <input asp-for="persona_apellido" id="persona_apellido" class="form-control" onblur="armaNombre()" />
                 <span asp-validation-for="persona_apellido" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -31,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="peresona_nombreCompleto" class="control-label"></label>
-                <input asp-for="peresona_nombreCompleto" class="form-control" />
+                <input asp-for="peresona_nombreCompleto" id="persona_nombreCompleto" class="form-control" readonly />
                 <span asp-validation-for="peresona_nombreCompleto" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -53,3 +53,17 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    function armaNombre() {
+        var apellido = document.getElementById("persona_apellido").value;
+        var nombre = document.getElementById("persona_nombre").value;
+
+        document.getElementById("persona_apellido").value = apellido.toUpperCase();
+        document.getElementById("persona_nombre").value = nombre.toUpperCase();
+
+        var nombreCompleto = apellido.toUpperCase() + ', ' + nombre.toUpperCase();
+
+        document.getElementById("persona_nombreCompleto").value = nombreCompleto.toUpperCase();
+    }
+</script>  

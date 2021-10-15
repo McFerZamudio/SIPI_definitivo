@@ -1,0 +1,24 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Register confirmation";
+    Layout = "~/Views/Shared/_LayoutPublico.cshtml";
+    var _email = Request.Query["email"];
+}
+
+<h1>@ViewData["Title"]</h1>
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+    <p>
+        Por favor confirma que este es tu correo, ya que este es el canal de comunicacion contigo y es el acceso al portal.
+        Este es el correo electronico que haz introducido: <b>@_email</b> por favor <a id="confirm-link" href="@Model.EmailConfirmationUrl">Haz Click aqui para confirmar que este es el correo</a>
+    </p>
+    }
+    else
+    {
+<p>
+        Please check your email to confirm your account.
+</p>
+    }
+}

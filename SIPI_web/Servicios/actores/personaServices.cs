@@ -11,15 +11,63 @@ namespace SIPI_web.Servicios
     public class personaServices : Ipersona
     {
 
+        // TODO: Pasar a funcion SANGRE
+        public readonly List<tipoSangre> listaTipoSangre = new();
+        public class tipoSangre
+        {
+            public string persona_tipoSangre { get; init; }
+
+            public tipoSangre(string _sangre)
+            {
+                persona_tipoSangre = _sangre;
+            }
+
+            public tipoSangre()
+            {
+
+            }
+            
+        }
+
         public personaServices()
         {
 
         }
-
+ 
         private readonly SIPI_dbContext _context;
         public personaServices(SIPI_dbContext context)
         {
             _context = context;
+
+            // *** pasar a funcion *** //
+            tipoSangre _sangre = new();
+
+            _sangre = new("Desconocida");
+            listaTipoSangre.Add(_sangre);
+
+            _sangre = new("A+");
+            listaTipoSangre.Add(_sangre);
+
+            _sangre = new("A-");
+            listaTipoSangre.Add(_sangre);
+
+            _sangre = new("B+");
+            listaTipoSangre.Add(_sangre);
+
+            _sangre = new("B-");
+            listaTipoSangre.Add(_sangre);
+
+            _sangre = new("AB+");
+            listaTipoSangre.Add(_sangre);
+
+            _sangre = new("AB-");
+            listaTipoSangre.Add(_sangre);
+
+            _sangre = new("O+");
+            listaTipoSangre.Add(_sangre);
+
+            _sangre = new("O-");
+            listaTipoSangre.Add(_sangre);
         }
 
         public List<tbl_persona> ListaPersona = new();
@@ -62,6 +110,11 @@ namespace SIPI_web.Servicios
         public bool existeRegistro(string id)
         {
             return _context.tbl_personas.Any(e => e.id_persona == id);
+        }
+
+        public bool existeNombreUsuario(string _existeNombreUsuario)
+        {
+            return _context.AspNetUsers.Any(e => e.UserName == _existeNombreUsuario);
         }
     }
 }

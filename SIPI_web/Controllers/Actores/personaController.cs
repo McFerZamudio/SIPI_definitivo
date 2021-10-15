@@ -59,6 +59,7 @@ namespace SIPI_web.Controllers
         {
             cargaIdUser();
             ViewData["id_persona"] = idUser;
+            ViewData["tipoSangre"] = new SelectList(_persona.listaTipoSangre, "persona_tipoSangre", "persona_tipoSangre"); 
             ViewData["nombreUsuario"] = ((Ipersona)_persona).buscaNombreUsuario(idUser,_context);
 
             return View();
@@ -163,5 +164,20 @@ namespace SIPI_web.Controllers
         {
             return _persona.existeRegistro(id);
         }
+
+        [HttpPost]
+        public ActionResult existeNombreUsuario(string name) 
+        {
+           var _existe = _persona.existeNombreUsuario(name);
+           return Json(new { existe = _existe });
+        }
+
+        [HttpPost]
+        public ActionResult GoToConfirm(string name)
+        {
+            return Json(new { Name = name, DateTime = DateTime.Now.ToShortDateString() });
+        }
+
+
     }
 }

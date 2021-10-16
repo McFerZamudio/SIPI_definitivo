@@ -63,9 +63,14 @@ namespace SIPI_web
                 app.UseHsts();
             }
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseSession();
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+
+
 
             app.UseRouting();
 

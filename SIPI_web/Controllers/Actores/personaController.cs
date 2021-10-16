@@ -172,7 +172,6 @@ namespace SIPI_web.Controllers
            return Json(new { existe = _existe });
         }
 
-        [HttpPost]
         public ActionResult GoToConfirm(string name)
         {
             return Json(new { Name = name, DateTime = DateTime.Now.ToShortDateString() });

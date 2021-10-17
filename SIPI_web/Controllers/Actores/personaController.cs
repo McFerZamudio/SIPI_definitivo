@@ -166,15 +166,30 @@ namespace SIPI_web.Controllers
         }
 
         [HttpPost]
-        public ActionResult existeNombreUsuario(string name) 
+        public ActionResult existeNombreUsuario([FromBody] SaveReportDetailInput input) 
         {
-           var _existe = _persona.existeNombreUsuario(name);
+           var _existe = _persona.existeNombreUsuario(input.userName);
            return Json(new { existe = _existe });
         }
 
-        public ActionResult GoToConfirm(string name)
+        [HttpPost]
+        public JsonResult GoToConfirm(string name)
         {
             return Json(new { Name = name, DateTime = DateTime.Now.ToShortDateString() });
+        }
+
+        public class SaveReportDetailInput
+        {
+            public string userName { get; set; }
+
+        }
+
+        [HttpPost]
+        public JsonResult SaveReportDetail([FromBody] SaveReportDetailInput input)
+        {
+            var userName = input.userName;
+
+            return Json("b");
         }
 
 

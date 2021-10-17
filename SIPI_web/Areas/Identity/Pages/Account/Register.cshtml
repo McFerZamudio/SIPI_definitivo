@@ -31,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.nombreUsuario"></label><br />
-                <input asp-for="Input.nombreUsuario" id="nombreUsuario" value="" class="form-control" onblur="getItems();"/>
+                <input asp-for="Input.nombreUsuario" id="nombreUsuario" value="" class="form-control" onblur="validaUsuario();" />
                 <label id="validarNombreUsuario" class="form-control" style="border:solid; border-width:1px; text-align:center">Sin Validar Nombre Usuario !</label>
                 <span asp-validation-for="Input.nombreUsuario" class="text-danger"></span>
             </div>
@@ -75,47 +75,36 @@
 }
 
 <script type="text/javascript">
-    async function getItems() {
-        //var _nombreUsuario = document.getElementById('nombreUsuario').innerText;
-        //var data = { 'name': 'Dharmendra' };
-        //const res = await fetch("/persona/existeNombreUsuario", {
-        //    method: "POST",
-        //    body: JSON.stringify(data),
-        //    headers: {
-        //        "Content-Type": "application/json"
-        //    }
-        //});
+    async function validaUsuario() {
 
-        //const result = await res.json();
-  
-        //var _result = document.getElementById('validarNombreUsuario');
+        var url = '/persona/existeNombreUsuario/';
+        var _userName = document.getElementById("nombreUsuario");
+        var data = { userName: _userName.value};
 
-        //if (_result.existe == true) {
-        //    _result.innerText = "pues si";
-        //} else {
-        //    _result.innerText = "pues no";
-        //}
-
-        //var data2 = { 'name': 'Dharmendra' };
-        //var data = new FormData();
-        //data.append("json", JSON.stringify(data2));
-
-        
-        var data = { 'name': 'Dharmendra' };
-        const res = await fetch("/persona/GoToConfirm", {
-            method: "POST",
-             headers: {
-                 'Accept': 'application/json',
-                 'Content-Type': 'application/json'
-            },
-            body:data
+        var res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
         });
 
-        const result = await res.json();
-        //alert('Name : ' + result.Name + '\nDate : ' + result.DateTime);
-      
-       
+        const _result = await res.json();
+
+        var _validarNombreUsuario = document.getElementById('validarNombreUsuario');
+
+        if (_result.existe == true || document.getElementById("nombreUsuario").value == "") {
+            _validarNombreUsuario.innerText = "Nombre de Usuario No Disponible";
+            document.getElementById("nombreUsuario").value = "";
+            return false;
+        } else {
+            _validarNombreUsuario.innerText = "Nombre de Usuario Disponible";
+            return true;
+        }
 
     };
+
+
 </script>
 

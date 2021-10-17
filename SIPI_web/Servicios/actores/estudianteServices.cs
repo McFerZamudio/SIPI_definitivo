@@ -71,6 +71,12 @@ namespace SIPI_web.Servicios
         {
             return _context.tbl_estudiantes.Any(e => e.id_estudiante == id);
         }
+
+        public bool existeInscrito(string _existeNombreUsuario)
+        {
+            return false;
+           // return _context.tbl_estudiantes.Any(e => e.em == _existeNombreUsuario);
+        }
     }
 }
 

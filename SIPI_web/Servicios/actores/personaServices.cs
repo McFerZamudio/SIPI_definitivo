@@ -29,6 +29,11 @@ namespace SIPI_web.Servicios
             
         }
 
+        public class verificaUsuario
+        {
+            public string userName { get; set; }
+        }
+
         public personaServices()
         {
 

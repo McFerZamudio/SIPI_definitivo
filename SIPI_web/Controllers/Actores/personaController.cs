@@ -9,11 +9,14 @@ using Microsoft.EntityFrameworkCore;
 using SIPI_web.Interface;
 using SIPI_web.Models;
 using SIPI_web.Servicios;
+using static SIPI_web.Servicios.personaServices;
 
 namespace SIPI_web.Controllers
 {
     public class personaController : Controller
     {
+
+
 
         private personaServices _persona = new();
 
@@ -45,7 +48,7 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
-            var tbl_persona = await  _persona.buscarRegistro(id);
+            var tbl_persona = await _persona.buscarRegistro(id);
             if (tbl_persona == null)
             {
                 return NotFound();
@@ -59,8 +62,8 @@ namespace SIPI_web.Controllers
         {
             cargaIdUser();
             ViewData["id_persona"] = idUser;
-            ViewData["tipoSangre"] = new SelectList(_persona.listaTipoSangre, "persona_tipoSangre", "persona_tipoSangre"); 
-            ViewData["nombreUsuario"] = ((Ipersona)_persona).buscaNombreUsuario(idUser,_context);
+            ViewData["tipoSangre"] = new SelectList(_persona.listaTipoSangre, "persona_tipoSangre", "persona_tipoSangre");
+            ViewData["nombreUsuario"] = ((Ipersona)_persona).buscaNombreUsuario(idUser, _context);
 
             return View();
         }
@@ -115,7 +118,7 @@ namespace SIPI_web.Controllers
             {
                 try
                 {
-                     await _persona.modificarRegistro(tbl_persona);
+                    await _persona.modificarRegistro(tbl_persona);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -166,31 +169,16 @@ namespace SIPI_web.Controllers
         }
 
         [HttpPost]
-        public ActionResult existeNombreUsuario([FromBody] SaveReportDetailInput input) 
+        public ActionResult existeNombreUsuario([FromBody] verificaUsuario input)
         {
-           var _existe = _persona.existeNombreUsuario(input.userName);
-           return Json(new { existe = _existe });
+            var _existe = _persona.existeNombreUsuario(input.userName);
+            return Json(new { existe = _existe });
         }
 
-        [HttpPost]
-        public JsonResult GoToConfirm(string name)
-        {
-            return Json(new { Name = name, DateTime = DateTime.Now.ToShortDateString() });
-        }
 
-        public class SaveReportDetailInput
-        {
-            public string userName { get; set; }
 
-        }
 
-        [HttpPost]
-        public JsonResult SaveReportDetail([FromBody] SaveReportDetailInput input)
-        {
-            var userName = input.userName;
 
-            return Json("b");
-        }
 
 
     }

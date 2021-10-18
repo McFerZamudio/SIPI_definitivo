@@ -60,6 +60,7 @@ namespace SIPI_web.Controllers
         public IActionResult Create()
         {
             ViewData["id_usuario"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+            ViewData["id_ciudad"] = new SelectList(_context.tbl_ciudads, "Id_ciudad", "ciudad_nombre");
             return View();
         }
 

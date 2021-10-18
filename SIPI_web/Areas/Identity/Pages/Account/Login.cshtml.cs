@@ -11,23 +11,29 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SIPI_web.Servicios;
+using SIPI_web.Interface;
+using SIPI_web.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace SIPI_web.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        private readonly SIPI_dbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
         public LoginModel(SignInManager<IdentityUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager, SIPI_dbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -86,6 +92,27 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    var idUser = _context.AspNetUsers.Where(x => x.UserName.Equals(Input.userName)).FirstOrDefault().Id;
+                    HttpContext.Session.SetString("idUser", idUser);
+
+                    usuarioServices _usuario = new();
+                    var _existeUsuario = await ((Iusuario)_usuario).existeUsuario(idUser, _context);
+
+                    if (_existeUsuario == false)
+                    {
+                        return RedirectToAction("create", "Usuario");
+                    }
+
+                    personaServices _persona = new();
+                    var _existePersona = await ((Ipersona)_persona).existePersona(idUser, _context);
+
+                    if (_existePersona == false)
+                    {
+                        return RedirectToAction("create", "persona");
+                    }
+
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

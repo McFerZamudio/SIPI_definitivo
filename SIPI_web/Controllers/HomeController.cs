@@ -25,8 +25,6 @@ namespace SIPI_web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var idUser = _context.AspNetUsers.Where(x => x.UserName.Equals(User.Identity.Name)).FirstOrDefault().Id;
-                HttpContext.Session.SetString("idUser", idUser);
                 return RedirectToAction("homeEstudiante", "estudiante");
             }
             return View();

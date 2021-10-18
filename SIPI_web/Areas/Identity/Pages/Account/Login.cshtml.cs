@@ -43,14 +43,15 @@ namespace SIPI_web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            [Display(Name = "Nombre de Usuario")]
+            public string userName { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Clave")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Recoradarme en el portal?")]
             public bool RememberMe { get; set; }
         }
 
@@ -81,7 +82,7 @@ namespace SIPI_web.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.userName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SIPI_web.Interface;
 using SIPI_web.Models;
 using SIPI_web.Servicios;
+using static SIPI_web.Servicios.estudianteServices;
 
 namespace SIPI_web.Controllers
 {
@@ -31,12 +32,15 @@ namespace SIPI_web.Controllers
 
         }
 
+        public async Task<IActionResult> homeEstudiante()
+        {
+            return View();
+        }
+
         // GET: estudiante
         public async Task<IActionResult> Index()
         {
             await _estudiante.listarRegistro();
-
-            //var sIPI_dbContext = _context.tbl_estudiantes.Include(t => t.id_equipoNavigation).Include(t => t.id_estudianteEstatusNavigation).Include(t => t.id_estudianteNavigation).Include(t => t.id_informeAcademicoEstatusNavigation).Include(t => t.id_metodologiaEstatusNavigation).Include(t => t.id_pasantiaEstatusNavigation).Include(t => t.id_sedeNavigation);
             var sIPI_dbContext = _estudiante.Lista;
 
             return View(sIPI_dbContext);
@@ -214,6 +218,13 @@ namespace SIPI_web.Controllers
         private bool tbl_estudianteExists(string id)
         {
             return _context.tbl_estudiantes.Any(e => e.id_estudiante == id);
+        }
+
+        [HttpPost]
+        public ActionResult existeInscrito([FromBody] verificaInscrito input)
+        {
+            var _existe = _estudiante.existeInscrito(input.emailEstudiante);
+            return Json(new { existe = _existe });
         }
     }
 }

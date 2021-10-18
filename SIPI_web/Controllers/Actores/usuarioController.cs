@@ -8,11 +8,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SIPI_web.Models;
 using SIPI_web.Servicios;
+using static SIPI_web.Servicios.usuarioServices;
 
 namespace SIPI_web.Controllers
 {
     public class usuarioController : Controller
     {
+
+
 
         private string idUser;
         private void cargaIdUser()
@@ -157,6 +160,13 @@ namespace SIPI_web.Controllers
         private bool tbl_usuarioExists(string id)
         {
             return _context.tbl_usuarios.Any(e => e.id_usuario == id);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> existeUsuario([FromBody] verificaUsuario input)
+        {
+            var _existe = await _usuario.existeUsuario(input.emailUsuario);
+            return Json(new { existe = _existe });
         }
     }
 }

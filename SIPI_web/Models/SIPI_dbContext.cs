@@ -34,6 +34,7 @@ namespace SIPI_web.Models
         public virtual DbSet<tbl_estudianteCarrera> tbl_estudianteCarreras { get; set; }
         public virtual DbSet<tbl_estudianteEstatus> tbl_estudianteEstatuses { get; set; }
         public virtual DbSet<tbl_informeAcademicoEstatus> tbl_informeAcademicoEstatuses { get; set; }
+        public virtual DbSet<tbl_inscrito> tbl_inscritos { get; set; }
         public virtual DbSet<tbl_metodologiaEstatus> tbl_metodologiaEstatuses { get; set; }
         public virtual DbSet<tbl_pai> tbl_pais { get; set; }
         public virtual DbSet<tbl_pasantiaEstatus> tbl_pasantiaEstatuses { get; set; }
@@ -179,6 +180,11 @@ namespace SIPI_web.Models
                     .HasForeignKey(d => d.id_estudiante)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Un estudiante cursa una o mas carreras");
+            });
+
+            modelBuilder.Entity<tbl_inscrito>(entity =>
+            {
+                entity.Property(e => e.id_inscrito).HasDefaultValueSql("(newid())");
             });
 
             modelBuilder.Entity<tbl_persona>(entity =>

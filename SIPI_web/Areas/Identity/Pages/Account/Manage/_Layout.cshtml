@@ -1,0 +1,29 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = "~/Views/Shared/_LayoutPublico.cshtml";
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_LayoutPublico.cshtml";
+    }
+}
+
+<br/>
+
+<div>
+    <h4>Cambia la configuracion de tu usuario</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <partial name="_ManageNav" />
+        </div>
+        <div class="col-md-9">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

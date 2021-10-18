@@ -13,7 +13,12 @@ namespace SIPI_web.Servicios
 {
     public class usuarioServices : Iusuario
     {
-        
+
+        public class verificaUsuario
+        {
+            public string emailUsuario { get; set; }
+        }
+
         public usuarioServices()
         {
 
@@ -65,6 +70,11 @@ namespace SIPI_web.Servicios
         public bool existeRegistro(string id)
         {
             return _context.tbl_personas.Any(e => e.id_persona == id);
+        }
+
+        public async Task<bool> existeUsuario(string _email)
+        {
+            return await _context.AspNetUsers.AnyAsync(e => e.Email == _email);
         }
     }
 }

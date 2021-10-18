@@ -11,6 +11,11 @@ namespace SIPI_web.Servicios
     public class estudianteServices : Iestudiante
     {
 
+        public class verificaInscrito
+        {
+            public string emailEstudiante { get; set; }
+        }
+
         public estudianteServices()
         {
 
@@ -72,10 +77,9 @@ namespace SIPI_web.Servicios
             return _context.tbl_estudiantes.Any(e => e.id_estudiante == id);
         }
 
-        public bool existeInscrito(string _existeNombreUsuario)
+        public bool existeInscrito(string _email)
         {
-            return false;
-           // return _context.tbl_estudiantes.Any(e => e.em == _existeNombreUsuario);
+           return _context.tbl_inscritos.Any(e => e.inscrito_email == _email);
         }
     }
 }

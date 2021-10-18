@@ -5,19 +5,19 @@
     Layout = "~/Views/Shared/_LayoutPublico.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
-
+<br/>
 <div class="row">
     <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post" autocomplete="off">
-            <h4>Create a new account.</h4>
+            <h4>Registrarse en el portal</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
+                <input asp-for="Input.Email" id="email" class="form-control" onblur="existeUsuario();" />
                 <label id="validarEmail" class="form-control" style="border:solid; border-width:1px; text-align:center">Sin Validar email !</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
+                <input type="hidden" id="emailValido" value="false" />
             </div>
             <div class="form-group">
                 <label asp-for="Input.Password"></label>
@@ -30,27 +30,36 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.nombreUsuario"></label><br />
+                <label asp-for="Input.nombreUsuario">Nombre Usuario - Todos vera este nombre</label><br />
                 <input asp-for="Input.nombreUsuario" id="nombreUsuario" value="" class="form-control" onblur="validaUsuario();" />
                 <label id="validarNombreUsuario" class="form-control" style="border:solid; border-width:1px; text-align:center">Sin Validar Nombre Usuario !</label>
                 <span asp-validation-for="Input.nombreUsuario" class="text-danger"></span>
+                <input type="hidden" id="nombreUsuarioValido" value="false" />
+
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" id="registrar" class="btn btn-primary">Register</button>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h4>Use another service to register.</h4>
+            <h4>Tu correo electronico como canal de Informacion.</h4>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
+                        <div>
+                            <p>
+                                El correo con el que te vas a registrar debe ser tu correo principal en UNITEC, debes estar siempre pendiente de el
+                                ya que es tu entrada principal al portal y sera el canal principal de comunicacion entre UNITEC y tu.
+                            </p>
+                            <p>
+                                Recomendamos el uso de GMAIL como correo principal ya que muchas herramientas de este sera usadas por la institucion.
+                            </p>
+                            <p>
+                                <h4 style="color:red">Correos NO autorizados para registrarse</h4>
+                                Si su correo no esta autorizado para registrarse, notificarlo a gestionequipos.unitec@gmail.com para que autoricen su entrada al portal.
+                            </p>
+                        </div>
                 }
                 else
                 {
@@ -94,16 +103,83 @@
 
         var _validarNombreUsuario = document.getElementById('validarNombreUsuario');
 
-        if (_result.existe == true || document.getElementById("nombreUsuario").value == "") {
+        if (_result.existe == true) {
             _validarNombreUsuario.innerText = "Nombre de Usuario No Disponible";
             document.getElementById("nombreUsuario").value = "";
-            return false;
+            document.getElementById("nombreUsuarioValido").value = false; 
         } else {
             _validarNombreUsuario.innerText = "Nombre de Usuario Disponible";
-            return true;
+            document.getElementById("nombreUsuarioValido").value = true;
         }
 
     };
+
+    async function validaEstudiante() {
+        var url = '/estudiante/existeInscrito/';
+        var _email = document.getElementById("email");
+        var data = { emailEstudiante: _email.value };
+
+        var res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+
+        const _result = await res.json();
+
+        var _validarEmail = document.getElementById('validarEmail');
+
+        if (_result.existe == true && document.getElementById("email").value != "") {
+            _validarEmail.innerText = "Email Estudiante Válido ! Puede Continuar";
+            document.getElementById("emailValido").value = true;
+        } else {
+            _validarEmail.innerText = "Usted NO esta autorizado para registrarse !";
+            document.getElementById("email").value = "";
+            document.getElementById("emailValido").value = false;
+        }
+
+    };
+
+    async function existeUsuario() {
+        var url = '/usuario/existeUsuario/';
+        var _email = document.getElementById("email");
+        var data = { emailUsuario: _email.value };
+
+        var res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+
+        const _result = await res.json();
+        var _validarEmail = document.getElementById('validarEmail');
+        if (_result.existe == true) {
+            _validarEmail.innerText = "Usted ya posee una cuenta en SIPI !";
+            _email.value = "";
+            document.getElementById("emailValido").value = false;
+        } else {
+            validaInscrito();
+
+            document.getElementById("emailValido").value = true;
+            _validarEmail.innerText = "";
+        }
+    };
+
+    // *** Aqui se colocaran el resto de las validaciones del tipo de usuario ** //
+    async function validaInscrito() {
+        validaEstudiante();
+    }
+
+    async function validaGeneral() {
+        var _resp = document.getElementById("emailValido").value * document.getElementById("nombreUsuarioValido").value
+        return _resp;
+    }
 
 
 </script>

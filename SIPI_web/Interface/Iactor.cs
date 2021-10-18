@@ -36,6 +36,9 @@ namespace SIPI_web.Interface
 
     interface Iestudiante : Ipersona
     {
-
+        public async Task<bool> existeEstudiante(string id, SIPI_dbContext _context)
+        {
+            return await _context.tbl_estudiantes.AnyAsync(x => x.id_estudiante.Equals(id));
+        }
     }
 }

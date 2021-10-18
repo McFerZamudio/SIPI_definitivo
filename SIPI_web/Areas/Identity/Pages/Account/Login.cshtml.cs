@@ -98,7 +98,6 @@ namespace SIPI_web.Areas.Identity.Pages.Account
 
                     usuarioServices _usuario = new();
                     var _existeUsuario = await ((Iusuario)_usuario).existeUsuario(idUser, _context);
-
                     if (_existeUsuario == false)
                     {
                         return RedirectToAction("create", "Usuario");
@@ -106,10 +105,16 @@ namespace SIPI_web.Areas.Identity.Pages.Account
 
                     personaServices _persona = new();
                     var _existePersona = await ((Ipersona)_persona).existePersona(idUser, _context);
-
                     if (_existePersona == false)
                     {
                         return RedirectToAction("create", "persona");
+                    }
+
+                    estudianteServices _estudiante = new();
+                    var _existeEstudiante = await ((Iestudiante)_estudiante).existeEstudiante(idUser, _context);
+                    if (_existeEstudiante == false)
+                    {
+                        return RedirectToAction("create", "estudiante");
                     }
 
 

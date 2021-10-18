@@ -101,7 +101,7 @@ namespace SIPI_web.Controllers
             {
                 _context.Add(tbl_estudiante);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("details", "estudiante", new { id = tbl_estudiante.id_estudiante});
             }
 
             ViewData["id_equipo"] = new SelectList(_context.tbl_equipos, "id_equipo", "equipo_nombre", tbl_estudiante.id_equipo);

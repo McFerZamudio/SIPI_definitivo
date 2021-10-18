@@ -78,11 +78,11 @@ namespace SIPI_web.Controllers
             if (ModelState.IsValid)
             {
                 cargaIdUser();
-                await _persona.agregarRegistro(tbl_persona, idUser);
-                return RedirectToAction(nameof(Index));
+                await _persona.agregarRegistro(tbl_persona, tbl_persona.id_persona);
+                return RedirectToAction("details", "persona", new { id = tbl_persona.id_persona });
             }
             ViewData["id_persona"] = new SelectList(_context.tbl_usuarios, "id_usuario", "id_usuario", tbl_persona.id_persona);
-            return View(tbl_persona);
+            return RedirectToAction("details", "usuario", new { id = 2 });
         }
 
         // GET: persona/Edit/5

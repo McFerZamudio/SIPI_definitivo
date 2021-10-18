@@ -238,6 +238,18 @@ namespace SIPI_web.Models
                     .HasForeignKey<tbl_usuario>(d => d.id_usuario)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Un usuario es miembro del Portal Portal");
+
+                entity.HasOne(d => d.usuario_ciudadNacimientoNavigation)
+                    .WithMany(p => p.tbl_usuariousuario_ciudadNacimientoNavigations)
+                    .HasForeignKey(d => d.usuario_ciudadNacimiento)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Un Usuario nacio en una Ciudad");
+
+                entity.HasOne(d => d.usuario_ciudadUbicacionNavigation)
+                    .WithMany(p => p.tbl_usuariousuario_ciudadUbicacionNavigations)
+                    .HasForeignKey(d => d.usuario_ciudadUbicacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("[Un usuario se encuentra en una Ciudad");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -23,6 +23,12 @@ namespace SIPI_web.Models
         [ForeignKey(nameof(id_usuario))]
         [InverseProperty(nameof(AspNetUser.tbl_usuario))]
         public virtual AspNetUser id_usuarioNavigation { get; set; }
+        [ForeignKey(nameof(usuario_ciudadNacimiento))]
+        [InverseProperty(nameof(tbl_ciudad.tbl_usuariousuario_ciudadNacimientoNavigations))]
+        public virtual tbl_ciudad usuario_ciudadNacimientoNavigation { get; set; }
+        [ForeignKey(nameof(usuario_ciudadUbicacion))]
+        [InverseProperty(nameof(tbl_ciudad.tbl_usuariousuario_ciudadUbicacionNavigations))]
+        public virtual tbl_ciudad usuario_ciudadUbicacionNavigation { get; set; }
         [InverseProperty("id_empresaNavigation")]
         public virtual tbl_empresa tbl_empresa { get; set; }
         [InverseProperty("id_personaNavigation")]

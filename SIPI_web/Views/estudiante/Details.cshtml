@@ -2,78 +2,70 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutPublico.cshtml";
 }
 
-<h1>Details</h1>
-
+<br/>
 <div>
-    <h4>tbl_estudiante</h4>
+    <h4><b>Detalles del Estudiante: </b></h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.estudiante_fechaIngreaso)
+            Fecha de Ingreso
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.estudiante_fechaIngreaso)
+            @Model.estudiante_fechaIngreaso.ToShortDateString()
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.estudiante_fechaActualizacion)
+           Fecha Ultima Actualizacion
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.estudiante_fechaActualizacion)
+        <dd class="col-sm-10">
+            @Model.estudiante_fechaActualizacion.ToShortDateString()
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.estudiante_cohorte)
+            Cohorte a a que pertenece
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.estudiante_cohorte)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_equipoNavigation)
+            Equipo de Proyecto
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.id_equipoNavigation.equipo_nombre)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_estudianteEstatusNavigation)
+            Estatus del Estudiante
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_estudianteEstatusNavigation.estudianteEstatus_codigo)
+            @Html.DisplayFor(model => model.id_estudianteEstatusNavigation.estudianteEstatus_nombre)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_estudianteNavigation)
+            Estatus del Articulo Academico
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_estudianteNavigation.id_persona)
+            @Html.DisplayFor(model => model.id_informeAcademicoEstatusNavigation.informeAcademicoEstatus_nombre)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_informeAcademicoEstatusNavigation)
+           Estatus del Trabajo Especial de Grado (TEG)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_informeAcademicoEstatusNavigation.informeAcademicoEstatus_codigo)
+            @Html.DisplayFor(model => model.id_metodologiaEstatusNavigation.metodologiaEstatus_nombre)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_metodologiaEstatusNavigation)
+           Estatus de Pasantia
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_metodologiaEstatusNavigation.metodologiaEstatus_codigo)
+            @Html.DisplayFor(model => model.id_pasantiaEstatusNavigation.pasantiaEstatus_nombre)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_pasantiaEstatusNavigation)
+            Sede del Equipo
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_pasantiaEstatusNavigation.pasantiaEstatus_codigo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_sedeNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_sedeNavigation.sede_codigo)
+            @Html.DisplayFor(model => model.id_sedeNavigation.sede_nombre)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.id_estudiante">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Home">Salir</a>
 </div>

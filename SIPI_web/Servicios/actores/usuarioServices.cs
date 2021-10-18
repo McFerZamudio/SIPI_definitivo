@@ -40,7 +40,10 @@ namespace SIPI_web.Servicios
         public async Task<string> agregarRegistro(object nuevoRegistro, string id)
         {
             tbl_usuario _registro = (tbl_usuario)nuevoRegistro;
+            _registro.usuario_fechaCreacion = DateTime.Now;
+
             _context.tbl_usuarios.Add(_registro);
+
             await _context.SaveChangesAsync();
             _registro = (tbl_usuario)await buscarRegistro(id);
             return _registro.id_usuario;
@@ -50,6 +53,8 @@ namespace SIPI_web.Servicios
         {
             var _registro = await _context.tbl_usuarios
                 .Include(t => t.id_usuarioNavigation)
+                .Include(t => t.usuario_ciudadNacimientoNavigation)
+                .Include(t => t.usuario_ciudadUbicacionNavigation)
                 .FirstOrDefaultAsync(m => m.id_usuario == id);
             return _registro;
         }

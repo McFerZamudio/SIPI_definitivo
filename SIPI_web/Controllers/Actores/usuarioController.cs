@@ -59,8 +59,11 @@ namespace SIPI_web.Controllers
         // GET: usuario/Create
         public IActionResult Create()
         {
-            ViewData["id_usuario"] = new SelectList(_context.AspNetUsers, "Id", "Id");
-            ViewData["id_ciudad"] = new SelectList(_context.tbl_ciudads, "Id_ciudad", "ciudad_nombre");
+            cargaIdUser();
+            ViewData["id_usuario"] = idUser;
+            var valor = new SelectList(_context.tbl_ciudads, "id_ciudad", "ciudad_nombre");
+
+            ViewData["id_ciudad"] = valor;
             return View();
         }
 
@@ -73,8 +76,10 @@ namespace SIPI_web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _usuario.agregarRegistro(tbl_usuario, idUser);
-                return RedirectToAction(nameof(Index));
+                await _usuario.agregarRegistro(tbl_usuario, tbl_usuario.id_usuario);
+
+                return RedirectToAction("details", "usuario", new { id = tbl_usuario.id_usuario });
+
             }
             ViewData["id_usuario"] = new SelectList(_context.AspNetUsers, "Id", "Id", tbl_usuario.id_usuario);
             return View(tbl_usuario);

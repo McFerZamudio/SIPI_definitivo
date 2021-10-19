@@ -77,9 +77,7 @@ namespace SIPI_web.Controllers
             if (ModelState.IsValid)
             {
                 await _usuario.agregarRegistro(tbl_usuario, tbl_usuario.id_usuario);
-
                 return RedirectToAction("details", "usuario", new { id = tbl_usuario.id_usuario });
-
             }
             ViewData["id_usuario"] = new SelectList(_context.AspNetUsers, "Id", "Id", tbl_usuario.id_usuario);
             return View(tbl_usuario);

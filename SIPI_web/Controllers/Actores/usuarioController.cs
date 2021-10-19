@@ -61,7 +61,7 @@ namespace SIPI_web.Controllers
         {
             cargaIdUser();
             ViewData["id_usuario"] = idUser;
-            var valor = new SelectList(_context.tbl_ciudads, "id_ciudad", "ciudad_nombre");
+            var valor = new SelectList(_context.tbl_ciudads.OrderBy(x => x.ciudad_nombre), "id_ciudad", "ciudad_nombre", 1);
 
             ViewData["id_ciudad"] = valor;
             return View();

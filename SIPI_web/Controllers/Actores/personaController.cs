@@ -16,8 +16,6 @@ namespace SIPI_web.Controllers
     public class personaController : Controller
     {
 
-
-
         private personaServices _persona = new();
 
         private string idUser;
@@ -99,6 +97,9 @@ namespace SIPI_web.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["userName"] = HttpContext.Session.GetString("userName");
+            ViewData["tipoSangre"] = new SelectList(_persona.listaTipoSangre, "persona_tipoSangre", "persona_tipoSangre");
             ViewData["id_persona"] = new SelectList(_context.tbl_usuarios, "id_usuario", "id_usuario", tbl_persona.id_persona);
             return View(tbl_persona);
         }
@@ -132,7 +133,7 @@ namespace SIPI_web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("details",new { id = tbl_persona.id_persona });
             }
             ViewData["id_persona"] = new SelectList(_context.tbl_usuarios, "id_usuario", "id_usuario", tbl_persona.id_persona);
             return View(tbl_persona);

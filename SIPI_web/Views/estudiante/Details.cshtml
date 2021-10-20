@@ -7,65 +7,66 @@
 
 <br/>
 <div>
-    <h4><b>Detalles del Estudiante: </b></h4>
+    <h4><b style="color:blue">Datos Agregados en el Portal: </b>@ViewData["userName"]</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Fecha de Ingreso
         </dt>
-        <dd class = "col-sm-10">
-            @Model.estudiante_fechaIngreaso.ToShortDateString()
+        <dd class="col-sm-10">
+            @Model.estudiante_fechaIngreaso.ToLongDateString()
         </dd>
-        <dt class = "col-sm-2">
-           Fecha Ultima Actualizacion
+        <dt class="col-sm-2">
+            Fecha Actualizacion
         </dt>
         <dd class="col-sm-10">
-            @Model.estudiante_fechaActualizacion.ToShortDateString()
+            @Model.estudiante_fechaActualizacion.ToLongDateString()
         </dd>
-        <dt class = "col-sm-2">
-            Cohorte a a que pertenece
+        <dt class="col-sm-2">
+            Cohorte
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.estudiante_cohorte)
         </dd>
-        <dt class = "col-sm-2">
-            Equipo de Proyecto
+        <dt class="col-sm-2">
+            Equipo
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.id_equipoNavigation.equipo_nombre)
         </dd>
-        <dt class = "col-sm-2">
-            Estatus del Estudiante
+        <dt class="col-sm-2">
+            Articulo Academico
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_estudianteEstatusNavigation.estudianteEstatus_nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            Estatus del Articulo Academico
-        </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.id_informeAcademicoEstatusNavigation.informeAcademicoEstatus_nombre)
         </dd>
-        <dt class = "col-sm-2">
-           Estatus del Trabajo Especial de Grado (TEG)
+        <dt class="col-sm-2">
+            TEG
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.id_metodologiaEstatusNavigation.metodologiaEstatus_nombre)
         </dd>
-        <dt class = "col-sm-2">
-           Estatus de Pasantia
+        <dt class="col-sm-2">
+            Pasantia
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.id_pasantiaEstatusNavigation.pasantiaEstatus_nombre)
         </dd>
-        <dt class = "col-sm-2">
-            Sede del Equipo
+        <dt class="col-sm-2">
+            Sede
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.id_sedeNavigation.sede_nombre)
+        </dd>
+        <dt class="col-sm-2">
+            Estatus
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.id_estudianteEstatusNavigation.estudianteEstatus_nombre)
         </dd>
     </dl>
 </div>
 <div>
-     <a asp-area="Identity" asp-page="/Account/Manage/Index">Siguiente</a>
+    <a asp-action="Edit" asp-route-id="@Model.id_estudiante">Modificar</a> |
+    <a asp-area="Identity" asp-page="/Account/Manage/Index">Siguiente</a>
 </div>

@@ -68,6 +68,7 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
+           ViewData["userName"] = HttpContext.Session.GetString("userName");
             return View(tbl_estudiante);
         }
 
@@ -95,7 +96,7 @@ namespace SIPI_web.Controllers
         {
 
  
-            tbl_estudiante.estudiante_fechaActualizacion = DateTime.Now.Date;
+            tbl_estudiante.estudiante_fechaActualizacion = DateTime.Now;
 
             if (ModelState.IsValid)
             {
@@ -128,12 +129,12 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
             ViewData["id_equipo"] = new SelectList(_context.tbl_equipos, "id_equipo", "equipo_nombre", tbl_estudiante.id_equipo);
-            ViewData["id_estudianteEstatus"] = new SelectList(_context.tbl_estudianteEstatuses, "id_estudianteEstatus", "estudianteEstatus_codigo", tbl_estudiante.id_estudianteEstatus);
+            ViewData["id_estudianteEstatus"] = new SelectList(_context.tbl_estudianteEstatuses, "id_estudianteEstatus", "estudianteEstatus_nombre", tbl_estudiante.id_estudianteEstatus);
             ViewData["id_estudiante"] = new SelectList(_context.tbl_personas, "id_persona", "id_persona", tbl_estudiante.id_estudiante);
-            ViewData["id_informeAcademicoEstatus"] = new SelectList(_context.tbl_informeAcademicoEstatuses, "id_informeAcademicoEstatus", "informeAcademicoEstatus_codigo", tbl_estudiante.id_informeAcademicoEstatus);
-            ViewData["id_metodologiaEstatus"] = new SelectList(_context.tbl_metodologiaEstatuses, "id_metodologiaEstatus", "metodologiaEstatus_codigo", tbl_estudiante.id_metodologiaEstatus);
-            ViewData["id_pasantiaEstatus"] = new SelectList(_context.tbl_pasantiaEstatuses, "id_pasantiaEstatus", "pasantiaEstatus_codigo", tbl_estudiante.id_pasantiaEstatus);
-            ViewData["id_sede"] = new SelectList(_context.tbl_sedes, "id_sede", "sede_codigo", tbl_estudiante.id_sede);
+            ViewData["id_informeAcademicoEstatus"] = new SelectList(_context.tbl_informeAcademicoEstatuses, "id_informeAcademicoEstatus", "informeAcademicoEstatus_nombre", tbl_estudiante.id_informeAcademicoEstatus);
+            ViewData["id_metodologiaEstatus"] = new SelectList(_context.tbl_metodologiaEstatuses, "id_metodologiaEstatus", "metodologiaEstatus_nombre", tbl_estudiante.id_metodologiaEstatus);
+            ViewData["id_pasantiaEstatus"] = new SelectList(_context.tbl_pasantiaEstatuses, "id_pasantiaEstatus", "pasantiaEstatus_nombre", tbl_estudiante.id_pasantiaEstatus);
+            ViewData["id_sede"] = new SelectList(_context.tbl_sedes, "id_sede", "sede_nombre", tbl_estudiante.id_sede);
             return View(tbl_estudiante);
         }
 
@@ -149,6 +150,7 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
+            tbl_estudiante.estudiante_fechaActualizacion = DateTime.Now;
             if (ModelState.IsValid)
             {
                 try
@@ -161,13 +163,13 @@ namespace SIPI_web.Controllers
                     if (!tbl_estudianteExists(tbl_estudiante.id_estudiante))
                     {
                         return NotFound();
-                    }
+                    } 
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("details", new { id = tbl_estudiante.id_estudiante } );
             }
             ViewData["id_equipo"] = new SelectList(_context.tbl_equipos, "id_equipo", "equipo_nombre", tbl_estudiante.id_equipo);
             ViewData["id_estudianteEstatus"] = new SelectList(_context.tbl_estudianteEstatuses, "id_estudianteEstatus", "estudianteEstatus_codigo", tbl_estudiante.id_estudianteEstatus);

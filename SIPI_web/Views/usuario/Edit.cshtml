@@ -2,12 +2,10 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutPublico.cshtml";
 }
 
-<h1>Edit</h1>
-
-<h4>tbl_usuario</h4>
+<h4><b style="color:blue">Modificar Usuario en el Portal:</b> @ViewBag.userName</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,29 +13,25 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id_usuario" />
             <div class="form-group">
-                <label asp-for="usuario_fechaNacimiento" class="control-label"></label>
-                <input asp-for="usuario_fechaNacimiento" class="form-control" />
+                <label asp-for="usuario_fechaNacimiento"  class="control-label">Fecha Nacimiento</label>
+                <input asp-for="usuario_fechaNacimiento" type="date" class="form-control" />
                 <span asp-validation-for="usuario_fechaNacimiento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="usuario_ciudadNacimiento" class="control-label"></label>
-                <input asp-for="usuario_ciudadNacimiento" class="form-control" />
+                <label asp-for="usuario_ciudadNacimiento" class="control-label">Ciudad Nacimiento</label>
+                <select asp-for="usuario_ciudadNacimiento" class="form-control" asp-items="@ViewBag.id_ciudad"></select>
                 <span asp-validation-for="usuario_ciudadNacimiento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="usuario_ciudadUbicacion" class="control-label"></label>
-                <input asp-for="usuario_ciudadUbicacion" class="form-control" />
+                <label asp-for="usuario_ciudadUbicacion" class="control-label">Ciudad Ubicacion</label>
+                <select asp-for="usuario_ciudadUbicacion" class="form-control" asp-items="@ViewBag.id_ciudad"></select>
                 <span asp-validation-for="usuario_ciudadUbicacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

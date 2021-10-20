@@ -21,7 +21,8 @@ namespace SIPI_web.Servicios
 
             if (_inscritos is not null)
             {
-                _inscritos.inscrito_fechaActualizacion = DateTime.Now.Date;
+                _inscritos.inscrito_fechaActualizacion = DateTime.Now;
+                _inscritos.inscrito_sipiActivo = true;
                 _context.Update(_inscritos);
                 _context.SaveChanges();
             }

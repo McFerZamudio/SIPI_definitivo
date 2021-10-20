@@ -95,6 +95,7 @@ namespace SIPI_web.Areas.Identity.Pages.Account
 
                     var idUser = _context.AspNetUsers.Where(x => x.UserName.Equals(Input.userName)).FirstOrDefault().Id;
                     HttpContext.Session.SetString("idUser", idUser);
+                    HttpContext.Session.SetString("userName", Input.userName);
 
                     usuarioServices _usuario = new();
                     var _existeUsuario = await ((Iusuario)_usuario).existeUsuario(idUser, _context);

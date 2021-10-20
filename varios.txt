@@ -3,3 +3,5 @@ Scaffold-DbContext "Data Source=KyloZ\masterServer;Initial Catalog=SIPI_db;Integ
 <input type="hidden" id="id_estudiante" name="id_estudiante" asp-for="id_estudiante" value="@ViewData["id_estudiante"]" />
 
 <h5>Crear datos del ***actor*** @ViewData["nombreActor"]</h5>
+
+https://localhost:44310/usuario/details/3e4fa265-77b0-449a-b26c-650fcded5120

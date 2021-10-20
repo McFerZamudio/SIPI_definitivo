@@ -2,88 +2,79 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutPublico.cshtml";
 }
+<link href="~/css/site.css" rel="stylesheet" />
 
-<h1>Edit</h1>
+<h4><b style="color:blue">Modificar Estudiante en el Portal: </b>@ViewData["UserName"]</h4>
 
-<h4>tbl_estudiante</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="id_estudiante" />
-            <div class="form-group">
-                <label asp-for="estudiante_fechaIngreaso" class="control-label"></label>
-                <input asp-for="estudiante_fechaIngreaso" class="form-control" />
-                <span asp-validation-for="estudiante_fechaIngreaso" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="estudiante_fechaActualizacion" class="control-label"></label>
-                <input asp-for="estudiante_fechaActualizacion" class="form-control" />
-                <span asp-validation-for="estudiante_fechaActualizacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="id_equipo" class="control-label"></label>
-                <select asp-for="id_equipo" class="form-control" asp-items="ViewBag.id_equipo"></select>
-                <span asp-validation-for="id_equipo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="id_sede" class="control-label"></label>
-                <select asp-for="id_sede" class="form-control" asp-items="ViewBag.id_sede"></select>
-                <span asp-validation-for="id_sede" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="id_metodologiaEstatus" class="control-label"></label>
-                <select asp-for="id_metodologiaEstatus" class="form-control" asp-items="ViewBag.id_metodologiaEstatus"></select>
-                <span asp-validation-for="id_metodologiaEstatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="id_pasantiaEstatus" class="control-label"></label>
-                <select asp-for="id_pasantiaEstatus" class="form-control" asp-items="ViewBag.id_pasantiaEstatus"></select>
-                <span asp-validation-for="id_pasantiaEstatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="id_informeAcademicoEstatus" class="control-label"></label>
-                <select asp-for="id_informeAcademicoEstatus" class="form-control" asp-items="ViewBag.id_informeAcademicoEstatus"></select>
-                <span asp-validation-for="id_informeAcademicoEstatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="estudiante_cohorte" class="control-label"></label>
-                <input asp-for="estudiante_cohorte" class="form-control" />
-                <span asp-validation-for="estudiante_cohorte" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="id_estudianteEstatus" class="control-label"></label>
-                <select asp-for="id_estudianteEstatus" class="form-control" asp-items="ViewBag.id_estudianteEstatus"></select>
-                <span asp-validation-for="id_estudianteEstatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="id_estudiante" />
+                <div class="form-group">
+                    <label asp-for="estudiante_fechaIngreaso" class="control-label">Fecha Ingreso a la Universidad</label>
+                    <input asp-for="estudiante_fechaIngreaso" type="date" class="form-control" />
+                    <span asp-validation-for="estudiante_fechaIngreaso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_equipo" class="control-label">Equipo de Proyecto</label>
+                    <select asp-for="id_equipo" class="form-control" asp-items="ViewBag.id_equipo"></select>
+                    <span asp-validation-for="id_equipo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_sede" class="control-label">Sede</label>
+                    <select asp-for="id_sede" class="form-control" asp-items="ViewBag.id_sede"></select>
+                    <span asp-validation-for="id_sede" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="estudiante_cohorte" class="control-label">Cohorte a la que pertenece</label>
+                    <input asp-for="estudiante_cohorte" class="form-control" />
+                    <span asp-validation-for="estudiante_cohorte" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_metodologiaEstatus" class="control-label">Estatus del TEG / Metodologia</label>
+                    <select asp-for="id_metodologiaEstatus" class="form-control" asp-items="ViewBag.id_metodologiaEstatus"></select>
+                    <span asp-validation-for="id_metodologiaEstatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_pasantiaEstatus" class="control-label">Estatus de la Pasantia</label>
+                    <select asp-for="id_pasantiaEstatus" class="form-control" asp-items="ViewBag.id_pasantiaEstatus"></select>
+                    <span asp-validation-for="id_pasantiaEstatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_informeAcademicoEstatus" class="control-label">Estatus del Articulo Academico</label>
+                    <select asp-for="id_informeAcademicoEstatus" class="form-control" asp-items="ViewBag.id_informeAcademicoEstatus"></select>
+                    <span asp-validation-for="id_informeAcademicoEstatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_estudianteEstatus" class="control-label">Estatus del Estudiante</label>
+                    <select asp-for="id_estudianteEstatus" class="form-control" asp-items="ViewBag.id_estudianteEstatus"></select>
+                    <span asp-validation-for="id_estudianteEstatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-
-<script>
-    function armaNombre() {
-        var apellido = document.getElementById("persona_apellido").value;
-        var nombre = document.getElementById("persona_nombre").value;
-
-        document.getElementById("persona_apellido").value = apellido.toUpperCase();
-        document.getElementById("persona_nombre").value = nombre.toUpperCase();
-
-        var nombreCompleto = apellido.toUpperCase() + ', ' + nombre.toUpperCase();
-
-        document.getElementById("persona_nombreCompleto").value = nombreCompleto.toUpperCase();
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }
-</script>  
+
+    <script>
+        function armaNombre() {
+            var apellido = document.getElementById("persona_apellido").value;
+            var nombre = document.getElementById("persona_nombre").value;
+
+            document.getElementById("persona_apellido").value = apellido.toUpperCase();
+            document.getElementById("persona_nombre").value = nombre.toUpperCase();
+
+            var nombreCompleto = apellido.toUpperCase() + ', ' + nombre.toUpperCase();
+
+            document.getElementById("persona_nombreCompleto").value = nombreCompleto.toUpperCase();
+        }
+    </script>

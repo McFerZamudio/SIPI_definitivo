@@ -19,21 +19,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="usuario_ciudadNacimiento" class="control-label">Ciudad Nacimiento</label>
-                <select asp-for="usuario_ciudadNacimiento" class="form-control" asp-items="@ViewBag.id_ciudad"></select>
+                <input asp-for="usuario_ciudadNacimientoNavigation.ciudad_nombre" id="nacimiento" asp-value class="form-control" readonly />
+                <input type="hidden" asp-for="usuario_ciudadNacimiento" id="usuario_ciudadNacimiento" name="usuario_ciudadNacimiento" required />
+                <button onclick="seleccionarCiudad('nacimiento', 'usuario_ciudadNacimiento');return false; ">Seleccione Ciudad Nacimiento</button>
                 <span asp-validation-for="usuario_ciudadNacimiento" class="text-danger"></span>
-                <button onclick="seleccionarCiudad();return false; ">Seleccione Ciudad</button>
             </div>
             <div class="form-group">
                 <label asp-for="usuario_ciudadUbicacion" class="control-label">Ciudad Ubicacion</label>
-                <select asp-for="usuario_ciudadUbicacion" class="form-control" asp-items="@ViewBag.id_ciudad"></select>
-                <span asp-validation-for="usuario_ciudadUbicacion" class="text-danger"></span>
+                <input asp-for="usuario_ciudadUbicacionNavigation.ciudad_nombre" id="ubicacion" asp-value class="form-control" readonly />
+                <input type="hidden" asp-for="usuario_ciudadUbicacion" id="usuario_ciudadUbicacion" name="usuario_ciudadUbicacion" required />
+                <button onclick="seleccionarCiudad('ubicacion', 'usuario_ciudadUbicacion');return false; ">Seleccione Ciudad Ubicacion</button>
+                <span asp-validation-for="usuario_ciudadNacimiento" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="usuario_fechaCreacion" class="control-label">Fecha Creacion</label>
                 <input asp-for="usuario_fechaCreacion" type="date" class="form-control" readonly />
                 <span asp-validation-for="usuario_fechaCreacion" class="text-danger"></span>
             </div>
-            <input type="text" id="textCiudad" name="textCiudad" value="Sin Seleccionar">
             <div class="form-group">
                 <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
             </div>
@@ -47,7 +49,7 @@
 
 <script type="text/javascript">
 
-    function seleccionarCiudad() {
-        window.open("/seleccionCiudad.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+    function seleccionarCiudad(ciudad, idCiudad) {
+        window.open("/seleccionCiudad.html?ciudad=" + ciudad + "&idCiudad=" + idCiudad, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
     }
 </script>

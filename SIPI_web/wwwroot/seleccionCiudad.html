@@ -24,7 +24,7 @@
     <div>
         <input type="hidden" id="id_ciudad" name="id_ciudad"/>
         <label for="ciudadSeleccionada">Ciudad Seleccionada:</label>
-        <input type="text" id="ciudadSeleccionada" name="ciudadSeleccionada" value="Sin Seleccionar">
+        <input type="text" id="ciudadSeleccionada" name="ciudadSeleccionada" readonly>
     </div>
 
     <button onclick="enviaDatos()">Selecciona Ciudad</button>
@@ -36,7 +36,8 @@
     llenaPais();
 
     async function llenaPais() {
-        document.getElementById("listaEstado").innerHTML = "";
+        limpiaCiudad();
+        document.getElementById("listaPais").innerHTML = "";
         var url = '/pais/listaPais/';
    
         var res = await fetch(url, {
@@ -59,6 +60,7 @@
 
     async function llenaEstado(pais) {
         document.getElementById("listaEstado").innerHTML = "";
+        limpiaCiudad();
         var url = '/estado/listaEstado/';
 
         var data = { idPais: pais };
@@ -73,6 +75,12 @@
 
         const _result = await res.json();
         var sel = document.getElementById('listaEstado');
+
+        var opt = document.createElement('option');
+        opt.innerHTML = "Seleccione un Estado";
+        opt.value = 0;
+        sel.appendChild(opt);
+
         for (var i = 0; i < _result.length; i++) {
             var opt = document.createElement('option');
             opt.innerHTML = _result[i].estado_nombre;
@@ -83,6 +91,7 @@
 
     async function llenaCiudad(estado) {
         document.getElementById("listaCiudad").innerHTML = "";
+        limpiaCiudad();
         var url = '/ciudad/listaCiudad/';
        // var data = { idEstado: estado };
         var data = estado;
@@ -98,6 +107,12 @@
 
         const _result = await res.json();
         var sel = document.getElementById('listaCiudad');
+
+        var opt = document.createElement('option');
+        opt.innerHTML = "Seleccione una Ciudad";
+        opt.value = 0;
+        sel.appendChild(opt);
+
         for (var i = 0; i < _result.length; i++) {
             var opt = document.createElement('option');
             opt.innerHTML = _result[i].ciudad_nombre;
@@ -107,23 +122,27 @@
     };
 
     function seleccionaCiudad(ciudad) {
-        document.getElementById("ciudadSeleccionada").value = ciudad.options[ciudad.selectedIndex].text;
-        document.getElementById("id_ciudad").value = ciudad.value;
+            document.getElementById("ciudadSeleccionada").value = ciudad.options[ciudad.selectedIndex].text;
+            document.getElementById("id_ciudad").value = ciudad.value;
+    }
+
+    function limpiaCiudad() {
+        document.getElementById("ciudadSeleccionada").value ="Sin Ciudad seleccionada";
+        document.getElementById("id_ciudad").value = 0;
     }
 
     function enviaDatos() {
-        alert('iniciando 1');
-        var recibe = window.opener;
-        alert('iniciando 2');
-        recibe.document.getElementById('textCiudad').value = 'fernandio';
-        alert('iniciando 3');
-        
-        var ciudad = document.getElementById("listaCiudad");
-        ciudad = document.getElementById("ciudadSeleccionada").value = ciudad.options[ciudad.selectedIndex].text;
-        window.opener.getElementById("textCiudad").value = ciudad;
+        if (document.getElementById("id_ciudad").value > 0) {
+            var paramsString = window.location.href.replace("?", "&");
+            var searchParams = new URLSearchParams(paramsString);
+
+            window.opener.document.getElementById(searchParams.get("ciudad")).value = document.getElementById("ciudadSeleccionada").value;
+            window.opener.document.getElementById(searchParams.get("idCiudad")).value = document.getElementById("id_ciudad").value;
+            window.close();
+        } else {
+            alert('Debe seleccionar una opcion');
+        }
     }
-
-
 
     function prueba() {
         var cuisines = ["Chinese", "Indian"];

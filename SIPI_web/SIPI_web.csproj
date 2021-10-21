@@ -23,4 +23,8 @@
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\seleccionCiudad.html" />
+  </ItemGroup>
+
 </Project>

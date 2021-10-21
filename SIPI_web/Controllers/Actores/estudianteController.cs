@@ -76,6 +76,10 @@ namespace SIPI_web.Controllers
         public IActionResult Create()
         {
             cargaIdUser();
+            if (_estudiante.existeRegistro(idUser) == true)
+            {
+                return RedirectToAction("edit", new { id = idUser });
+            }
             ViewData["id_estudiante"] = idUser;
             ViewData["UserName"] = ((Iusuario)_estudiante).buscaNombreUsuario(idUser, _context);
             ViewData["id_equipo"] = new SelectList(_context.tbl_equipos, "id_equipo", "equipo_nombre");

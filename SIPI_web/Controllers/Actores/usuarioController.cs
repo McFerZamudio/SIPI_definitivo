@@ -60,6 +60,12 @@ namespace SIPI_web.Controllers
         public IActionResult Create()
         {
             cargaIdUser();
+            if (_usuario.existeRegistro(idUser) == true)
+            {
+                return RedirectToAction("edit", new { id  = idUser });
+            }
+
+
             ViewData["userName"] = HttpContext.Session.GetString("userName");
             ViewData["id_usuario"] = idUser;
             ViewData["id_ciudad"] = new SelectList(_context.tbl_ciudads.OrderBy(x => x.ciudad_nombre), "id_ciudad", "ciudad_nombre", 1);
@@ -104,7 +110,7 @@ namespace SIPI_web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("id_usuario,usuario_fechaNacimiento,usuario_ciudadNacimiento,usuario_ciudadUbicacion")] tbl_usuario tbl_usuario)
+        public async Task<IActionResult> Edit(string id, [Bind("id_usuario,usuario_fechaNacimiento,usuario_ciudadNacimiento,usuario_ciudadUbicacion, usuario_fechaCreacion")] tbl_usuario tbl_usuario)
         {
             if (id != tbl_usuario.id_usuario)
             {

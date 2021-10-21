@@ -13,7 +13,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id_usuario" />
             <div class="form-group">
-                <label asp-for="usuario_fechaNacimiento"  class="control-label">Fecha Nacimiento</label>
+                <label asp-for="usuario_fechaNacimiento" class="control-label">Fecha Nacimiento</label>
                 <input asp-for="usuario_fechaNacimiento" type="date" class="form-control" />
                 <span asp-validation-for="usuario_fechaNacimiento" class="text-danger"></span>
             </div>
@@ -21,11 +21,17 @@
                 <label asp-for="usuario_ciudadNacimiento" class="control-label">Ciudad Nacimiento</label>
                 <select asp-for="usuario_ciudadNacimiento" class="form-control" asp-items="@ViewBag.id_ciudad"></select>
                 <span asp-validation-for="usuario_ciudadNacimiento" class="text-danger"></span>
+                <button onclick="seleccionarCiudad();return false; ">Seleccione Ciudad</button>
             </div>
             <div class="form-group">
                 <label asp-for="usuario_ciudadUbicacion" class="control-label">Ciudad Ubicacion</label>
                 <select asp-for="usuario_ciudadUbicacion" class="form-control" asp-items="@ViewBag.id_ciudad"></select>
                 <span asp-validation-for="usuario_ciudadUbicacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="usuario_fechaCreacion" class="control-label">Fecha Creacion</label>
+                <input asp-for="usuario_fechaCreacion" type="date" class="form-control" readonly/>
+                <span asp-validation-for="usuario_fechaCreacion" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
@@ -37,3 +43,10 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script type="text/javascript">
+
+    function seleccionarCiudad() {
+        window.open("/seleccionCiudad.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+    }
+</script>

@@ -1,0 +1,25 @@
+﻿@model SIPI_web.Models.tbl_pai
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LayoutPublico.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>tbl_pai</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.pais_nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.pais_nombre)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id_pais">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -16,6 +16,7 @@
                 <label asp-for="usuario_fechaNacimiento" class="control-label">Fecha Nacimiento</label>
                 <input type="date" asp-for="usuario_fechaNacimiento" class="form-control" />
                 <span asp-validation-for="usuario_fechaNacimiento" class="text-danger"></span>
+                <button onclick="seleccionarCiudad();">Seleccion de Ciudad</button>
             </div>
             <div class="form-group">
                 <label asp-for="usuario_ciudadNacimiento" class="control-label">Ciudad de Nacimiento</label>
@@ -38,3 +39,11 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script type="text/javascript">
+
+    function seleccionarCiudad() {
+        window.open("https://www.w3schools.com", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+    }
+
+</script>

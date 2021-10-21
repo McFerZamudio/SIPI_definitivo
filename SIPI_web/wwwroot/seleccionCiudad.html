@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <div>
+        <label for="listaPais">Escoger Pais:</label>
+        <select name="listaPais" id="listaPais" onchange="llenaEstado(this.value);"></select>
+    </div>
+
+    <div>
+        <label for="listaEstado">Escoger Estado:</label>
+        <select name="listaEstado" id="listaEstado" onchange="llenaCiudad(this.value);"></select>
+    </div>
+
+    <div>
+        <label for="listaCiudad">Escoger Ciudad:</label>
+        <select name="listaCiudad" id="listaCiudad" onchange="seleccionaCiudad(this)"></select>
+    </div>
+
+    <div>
+        <input type="hidden" id="id_ciudad" name="id_ciudad"/>
+        <label for="ciudadSeleccionada">Ciudad Seleccionada:</label>
+        <input type="text" id="ciudadSeleccionada" name="ciudadSeleccionada" value="Sin Seleccionar">
+    </div>
+
+</body>
+</html>
+<script type="text/javascript">
+
+    llenaPais();
+
+    async function llenaPais() {
+        document.getElementById("listaEstado").innerHTML = "";
+        var url = '/pais/listaPais/';
+   
+        var res = await fetch(url, {
+            method: 'POST',
+             headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+
+        const _result = await res.json();
+        var sel = document.getElementById('listaPais');
+        for (var i = 0; i < _result.length; i++) {
+            var opt = document.createElement('option');
+            opt.innerHTML = _result[i].pais_nombre;
+            opt.value = _result[i].id_pais;
+            sel.appendChild(opt);
+        }
+    };
+
+    async function llenaEstado(pais) {
+        document.getElementById("listaEstado").innerHTML = "";
+        var url = '/estado/listaEstado/';
+
+        var data = { idPais: pais };
+        var res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+
+        const _result = await res.json();
+        var sel = document.getElementById('listaEstado');
+        for (var i = 0; i < _result.length; i++) {
+            var opt = document.createElement('option');
+            opt.innerHTML = _result[i].estado_nombre;
+            opt.value = _result[i].id_estado;
+            sel.appendChild(opt);
+        }
+    };
+
+    async function llenaCiudad(estado) {
+        document.getElementById("listaCiudad").innerHTML = "";
+        var url = '/ciudad/listaCiudad/';
+       // var data = { idEstado: estado };
+        var data = estado;
+        var res = await fetch(url, {
+            method: 'POST',
+            //body: JSON.stringify(data),
+            body: data,
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+
+        const _result = await res.json();
+        var sel = document.getElementById('listaCiudad');
+        for (var i = 0; i < _result.length; i++) {
+            var opt = document.createElement('option');
+            opt.innerHTML = _result[i].ciudad_nombre;
+            opt.value = _result[i].id_ciudad;
+            sel.appendChild(opt);
+        }
+    };
+
+    function seleccionaCiudad(ciudad) {
+        document.getElementById("ciudadSeleccionada").value = ciudad.options[ciudad.selectedIndex].text;
+        document.getElementById("id_ciudad").value = ciudad.value;
+    }
+
+
+
+    function prueba() {
+        var cuisines = ["Chinese", "Indian"];
+        var id = ["1", "2"];
+        var sel = document.getElementById('listaPais');
+        for (var i = 0; i < cuisines.length; i++) {
+            var opt = document.createElement('option');
+            opt.innerHTML = cuisines[i];
+            opt.value = id[i];
+            sel.appendChild(opt);
+        }
+    }
+
+</script>

@@ -74,7 +74,7 @@ namespace SIPI_web.Servicios
 
         public bool existeRegistro(string id)
         {
-            return _context.tbl_personas.Any(e => e.id_persona == id);
+            return _context.tbl_usuarios.Any(e => e.id_usuario == id);
         }
 
         public async Task<bool> existeUsuario(string _email)

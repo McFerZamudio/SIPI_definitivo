@@ -27,6 +27,8 @@
         <input type="text" id="ciudadSeleccionada" name="ciudadSeleccionada" value="Sin Seleccionar">
     </div>
 
+    <button onclick="enviaDatos()">Selecciona Ciudad</button>
+
 </body>
 </html>
 <script type="text/javascript">
@@ -107,6 +109,18 @@
     function seleccionaCiudad(ciudad) {
         document.getElementById("ciudadSeleccionada").value = ciudad.options[ciudad.selectedIndex].text;
         document.getElementById("id_ciudad").value = ciudad.value;
+    }
+
+    function enviaDatos() {
+        alert('iniciando 1');
+        var recibe = window.opener;
+        alert('iniciando 2');
+        recibe.document.getElementById('textCiudad').value = 'fernandio';
+        alert('iniciando 3');
+        
+        var ciudad = document.getElementById("listaCiudad");
+        ciudad = document.getElementById("ciudadSeleccionada").value = ciudad.options[ciudad.selectedIndex].text;
+        window.opener.getElementById("textCiudad").value = ciudad;
     }
 
 

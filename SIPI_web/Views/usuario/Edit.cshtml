@@ -30,9 +30,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="usuario_fechaCreacion" class="control-label">Fecha Creacion</label>
-                <input asp-for="usuario_fechaCreacion" type="date" class="form-control" readonly/>
+                <input asp-for="usuario_fechaCreacion" type="date" class="form-control" readonly />
                 <span asp-validation-for="usuario_fechaCreacion" class="text-danger"></span>
             </div>
+            <input type="text" id="textCiudad" name="textCiudad" value="Sin Seleccionar">
             <div class="form-group">
                 <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
             </div>

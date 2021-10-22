@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SIPI_web.Models.tbl_inscrito>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutPublico.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.inscrito_email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inscrito_nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inscrito_equipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inscrito_sipiActivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inscrito_fechaCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inscrito_fechaActualizacion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.inscrito_email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inscrito_nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inscrito_equipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inscrito_sipiActivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inscrito_fechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inscrito_fechaActualizacion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id_inscrito">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id_inscrito">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id_inscrito">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

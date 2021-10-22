@@ -16,17 +16,20 @@
                 <label asp-for="usuario_fechaNacimiento" class="control-label">Fecha Nacimiento</label>
                 <input type="date" asp-for="usuario_fechaNacimiento" class="form-control" />
                 <span asp-validation-for="usuario_fechaNacimiento" class="text-danger"></span>
-                <button onclick="seleccionarCiudad();">Seleccion de Ciudad</button>
             </div>
             <div class="form-group">
-                <label asp-for="usuario_ciudadNacimiento" class="control-label">Ciudad de Nacimiento</label>
-                <select asp-for="usuario_ciudadNacimiento" class="form-control" asp-items="@ViewBag.id_ciudad"></select>
+                <label asp-for="usuario_ciudadNacimiento" class="control-label">Ciudad Nacimiento</label>
+                <input asp-for="usuario_ciudadNacimientoNavigation.ciudad_nombre" id="nacimiento" asp-value class="form-control" readonly />
+                <input type="hidden" asp-for="usuario_ciudadNacimiento" id="usuario_ciudadNacimiento" name="usuario_ciudadNacimiento" required />
+                <button onclick="seleccionarCiudad('nacimiento', 'usuario_ciudadNacimiento');return false; ">Seleccione Ciudad Nacimiento</button>
                 <span asp-validation-for="usuario_ciudadNacimiento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="usuario_ciudadUbicacion" class="control-label">Ciudad de Ubicacion</label>
-                <select asp-for="usuario_ciudadUbicacion" class="form-control" asp-items="@ViewBag.id_ciudad"></select>
-                <span asp-validation-for="usuario_ciudadUbicacion" class="text-danger"></span>
+                <label asp-for="usuario_ciudadUbicacion" class="control-label">Ciudad Ubicacion</label>
+                <input asp-for="usuario_ciudadUbicacionNavigation.ciudad_nombre" id="ubicacion" asp-value class="form-control" readonly />
+                <input type="hidden" asp-for="usuario_ciudadUbicacion" id="usuario_ciudadUbicacion" name="usuario_ciudadUbicacion" required />
+                <button onclick="seleccionarCiudad('ubicacion', 'usuario_ciudadUbicacion');return false; ">Seleccione Ciudad Ubicacion</button>
+                <span asp-validation-for="usuario_ciudadNacimiento" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Crear Usuario en el Portal" class="btn btn-primary" />
@@ -42,8 +45,7 @@
 
 <script type="text/javascript">
 
-    function seleccionarCiudad() {
-        window.open("https://www.w3schools.com", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+    function seleccionarCiudad(ciudad, idCiudad) {
+        window.open("/seleccionCiudad.html?ciudad=" + ciudad + "&idCiudad=" + idCiudad, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
     }
-
 </script>

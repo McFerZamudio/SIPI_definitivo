@@ -14,7 +14,7 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" id="email" class="form-control" onblur="existeUsuario();" />
+                <input asp-for="Input.Email" id="email" class="form-control" onblur="existeUserEmail();" />
                 <label id="validarEmail" class="form-control" style="border:solid; border-width:1px; text-align:center">Sin Validar email !</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                 <input type="hidden" id="emailValido" value="false" />
@@ -31,13 +31,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.nombreUsuario">Nombre Usuario - Todos vera este nombre</label><br />
-                <input asp-for="Input.nombreUsuario" id="nombreUsuario" value="" class="form-control" onblur="validaUsuario();" />
+                <input asp-for="Input.nombreUsuario" id="nombreUsuario" value="" class="form-control" onblur="existeUserName();" />
                 <label id="validarNombreUsuario" class="form-control" style="border:solid; border-width:1px; text-align:center">Sin Validar Nombre Usuario !</label>
                 <span asp-validation-for="Input.nombreUsuario" class="text-danger"></span>
                 <input type="hidden" id="nombreUsuarioValido" value="false" />
 
             </div>
-            <button type="submit" id="registrar" class="btn btn-primary">Registrar</button>
+            <button type="submit" id="registrar" class="btn btn-primary" onclick="validaRegistro();">Registrar</button>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">
@@ -84,10 +84,66 @@
 }
 
 <script type="text/javascript">
-    async function validaUsuario() {
-        var url = '/persona/existeNombreUsuario/';
+  
+    async function existeUserEmail() {
+        var url = '/AspNetUsers/existeUserEmail/';
+        var _email = document.getElementById("email");
+        var data = { email: _email.value };
+
+        var res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+
+        const _result = await res.json();
+        var _validarEmail = document.getElementById('validarEmail');
+        if (_result == true) {
+            _validarEmail.innerText = "Usted ya posee una cuenta en SIPI !";
+            _email.value = "";
+            alert(_validarEmail.innerText);
+            document.getElementById("emailValido").value = false;
+            return;
+        } else {
+            existeInscrito();
+            _validarEmail.innerText = "";
+        }
+    };
+
+    async function existeInscrito() {
+        var url = '/inscrito/existeInscrito/';
+        var _email = document.getElementById("email");
+        var data = { email: _email.value };
+
+        var res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+
+        const _result = await res.json();
+
+        var _validarEmail = document.getElementById('validarEmail');
+        if (_result == true && document.getElementById("email").value != "") {
+            _validarEmail.innerText = "Email Valido en Proyectos ! Puede Continuar";
+            document.getElementById("emailValido").value = true;
+        } else {
+            _validarEmail.innerText = "Usted NO esta autorizado para registrarse !";
+            document.getElementById("email").value = "";
+            document.getElementById("emailValido").value = false;
+        }
+    };
+
+    async function existeUserName() {
+        var url = '/AspNetUsers/existeUserName/';
         var _userName = document.getElementById("nombreUsuario");
-        var data = { userName: _userName.value};
+        var data = { userName: _userName.value };
 
         var res = await fetch(url, {
             method: 'POST',
@@ -102,10 +158,10 @@
 
         var _validarNombreUsuario = document.getElementById('validarNombreUsuario');
 
-        if (_result.existe == true) {
+        if (_result == true) {
             _validarNombreUsuario.innerText = "Nombre de Usuario No Disponible";
             document.getElementById("nombreUsuario").value = "";
-            document.getElementById("nombreUsuarioValido").value = false; 
+            document.getElementById("nombreUsuarioValido").value = false;
         } else {
             _validarNombreUsuario.innerText = "Nombre de Usuario Disponible";
             document.getElementById("nombreUsuarioValido").value = true;
@@ -113,72 +169,12 @@
 
     };
 
-    async function validaEstudiante() {
-        var url = '/estudiante/existeInscrito/';
-        var _email = document.getElementById("email");
-        var data = { emailEstudiante: _email.value };
-
-        var res = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json; charset=utf-8',
-                'Content-Type': 'application/json;charset=UTF-8'
-            }
-        });
-
-        const _result = await res.json();
-
-        var _validarEmail = document.getElementById('validarEmail');
-
-        if (_result.existe == true && document.getElementById("email").value != "") {
-            _validarEmail.innerText = "Email Estudiante Válido ! Puede Continuar";
-            document.getElementById("emailValido").value = true;
-        } else {
-            _validarEmail.innerText = "Usted NO esta autorizado para registrarse !";
-            document.getElementById("email").value = "";
-            document.getElementById("emailValido").value = false;
-        }
-
-    };
-
-    async function existeUsuario() {
-        var url = '/usuario/existeUsuario/';
-        var _email = document.getElementById("email");
-        var data = { emailUsuario: _email.value };
-
-        var res = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json; charset=utf-8',
-                'Content-Type': 'application/json;charset=UTF-8'
-            }
-        });
-
-        const _result = await res.json();
-        var _validarEmail = document.getElementById('validarEmail');
-        if (_result.existe == true) {
-            _validarEmail.innerText = "Usted ya posee una cuenta en SIPI !";
-            _email.value = "";
-            document.getElementById("emailValido").value = false;
-        } else {
-            validaInscrito();
-
-            document.getElementById("emailValido").value = true;
-            _validarEmail.innerText = "";
-        }
-    };
-
-    // *** Aqui se colocaran el resto de las validaciones del tipo de usuario ** //
-    async function validaInscrito() {
-        validaEstudiante();
-    }
-
-    async function validaGeneral() {
+    async function validaRegistro() {
+        alert('validando username');
         var _resp = document.getElementById("emailValido").value * document.getElementById("nombreUsuarioValido").value
         return _resp;
     }
+
 
 
 </script>

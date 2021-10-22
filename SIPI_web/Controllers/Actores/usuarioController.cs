@@ -172,7 +172,7 @@ namespace SIPI_web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> existeUsuario([FromBody] verificaUsuario input)
+        public async Task<ActionResult> validaInscrito([FromBody] verificaUsuario input)
         {
             var _existe = await _usuario.existeUsuario(input.emailUsuario);
             return Json(new { existe = _existe });

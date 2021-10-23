@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutPublico.cshtml";
 }
 
-<h4>Usuarios en el Portal</h4>
+<h4>Usuarios en el Portal: @Model.Count()</h4>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -14,33 +14,45 @@
     <thead>
         <tr>
             <th>
-               Nombre de Usuario
+                Nombre de Usuario
             </th>
             <th>
-               Email
+                Email
             </th>
             <th>
                 Numero de telefono
             </th>
             <th></th>
+            @*<th></th>*@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.UserName)</a> 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.UserName)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.ActionLink("view request in a new window", "ViewRequest", new { id = item.Id }, new { target = "_blank" }
+)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<script>
+    function asignaRole(userName) {
+        var userName = userName;
+
+        window.open("/seleccionCiudad.html?ciudad=" + ciudad + "&idCiudad=" + idCiudad, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+    }
+</script>
+

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,32 +10,22 @@ using SIPI_web.Models;
 
 namespace SIPI_web.Controllers
 {
-    public class AspNetUsersController : Controller
+    public class AspNetRolesController : Controller
     {
         private readonly SIPI_dbContext _context;
 
-        public class verificaEmail
-        {
-            public string email { get; set; }
-        }
-
-        public class verificaName
-        {
-            public string userName { get; set; }
-        }
-
-        public AspNetUsersController(SIPI_dbContext context)
+        public AspNetRolesController(SIPI_dbContext context)
         {
             _context = context;
         }
 
-        // GET: AspNetUsers
+        // GET: AspNetRoles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AspNetUsers.ToListAsync());
+            return View(await _context.AspNetRoles.ToListAsync());
         }
 
-        // GET: AspNetUsers/Details/5
+        // GET: AspNetRoles/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -42,40 +33,49 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
-            var aspNetUser = await _context.AspNetUsers
+            var aspNetRole = await _context.AspNetRoles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (aspNetUser == null)
+            if (aspNetRole == null)
             {
                 return NotFound();
             }
 
-            return View(aspNetUser);
+            return View(aspNetRole);
         }
 
-        // GET: AspNetUsers/Create
+        // GET: AspNetRoles/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: AspNetUsers/Create
+        // POST: AspNetRoles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] AspNetUser aspNetUser)
+        public async Task<IActionResult> Create([Bind("Id,Name,NormalizedName,ConcurrencyStamp")] AspNetRole aspNetRole)
         {
             if (ModelState.IsValid)
             {
+                IdentityRole nombre = new IdentityRole(aspNetRole.Name);
+                AspNetRole _valor = new();
 
-                _context.Add(aspNetUser);
+                _valor.Id = nombre.Id;
+                _valor.ConcurrencyStamp = nombre.ConcurrencyStamp;
+                _valor.Name = nombre.Name;
+                _valor.NormalizedName =  nombre.Name.ToUpper();
+
+                _context.AspNetRoles.Add(_valor);
+
+                _context.SaveChanges();
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(aspNetUser);
+            return View(aspNetRole);
         }
 
-        // GET: AspNetUsers/Edit/5
+        // GET: AspNetRoles/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -83,22 +83,22 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
-            var aspNetUser = await _context.AspNetUsers.FindAsync(id);
-            if (aspNetUser == null)
+            var aspNetRole = await _context.AspNetRoles.FindAsync(id);
+            if (aspNetRole == null)
             {
                 return NotFound();
             }
-            return View(aspNetUser);
+            return View(aspNetRole);
         }
 
-        // POST: AspNetUsers/Edit/5
+        // POST: AspNetRoles/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] AspNetUser aspNetUser)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,NormalizedName,ConcurrencyStamp")] AspNetRole aspNetRole)
         {
-            if (id != aspNetUser.Id)
+            if (id != aspNetRole.Id)
             {
                 return NotFound();
             }
@@ -107,12 +107,12 @@ namespace SIPI_web.Controllers
             {
                 try
                 {
-                    _context.Update(aspNetUser);
+                    _context.Update(aspNetRole);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AspNetUserExists(aspNetUser.Id))
+                    if (!AspNetRoleExists(aspNetRole.Id))
                     {
                         return NotFound();
                     }
@@ -123,10 +123,10 @@ namespace SIPI_web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(aspNetUser);
+            return View(aspNetRole);
         }
 
-        // GET: AspNetUsers/Delete/5
+        // GET: AspNetRoles/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -134,47 +134,36 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
-            var aspNetUser = await _context.AspNetUsers
+            var aspNetRole = await _context.AspNetRoles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (aspNetUser == null)
+            if (aspNetRole == null)
             {
                 return NotFound();
             }
 
-            return View(aspNetUser);
+            return View(aspNetRole);
         }
 
-        // POST: AspNetUsers/Delete/5
+        // POST: AspNetRoles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var aspNetUser = await _context.AspNetUsers.FindAsync(id);
-            _context.AspNetUsers.Remove(aspNetUser);
+            var aspNetRole = await _context.AspNetRoles.FindAsync(id);
+            _context.AspNetRoles.Remove(aspNetRole);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AspNetUserExists(string id)
+        private bool AspNetRoleExists(string id)
         {
-            return _context.AspNetUsers.Any(e => e.Id == id);
-        }
-
-
-
-        [HttpPost]
-        public async Task<bool> existeUserEmail([FromBody] verificaEmail _email)
-        {
-            var _result = await _context.AspNetUsers.AnyAsync(x => x.Email.Equals(_email.email));
-            return _result;
+            return _context.AspNetRoles.Any(e => e.Id == id);
         }
 
         [HttpPost]
-        public async Task<bool> existeUserName([FromBody] verificaName _userName)
+        public async Task<List<AspNetRole>> listaRoles()
         {
-            var _result = await _context.AspNetUsers.AnyAsync(x => x.UserName.Equals(_userName.userName));
-            return _result;
+            return await _context.AspNetRoles.ToListAsync();
         }
-
     }
 }

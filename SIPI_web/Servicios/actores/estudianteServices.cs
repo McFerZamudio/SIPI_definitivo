@@ -28,16 +28,18 @@ namespace SIPI_web.Servicios
         }
 
         public object Lista = new();
-
         public async Task<int> listarRegistro()
         {
-           Lista = await _context.tbl_estudiantes.Include(t => t.id_equipoNavigation)
-                .Include(t => t.id_estudianteEstatusNavigation)
-                .Include(t => t.id_estudianteNavigation)
-                .Include(t => t.id_informeAcademicoEstatusNavigation)
-                .Include(t => t.id_metodologiaEstatusNavigation)
-                .Include(t => t.id_pasantiaEstatusNavigation)
-                .Include(t => t.id_sedeNavigation).ToListAsync();
+            Lista = await _context.tbl_estudiantes
+                 .Include(t => t.id_equipoNavigation)
+                 .Include(t => t.id_estudianteEstatusNavigation)
+                 .Include(t => t.id_estudianteNavigation)
+                 .Include(t => t.id_informeAcademicoEstatusNavigation)
+                 .Include(t => t.id_metodologiaEstatusNavigation)
+                 .Include(t => t.id_pasantiaEstatusNavigation)
+                 .Include(t => t.id_sedeNavigation).ToListAsync();
+
+
 
             return 0;
         }

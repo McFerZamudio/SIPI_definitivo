@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutPublico.cshtml";
 }
 
 <h1>Index</h1>
@@ -14,76 +14,41 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.estudiante_fechaIngreaso)
+                Nombre Completo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.estudiante_fechaActualizacion)
+               Fechas Importantes
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.estudiante_cohorte)
+               Cohorte
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.id_equipoNavigation)
+               Equipo
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.id_estudianteEstatusNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.id_estudianteNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.id_informeAcademicoEstatusNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.id_metodologiaEstatusNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.id_pasantiaEstatusNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.id_sedeNavigation)
-            </th>
-            <th></th>
+              @*<th></th>*@
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.estudiante_fechaIngreaso)
+                @Html.DisplayFor(modelItem => item.id_estudianteNavigation.peresona_nombreCompleto) <br />
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.estudiante_fechaActualizacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.estudiante_cohorte)
+                @Html.DisplayFor(modelItem => item.estudiante_cohorte)<br />
+                @Html.DisplayFor(modelItem => item.id_sedeNavigation.sede_nombre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.id_equipoNavigation.equipo_nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.id_estudianteEstatusNavigation.estudianteEstatus_codigo)
+                @Html.DisplayFor(modelItem => item.id_estudianteEstatusNavigation.estudianteEstatus_nombre)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.id_estudianteNavigation.id_persona)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.id_informeAcademicoEstatusNavigation.informeAcademicoEstatus_codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.id_metodologiaEstatusNavigation.metodologiaEstatus_codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.id_pasantiaEstatusNavigation.pasantiaEstatus_codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.id_sedeNavigation.sede_codigo)
-            </td>
-            <td>
+            @*<td>
                 <a asp-action="Edit" asp-route-id="@item.id_estudiante">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.id_estudiante">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.id_estudiante">Delete</a>
-            </td>
+            </td>*@
         </tr>
 }
     </tbody>

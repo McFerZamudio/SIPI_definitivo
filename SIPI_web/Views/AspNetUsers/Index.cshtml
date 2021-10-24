@@ -23,36 +23,75 @@
                 Numero de telefono
             </th>
             <th></th>
-            @*<th></th>*@
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.UserName)</a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.ActionLink("view request in a new window", "ViewRequest", new { id = item.Id }, new { target = "_blank" }
-)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.UserName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onload="alert('fer')">
+                    Launch demo modal
+                </button>
+            </td>
+        </tr>
         }
     </tbody>
+
+
 </table>
+
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @{
+                    var _roles = ViewData["listaRoles"] as List<AspNetRole>;
+
+                    foreach (var item in _roles)
+                    {
+                        @Html.CheckBox(item.Name) <label>@item.Name</label> <br />
+                    }
+
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function asignaRole(userName) {
         var userName = userName;
 
         window.open("/seleccionCiudad.html?ciudad=" + ciudad + "&idCiudad=" + idCiudad, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+    }
+
+    function cargaRoles() {
+        alert('entro');
+        document.getElementById('valor').innerText = 'fer';
     }
 </script>
 

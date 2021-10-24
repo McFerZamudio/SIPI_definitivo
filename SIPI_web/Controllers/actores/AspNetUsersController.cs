@@ -31,7 +31,8 @@ namespace SIPI_web.Controllers
         // GET: AspNetUsers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AspNetUsers.ToListAsync());
+            ViewData["listaRoles"] = _context.AspNetRoles.ToList();
+            return View(await _context.AspNetUsers.Include(x => x.AspNetUserRoles).ToListAsync());
         }
 
         // GET: AspNetUsers/Details/5

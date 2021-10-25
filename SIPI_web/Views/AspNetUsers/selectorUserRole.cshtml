@@ -1,0 +1,42 @@
+﻿@model SIPI_web.Models.AspNetUser
+
+@{
+    ViewData["Title"] = "selectorUserRole";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>selectorUserRole</h1>
+
+<div>
+    <h4>tbl_persona</h4>
+    <hr />
+    <dl class="row">
+        <dd class="col-sm-10">
+           Nombre Completo
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayFor(model => model.tbl_usuario.tbl_persona.peresona_nombreCompleto)
+        </dt>
+        <dd class="col-sm-10">
+           Identificacion
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayFor(model => model.tbl_usuario.tbl_persona.persona_identificacion)
+        </dt>
+        <dt>
+            cantidad: @Model.AspNetUserRoles.Count()
+            @Model.AspNetUserRoles.ElementAt(0).Role
+
+            @{
+                foreach (var item in Model.AspNetUserRoles)
+                {
+                    <label>@item.Role </label> <br />
+                }
+            }
+        </dt>
+
+    </dl>
+</div>
+<div>
+
+</div>

@@ -177,5 +177,23 @@ namespace SIPI_web.Controllers
             return _result;
         }
 
+        public async Task<IActionResult> selectorUserRole(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var _persona = await _context.AspNetUsers
+                .Include(t => t.AspNetUserRoles)
+                .Include(t => t.tbl_usuario.tbl_persona)
+                .FirstOrDefaultAsync(m => m.tbl_usuario.tbl_persona.id_persona == id);
+            if (_persona == null)
+            {
+                return NotFound();
+            }
+
+            return View(_persona);
+        }
     }
 }

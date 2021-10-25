@@ -162,5 +162,8 @@ namespace SIPI_web.Controllers
             return _context.AspNetUserRoles.Any(e => e.UserId == id);
         }
 
+        // GET: AspNetUserRoles/Details/5
+
+
     }
 }

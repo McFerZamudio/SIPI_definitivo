@@ -11,6 +11,11 @@ namespace SIPI_web.Models
     [Table("tbl_usuario")]
     public partial class tbl_usuario
     {
+        public tbl_usuario()
+        {
+            AspNetUserRoles = new HashSet<AspNetUserRole>();
+        }
+
         [Key]
         public string id_usuario { get; set; }
         [Column(TypeName = "date")]
@@ -33,5 +38,7 @@ namespace SIPI_web.Models
         public virtual tbl_empresa tbl_empresa { get; set; }
         [InverseProperty("id_personaNavigation")]
         public virtual tbl_persona tbl_persona { get; set; }
+        [InverseProperty(nameof(AspNetUserRole.UserNavigation))]
+        public virtual ICollection<AspNetUserRole> AspNetUserRoles { get; set; }
     }
 }

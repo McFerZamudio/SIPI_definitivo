@@ -22,5 +22,8 @@ namespace SIPI_web.Models
         [ForeignKey(nameof(UserId))]
         [InverseProperty(nameof(AspNetUser.AspNetUserRoles))]
         public virtual AspNetUser User { get; set; }
+        [ForeignKey(nameof(UserId))]
+        [InverseProperty(nameof(tbl_usuario.AspNetUserRoles))]
+        public virtual tbl_usuario UserNavigation { get; set; }
     }
 }

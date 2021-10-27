@@ -3,40 +3,46 @@
 @{
     ViewData["Title"] = "selectorUserRole";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
 }
 
 <h1>selectorUserRole</h1>
+<form action="/aspnetusers/guardaUserRole" method="post">
+    <div>
+        <h4>tbl_persona</h4>
+        <hr />
+        <dl class="row">
+            <dd class="col-sm-10">
+                Nombre Completo
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayFor(model => model.tbl_usuario.tbl_persona.peresona_nombreCompleto)
+            </dt>
+            <dd class="col-sm-10">
+                Identificacion
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayFor(model => model.tbl_usuario.tbl_persona.persona_identificacion)
+            </dt>
 
-<div>
-    <h4>tbl_persona</h4>
-    <hr />
-    <dl class="row">
-        <dd class="col-sm-10">
-           Nombre Completo
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayFor(model => model.tbl_usuario.tbl_persona.peresona_nombreCompleto)
-        </dt>
-        <dd class="col-sm-10">
-           Identificacion
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayFor(model => model.tbl_usuario.tbl_persona.persona_identificacion)
-        </dt>
-        <dt>
-            cantidad: @Model.AspNetUserRoles.Count()
-            @Model.AspNetUserRoles.ElementAt(0).Role
+            <dt>
+                @{
+                    bool _rolselected = false;
+                    var _rolesLista = ViewData["roles"] as List<AspNetRole>;
+                    var _rolesUser = Model.tbl_usuario.AspNetUserRoles;
+                    foreach (var item2 in _rolesLista)
+                    {
+                        _rolselected = _rolesUser.Any(x => x.RoleId.Equals(item2.Id));
 
-            @{
-                foreach (var item in Model.AspNetUserRoles)
-                {
-                    <label>@item.Role </label> <br />
+                        <input type="checkbox" id="@item2.Name" name="@item2.Name" checked="@_rolselected" />
+                        <label>@item2.Name</label><br />
+                    }
                 }
-            }
-        </dt>
+            </dt>
 
-    </dl>
-</div>
-<div>
-
-</div>
+        </dl>
+    </div>
+    <div>
+    </div>
+    <button type="submit">enviar</button>
+</form>

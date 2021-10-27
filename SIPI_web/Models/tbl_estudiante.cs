@@ -14,7 +14,7 @@ namespace SIPI_web.Models
         public tbl_estudiante()
         {
             tbl_estudianteCarreras = new HashSet<tbl_estudianteCarrera>();
-            tbl_tegista = new HashSet<tbl_tegistum>();
+            tbl_integrantes = new HashSet<tbl_integrante>();
         }
 
         [Key]
@@ -56,7 +56,7 @@ namespace SIPI_web.Models
         public virtual tbl_sede id_sedeNavigation { get; set; }
         [InverseProperty(nameof(tbl_estudianteCarrera.id_estudianteNavigation))]
         public virtual ICollection<tbl_estudianteCarrera> tbl_estudianteCarreras { get; set; }
-        [InverseProperty(nameof(tbl_tegistum.id_estudianteNavigation))]
-        public virtual ICollection<tbl_tegistum> tbl_tegista { get; set; }
+        [InverseProperty(nameof(tbl_integrante.id_estudianteNavigation))]
+        public virtual ICollection<tbl_integrante> tbl_integrantes { get; set; }
     }
 }

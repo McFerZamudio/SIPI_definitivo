@@ -11,11 +11,6 @@ namespace SIPI_web.Models
     [Table("tbl_teg")]
     public partial class tbl_teg
     {
-        public tbl_teg()
-        {
-            tbl_tegista = new HashSet<tbl_tegistum>();
-        }
-
         [Key]
         public long id_teg { get; set; }
         [Required]
@@ -24,11 +19,6 @@ namespace SIPI_web.Models
         [Required]
         [StringLength(50)]
         public string teg_codigoTeg { get; set; }
-        [Column(TypeName = "date")]
-        public DateTime teg_fechaCreacion { get; set; }
-        public int id_sede { get; set; }
-        [Required]
-        public string teg_titulo { get; set; }
         [Required]
         [StringLength(450)]
         public string id_consultorMetodologia { get; set; }
@@ -51,7 +41,8 @@ namespace SIPI_web.Models
         [ForeignKey(nameof(id_consultorMetodologia))]
         [InverseProperty(nameof(tbl_persona.tbl_tegid_consultorMetodologiaNavigations))]
         public virtual tbl_persona id_consultorMetodologiaNavigation { get; set; }
-        [InverseProperty(nameof(tbl_tegistum.id_tegNavigation))]
-        public virtual ICollection<tbl_tegistum> tbl_tegista { get; set; }
+        [ForeignKey(nameof(id_teg))]
+        [InverseProperty(nameof(tbl_trabajo.tbl_teg))]
+        public virtual tbl_trabajo id_tegNavigation { get; set; }
     }
 }

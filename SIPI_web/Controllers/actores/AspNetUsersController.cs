@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,12 @@ namespace SIPI_web.Controllers
     public class AspNetUsersController : Controller
     {
         private readonly SIPI_dbContext _context;
+
+        private string idUser;
+        private void cargaIdUser()
+        {
+            idUser = HttpContext.Session.GetString("idUser");
+        }
 
         public class verificaEmail
         {
@@ -184,9 +191,11 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
+
+            ViewData["roles"] = _context.AspNetRoles.ToList();
             var _persona = await _context.AspNetUsers
-                .Include(t => t.AspNetUserRoles)
                 .Include(t => t.tbl_usuario.tbl_persona)
+                .Include(t => t.tbl_usuario.AspNetUserRoles)
                 .FirstOrDefaultAsync(m => m.tbl_usuario.tbl_persona.id_persona == id);
             if (_persona == null)
             {
@@ -195,5 +204,50 @@ namespace SIPI_web.Controllers
 
             return View(_persona);
         }
+
+        public async Task<IActionResult> guardaUserRole(IFormCollection collection)
+        {
+            if (collection is not null)
+            {
+                cargaIdUser();
+
+                var _elimina = _context.AspNetUserRoles.Where(x => x.UserId.Equals(idUser));
+                _context.AspNetUserRoles.RemoveRange(_elimina);
+                await _context.SaveChangesAsync();
+
+                foreach (var item in collection)
+                {
+
+
+                    var _idRole = await _context.AspNetRoles.FirstOrDefaultAsync(x => x.Name.Equals(item.Key));
+
+                    AspNetUserRole agregaRole = new();
+
+                    agregaRole.RoleId = _idRole.Id;
+                    agregaRole.UserId = idUser;
+
+                        _context.AddRange(agregaRole);
+                }
+                await _context.SaveChangesAsync();
+
+            }
+
+            //ViewData["roles"] = _context.AspNetRoles.ToList();
+            //var _persona = await _context.AspNetUsers
+            //    .Include(t => t.tbl_usuario.tbl_persona)
+            //    .Include(t => t.tbl_usuario.AspNetUserRoles)
+            //    .FirstOrDefaultAsync(m => m.tbl_usuario.tbl_persona.id_persona == id);
+            //if (_persona == null)
+            //{
+            //    return NotFound();
+            //}
+
+            return View();
+        }
+
+
+
+
+        
     }
 }

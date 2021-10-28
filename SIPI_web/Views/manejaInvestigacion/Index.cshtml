@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SIPI_web.Models.tbl_trabajo>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutEstudiante.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.trabajo_fechaCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.trabajo_titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.trabajo_planteamientoProblema)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.trabajo_fecahaModificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_tipoTrabajoNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.trabajo_fechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.trabajo_titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.trabajo_planteamientoProblema)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.trabajo_fecahaModificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_tipoTrabajoNavigation.tipoTrabajo_nombre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id_trabajo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id_trabajo">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id_trabajo">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

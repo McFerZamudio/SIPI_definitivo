@@ -1,0 +1,80 @@
+﻿@model SIPI_web.Models.tbl_teg
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutEstudiante.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>tbl_teg</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id_teg" />
+            <div class="form-group">
+                <label asp-for="teg_codigoInterno" class="control-label"></label>
+                <input asp-for="teg_codigoInterno" class="form-control" />
+                <span asp-validation-for="teg_codigoInterno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="teg_codigoTeg" class="control-label"></label>
+                <input asp-for="teg_codigoTeg" class="form-control" />
+                <span asp-validation-for="teg_codigoTeg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_consultorMetodologia" class="control-label"></label>
+                <select asp-for="id_consultorMetodologia" class="form-control" asp-items="ViewBag.id_consultorMetodologia"></select>
+                <span asp-validation-for="id_consultorMetodologia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_consultorAcademico" class="control-label"></label>
+                <select asp-for="id_consultorAcademico" class="form-control" asp-items="ViewBag.id_consultorAcademico"></select>
+                <span asp-validation-for="id_consultorAcademico" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="teg_porcentaje" class="control-label"></label>
+                <input asp-for="teg_porcentaje" class="form-control" />
+                <span asp-validation-for="teg_porcentaje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="teg_puntuacion" class="control-label"></label>
+                <input asp-for="teg_puntuacion" class="form-control" />
+                <span asp-validation-for="teg_puntuacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="teg_fechaDefensa" class="control-label"></label>
+                <input asp-for="teg_fechaDefensa" class="form-control" />
+                <span asp-validation-for="teg_fechaDefensa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_statusTeg" class="control-label"></label>
+                <input asp-for="id_statusTeg" class="form-control" />
+                <span asp-validation-for="id_statusTeg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="teg_fechaRecepcionDocumento" class="control-label"></label>
+                <input asp-for="teg_fechaRecepcionDocumento" class="form-control" />
+                <span asp-validation-for="teg_fechaRecepcionDocumento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="teg_observacionRecepcionDocumento" class="control-label"></label>
+                <input asp-for="teg_observacionRecepcionDocumento" class="form-control" />
+                <span asp-validation-for="teg_observacionRecepcionDocumento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

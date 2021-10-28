@@ -1,0 +1,24 @@
+﻿@model SIPI_web.Models.tbl_teg
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutEstudiante.cshtml";
+}
+
+<h4>Trabajo Especial de Grado</h4>
+<hr />
+<div class="row">
+    <div>
+        <partial name="tegNav" />
+    </div>
+    <div>
+        <h5>Datos Basicos</h5>
+        <hr />
+        <partial name="../manejaInvestigacion/Create" />
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

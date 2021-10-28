@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "";
+}
+
+<ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" id="Index" asp-action="createTeg">Datos Basicos</a></li>
+    <li class="nav-item"><a class="nav-link" id="email" asp-action="index">Integrantes del TEG</a></li>
+    <li class="nav-item"><a class="nav-link" id="change-password" asp-action="./ChangePassword">Consultores</a></li>
+    <li class="nav-item"><a class="nav-link" id="actualizaDatos" asp-action="edit" asp-controller="usuario" asp-route-id="@Context.Session.GetString("idUser")">Actualizar mis Datos</a></li>
+</ul>
+
+<asp:Menu ID="Menu1" runat="server"></asp:Menu>

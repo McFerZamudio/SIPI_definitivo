@@ -176,8 +176,14 @@ namespace SIPI_web.Controllers.trabajos
 
         public async Task<IActionResult> createTeg()
         {
+            tbl_trabajo trabajo = new();
+
+            trabajo.trabajo_fechaCreacion = DateTime.Now;
+            trabajo.trabajo_fecahaModificacion = DateTime.Now;
+            trabajo.id_tipoTrabajo = 1;
+
             //var sIPI_dbContext = _context.tbl_tegs.Include(t => t.id_consultorAcademicoNavigation).Include(t => t.id_consultorMetodologiaNavigation).Include(t => t.id_tegNavigation);
-            return View();
+            return View(trabajo);
         }
 
     }

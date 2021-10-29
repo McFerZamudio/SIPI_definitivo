@@ -4,12 +4,13 @@
     ViewData["Title"] = "Create";
 }
 
-
+@ViewData["fechaActual"]
 <div class="row">
     <div>
-        <form asp-action="Create">
+        <form asp-action="createTrabajoInvestigacion" asp-controller="trabajoInvestigacion">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" id="id_trabajo" name="id_estudiante" asp-for="id_trabajo" value="@ViewData["id_trabajo"]" />
+            <input type="hidden" id="id_trabajo" name="id_estudiante" asp-for="id_trabajo" />
+            <input type="hidden" id="id_tipoTrabajo" name="id_tipoTrabajo" asp-for="id_tipoTrabajo"/>
             <div class="form-group">
                 <label asp-for="trabajo_titulo" class="control-label">Titulo del Trabajo</label>
                 <input asp-for="trabajo_titulo" class="form-control" />
@@ -22,12 +23,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="trabajo_planteamientoProblema" class="control-label">Planteamiento del Problema / Descripcion Situacion Problematica</label>
-                <textarea asp-for="trabajo_planteamientoProblema" rows="100" cols="50" class="form-control"></textarea>
+                <textarea asp-for="trabajo_planteamientoProblema" rows="20" cols="50" class="form-control"></textarea>
                 <span asp-validation-for="trabajo_planteamientoProblema" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="trabajo_fecahaModificacion" class="control-label">Ultima Modificacion</label>
-                <input asp-for="trabajo_fecahaModificacion" type="date"class="form-control" readonly />
+                <input asp-for="trabajo_fecahaModificacion" type="date" class="form-control" readonly />
                 <span asp-validation-for="trabajo_fecahaModificacion" class="text-danger"></span>
             </div>
             <div class="form-group">

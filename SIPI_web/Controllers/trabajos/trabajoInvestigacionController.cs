@@ -178,5 +178,19 @@ namespace SIPI_web.Controllers
             var _misTrabajos = await _trabajoInvestigacion.misTrabajos(idUser, _context);
             return View(_misTrabajos);
         }
+
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> createTrabajoInvestigacion([Bind("id_trabajo,trabajo_fechaCreacion,trabajo_titulo,trabajo_planteamientoProblema,id_tipoTrabajo,trabajo_fecahaModificacion")] tbl_trabajo tbl_trabajo)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(tbl_trabajo);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["id_tipoTrabajo"] = new SelectList(_context.tbl_tipoTrabajos, "id_tipoTrabajo", "tipoTrabajo_nombre", tbl_trabajo.id_tipoTrabajo);
+            return View(tbl_trabajo);
+        }
+
     }
 }

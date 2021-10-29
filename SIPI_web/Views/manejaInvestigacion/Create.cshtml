@@ -9,6 +9,12 @@
     <div>
         <form asp-action="createTrabajoInvestigacion" asp-controller="trabajoInvestigacion">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @{ 
+                //if (Model.id_trabajo is not null)
+                {
+
+                }
+            }
             <input type="hidden" id="id_trabajo" name="id_estudiante" asp-for="id_trabajo" />
             <input type="hidden" id="id_tipoTrabajo" name="id_tipoTrabajo" asp-for="id_tipoTrabajo"/>
             <div class="form-group">

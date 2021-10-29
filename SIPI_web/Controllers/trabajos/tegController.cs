@@ -174,7 +174,7 @@ namespace SIPI_web.Controllers.trabajos
             return View();
         }
 
-        public async Task<IActionResult> createTeg()
+        public IActionResult createTeg()
         {
             tbl_trabajo trabajo = new();
 

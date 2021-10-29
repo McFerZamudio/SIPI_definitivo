@@ -180,11 +180,22 @@ namespace SIPI_web.Controllers
         }
 
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> createTrabajoInvestigacion([Bind("id_trabajo,trabajo_fechaCreacion,trabajo_titulo,trabajo_planteamientoProblema,id_tipoTrabajo,trabajo_fecahaModificacion")] tbl_trabajo tbl_trabajo)
+        public async Task<IActionResult> createTrabajoInvestigacion([Bind("trabajo_fechaCreacion,trabajo_titulo,trabajo_planteamientoProblema,id_tipoTrabajo,trabajo_fecahaModificacion")] tbl_trabajo tbl_trabajo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tbl_trabajo);
+                //string valor;
+                //tbl_trabajo.id_trabajo. = parse) ;
+                _context.AddRange(tbl_trabajo);
+
+                tbl_integrante _integrante = new();
+
+                //_integrante.id_estudiante = idUser;
+                //_integrante.id_trabajo = tbl_trabajo.id_trabajo;
+                //_integrante.integrantes_confirmado = true;
+                //_integrante.integrantes_fechaCarga = DateTime.Now;
+                //_context.AddRange(_integrante);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

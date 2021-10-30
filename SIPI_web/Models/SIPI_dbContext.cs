@@ -275,8 +275,6 @@ namespace SIPI_web.Models
                 entity.HasKey(e => e.id_trabajo)
                     .HasName("PK_tbl_teg");
 
-                entity.Property(e => e.id_trabajo).ValueGeneratedNever();
-
                 entity.HasOne(d => d.id_tipoTrabajoNavigation)
                     .WithMany(p => p.tbl_trabajos)
                     .HasForeignKey(d => d.id_tipoTrabajo)

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SIPI_web.Models;
+using SIPI_web.Servicios.actores;
 using SIPI_web.Servicios.trabajos;
 
 namespace SIPI_web.Controllers
@@ -184,19 +185,29 @@ namespace SIPI_web.Controllers
         {
             if (ModelState.IsValid)
             {
-                //string valor;
-                //tbl_trabajo.id_trabajo. = parse) ;
-                _context.AddRange(tbl_trabajo);
 
-                tbl_integrante _integrante = new();
+                using (var dbContextTransaction = _context.Database.BeginTransaction())
+                {
+                    trabajosInvestigacionServices _trabajo = new(_context);
+                    var _idTrabajo = await _trabajo.agregaTrabajo(tbl_trabajo);
 
-                //_integrante.id_estudiante = idUser;
-                //_integrante.id_trabajo = tbl_trabajo.id_trabajo;
-                //_integrante.integrantes_confirmado = true;
-                //_integrante.integrantes_fechaCarga = DateTime.Now;
-                //_context.AddRange(_integrante);
+                    integrantesServices _servicios = new(_context);
+                    cargaIdUser();
+                    var _idIntegrante = await _servicios.agregaIntegrantes(_idTrabajo, idUser);
 
-                await _context.SaveChangesAsync();
+                    if (_idTrabajo > 0 && _idIntegrante >0 ){
+                        dbContextTransaction.Commit();
+                    }
+                    else
+                    {
+                        dbContextTransaction.Rollback();
+                    }
+
+                }
+
+
+
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["id_tipoTrabajo"] = new SelectList(_context.tbl_tipoTrabajos, "id_tipoTrabajo", "tipoTrabajo_nombre", tbl_trabajo.id_tipoTrabajo);

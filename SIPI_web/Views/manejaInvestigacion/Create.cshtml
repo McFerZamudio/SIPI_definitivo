@@ -7,7 +7,7 @@
 @ViewData["fechaActual"]
 <div class="row">
     <div>
-        <form asp-action="createTrabajoInvestigacion" asp-controller="trabajoInvestigacion">
+        <form asp-action="guardaTrabajoInvestigacion" asp-controller="trabajoInvestigacion">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @{ 
                 //if (Model.id_trabajo is not null)
@@ -15,11 +15,11 @@
 
                 }
             }
-            <input type="hidden" id="id_trabajo" name="id_estudiante" asp-for="id_trabajo" />
+            <input type="hidden" id="id_trabajo" name="id_trabajo" asp-for="id_trabajo" />
             <input type="hidden" id="id_tipoTrabajo" name="id_tipoTrabajo" asp-for="id_tipoTrabajo"/>
             <div class="form-group">
                 <label asp-for="trabajo_titulo" class="control-label">Titulo del Trabajo</label>
-                <input asp-for="trabajo_titulo" class="form-control" />
+                <textarea asp-for="trabajo_titulo" rows="10" cols="50" class="form-control"> </textarea>
                 <span asp-validation-for="trabajo_titulo" class="text-danger"></span>
             </div>
             <div class="form-group">

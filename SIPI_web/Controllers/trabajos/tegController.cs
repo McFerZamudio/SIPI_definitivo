@@ -2,16 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SIPI_web.Models;
+using SIPI_web.Servicios.trabajos;
 
 namespace SIPI_web.Controllers.trabajos
 {
     public class tegController : Controller
     {
         private readonly SIPI_dbContext _context;
+
+        private string idUser;
+        private void cargaIdUser()
+        {
+            idUser = HttpContext.Session.GetString("idUser");
+        }
 
         public tegController(SIPI_dbContext context)
         {
@@ -176,14 +184,25 @@ namespace SIPI_web.Controllers.trabajos
 
         public IActionResult createTeg()
         {
-            tbl_trabajo trabajo = new();
 
-            trabajo.trabajo_fechaCreacion = DateTime.Now;
-            trabajo.trabajo_fecahaModificacion = DateTime.Now;
-            trabajo.id_tipoTrabajo = 1;
+            trabajosInvestigacionServices _misTrabajos = new(_context);
+            cargaIdUser();
+            var _verificaTeg = _misTrabajos.buscaTrabajoPorUser(idUser, 1);
 
-            //var sIPI_dbContext = _context.tbl_tegs.Include(t => t.id_consultorAcademicoNavigation).Include(t => t.id_consultorMetodologiaNavigation).Include(t => t.id_tegNavigation);
-            return View(trabajo);
+            if (_verificaTeg.Result.Count() ==0)
+            {
+                tbl_trabajo trabajo = new();
+
+                trabajo.trabajo_fechaCreacion = DateTime.Now;
+                trabajo.trabajo_fecahaModificacion = DateTime.Now;
+                trabajo.id_tipoTrabajo = 1;
+                return View(trabajo);
+            }
+            
+            var _miTeg = _misTrabajos.buscaTrabajoPorID(_verificaTeg.Result[0].id_trabajo);
+             return View(_miTeg);
+
+           
         }
 
     }

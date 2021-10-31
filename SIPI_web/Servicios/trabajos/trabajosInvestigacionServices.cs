@@ -10,6 +10,8 @@ namespace SIPI_web.Servicios.trabajos
     public class trabajosInvestigacionServices
     {
 
+
+
         public trabajosInvestigacionServices()
         {
 
@@ -36,6 +38,30 @@ namespace SIPI_web.Servicios.trabajos
             await _context.SaveChangesAsync();
             return _trabajo.id_trabajo;
         }
+
+        public async Task<long> modificaTrabajo(tbl_trabajo _trabajo)
+        {
+            _context.Update(_trabajo);
+            await _context.SaveChangesAsync();
+            return _trabajo.id_trabajo;
+        }
+
+        public async Task<List<tbl_integrante>> buscaTrabajoPorUser(string _idUser, int _tipoTrabajo)
+        {
+            var _trabajos = _context.tbl_integrantes
+                .Include(x => x.id_trabajoNavigation)
+                .Where(x => x.id_estudiante.Equals(_idUser) && x.id_trabajoNavigation.id_tipoTrabajo.Equals(_tipoTrabajo));
+            
+            return await _trabajos.ToListAsync();
+        }
+
+        public tbl_trabajo buscaTrabajoPorID(long _idTrabajo)
+        {
+            tbl_trabajo _miTrabajo = _context.tbl_trabajos.FirstOrDefault(x => x.id_trabajo.Equals(_idTrabajo));
+
+            return _miTrabajo;
+        }
+
 
     }
 }

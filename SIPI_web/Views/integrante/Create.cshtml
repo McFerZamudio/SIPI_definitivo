@@ -1,0 +1,41 @@
+﻿@model SIPI_web.Models.tbl_integrante
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutEstudiante.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>tbl_integrante</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" id="id_trabajo" name="id_trabajo" asp-for="id_trabajo" />
+            <input type="hidden" id="id_estudiante" name="id_estudiante" asp-for="id_estudiante"  value="ViewBag.id_estudiante"> />
+            <div class="form-group">
+                <label asp-for="integrantes_fechaCarga" class="control-label"></label>
+                <input asp-for="integrantes_fechaCarga" class="form-control" readonly/>
+                <span asp-validation-for="integrantes_fechaCarga" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="integrandes_fechaConfirmado" class="control-label"></label>
+                <input asp-for="integrandes_fechaConfirmado" class="form-control" readonly/>
+                <span asp-validation-for="integrandes_fechaConfirmado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -2,19 +2,13 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "";
 }
 
-@ViewData["fechaActual"]
 <div class="row">
     <div>
         <form asp-action="guardaTrabajoInvestigacion" asp-controller="trabajoInvestigacion">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @{ 
-                //if (Model.id_trabajo is not null)
-                {
-
-                }
-            }
             <input type="hidden" id="id_trabajo" name="id_trabajo" asp-for="id_trabajo" />
             <input type="hidden" id="id_tipoTrabajo" name="id_tipoTrabajo" asp-for="id_tipoTrabajo"/>
             <div class="form-group">

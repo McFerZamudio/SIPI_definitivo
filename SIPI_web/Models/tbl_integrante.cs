@@ -23,6 +23,9 @@ namespace SIPI_web.Models
         public DateTime? integrandes_fechaConfirmado { get; set; }
 
         [ForeignKey(nameof(id_estudiante))]
+        [InverseProperty(nameof(tbl_persona.tbl_integrantes))]
+        public virtual tbl_persona id_estudiante1 { get; set; }
+        [ForeignKey(nameof(id_estudiante))]
         [InverseProperty(nameof(tbl_estudiante.tbl_integrantes))]
         public virtual tbl_estudiante id_estudianteNavigation { get; set; }
         [ForeignKey(nameof(id_trabajo))]

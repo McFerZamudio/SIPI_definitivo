@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,22 @@ namespace SIPI_web.Controllers
 {
     public class integranteController : Controller
     {
+
+        private string idUser;
+        private void cargaIdUser()
+        {
+            idUser = HttpContext.Session.GetString("idUser");
+        }
+
+
+        public class datosEstudiante
+        {
+            public string idUser { get; set; }
+            public string identificacion { get; set; }
+            public string peresona_nombreCompleto { get; set; }
+        }
+
+
         private readonly SIPI_dbContext _context;
 
         public integranteController(SIPI_dbContext context)
@@ -21,7 +38,9 @@ namespace SIPI_web.Controllers
         // GET: integrante
         public async Task<IActionResult> Index()
         {
-            var sIPI_dbContext = _context.tbl_integrantes.Include(t => t.id_estudianteNavigation).Include(t => t.id_trabajoNavigation);
+            var sIPI_dbContext = _context.tbl_integrantes.Include(t => t.id_estudianteNavigation).Include(t => t.id_trabajoNavigation).Include(x => x.id_estudiante1);
+
+
             return View(await sIPI_dbContext.ToListAsync());
         }
 
@@ -157,9 +176,25 @@ namespace SIPI_web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> listaIntegrante()
+        {
+            cargaIdUser();
+            var _integranes = await _context.tbl_integrantes
+                .Include( x=> x.id_estudiante1)
+                .Where(x => x.id_estudiante.Equals(idUser)).ToListAsync();
+            return View(_integranes);
+        }
+
         private bool tbl_integranteExists(long id)
         {
             return _context.tbl_integrantes.Any(e => e.id_integrantes == id);
+        }
+
+        [HttpPost]
+        public async Task<tbl_persona> buscaIntegranteCedula([FromBody] datosEstudiante _datosEstudiante)
+        {
+            var _result = await _context.tbl_personas.FirstOrDefaultAsync(x => x.persona_identificacion.Contains(_datosEstudiante.identificacion));
+            return _result;
         }
     }
 }

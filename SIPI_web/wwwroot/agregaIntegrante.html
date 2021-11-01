@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <label>Identificacion del otro Integrante:</label><input type="text" name="identificacion" id="identificacion" /><button onclick="buscaIdentificacion()">Buscar Integrante</button>
+    <label>Nombre del Integrante:</label><input type="text" name="nombreIntegrante" id="nombreIntegrante" value="" />
+</body>
+</html>
+
+<script type="text/javascript">
+
+    async function buscaIdentificacion() {
+        var identificacion = document.getElementById('identificacion').value;
+        document.getElementById('nombreIntegrante').value = '';
+
+        var url = '/integrante/buscaIntegranteCedula/';
+
+        var data = { identificacion: identificacion };
+        var res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+
+        const _result = await res.json();
+        var _nombre = document.getElementById('nombreIntegrante');
+
+        _nombre.value = _result.peresona_nombreCompleto;
+    };
+
+    async function llenaCiudad(estado) {
+        document.getElementById("listaCiudad").innerHTML = "";
+        limpiaCiudad();
+        var url = '/ciudad/listaCiudad/';
+       // var data = { idEstado: estado };
+        var data = estado;
+        var res = await fetch(url, {
+            method: 'POST',
+            //body: JSON.stringify(data),
+            body: data,
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+
+        const _result = await res.json();
+        var sel = document.getElementById('listaCiudad');
+
+        var opt = document.createElement('option');
+        opt.innerHTML = "Seleccione una Ciudad";
+        opt.value = 0;
+        sel.appendChild(opt);
+
+        for (var i = 0; i < _result.length; i++) {
+            var opt = document.createElement('option');
+            opt.innerHTML = _result[i].ciudad_nombre;
+            opt.value = _result[i].id_ciudad;
+            sel.appendChild(opt);
+        }
+    };
+
+    function seleccionaCiudad(ciudad) {
+            document.getElementById("ciudadSeleccionada").value = ciudad.options[ciudad.selectedIndex].text;
+            document.getElementById("id_ciudad").value = ciudad.value;
+    }
+
+    function limpiaCiudad() {
+        document.getElementById("ciudadSeleccionada").value ="Sin Ciudad seleccionada";
+        document.getElementById("id_ciudad").value = 0;
+    }
+
+    function enviaDatos() {
+        if (document.getElementById("id_ciudad").value > 0) {
+            var paramsString = window.location.href.replace("?", "&");
+            var searchParams = new URLSearchParams(paramsString);
+
+            window.opener.document.getElementById(searchParams.get("ciudad")).value = document.getElementById("ciudadSeleccionada").value;
+            window.opener.document.getElementById(searchParams.get("idCiudad")).value = document.getElementById("id_ciudad").value;
+            window.close();
+        } else {
+            alert('Debe seleccionar una opcion');
+        }
+    }
+</script>

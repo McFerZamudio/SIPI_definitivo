@@ -13,6 +13,7 @@ namespace SIPI_web.Models
     {
         public tbl_persona()
         {
+            tbl_integrantes = new HashSet<tbl_integrante>();
             tbl_tegid_consultorAcademicoNavigations = new HashSet<tbl_teg>();
             tbl_tegid_consultorMetodologiaNavigations = new HashSet<tbl_teg>();
         }
@@ -42,6 +43,8 @@ namespace SIPI_web.Models
         public virtual tbl_consultor tbl_consultor { get; set; }
         [InverseProperty("id_estudianteNavigation")]
         public virtual tbl_estudiante tbl_estudiante { get; set; }
+        [InverseProperty(nameof(tbl_integrante.id_estudiante1))]
+        public virtual ICollection<tbl_integrante> tbl_integrantes { get; set; }
         [InverseProperty(nameof(tbl_teg.id_consultorAcademicoNavigation))]
         public virtual ICollection<tbl_teg> tbl_tegid_consultorAcademicoNavigations { get; set; }
         [InverseProperty(nameof(tbl_teg.id_consultorMetodologiaNavigation))]

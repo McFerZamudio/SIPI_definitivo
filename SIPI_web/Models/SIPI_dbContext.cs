@@ -208,6 +208,12 @@ namespace SIPI_web.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Un TEGISTA es un estudiante");
 
+                entity.HasOne(d => d.id_estudiante1)
+                    .WithMany(p => p.tbl_integrantes)
+                    .HasForeignKey(d => d.id_estudiante)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Una TEG tiene uno o varias personas");
+
                 entity.HasOne(d => d.id_trabajoNavigation)
                     .WithMany(p => p.tbl_integrantes)
                     .HasForeignKey(d => d.id_trabajo)

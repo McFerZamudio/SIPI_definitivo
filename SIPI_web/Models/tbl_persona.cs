@@ -35,6 +35,8 @@ namespace SIPI_web.Models
         [Required]
         [StringLength(50)]
         public string persona_tipoSangre { get; set; }
+        [StringLength(50)]
+        public string persona_identificacionNormalizada { get; set; }
 
         [ForeignKey(nameof(id_persona))]
         [InverseProperty(nameof(tbl_usuario.tbl_persona))]

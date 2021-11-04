@@ -25,6 +25,8 @@ namespace SIPI_web.Controllers
             public string idUser { get; set; }
             public string identificacion { get; set; }
             public string peresona_nombreCompleto { get; set; }
+            public long idTrabajo { get; set; }
+
         }
 
 
@@ -179,9 +181,14 @@ namespace SIPI_web.Controllers
         public async Task<IActionResult> listaIntegrante()
         {
             cargaIdUser();
+            var _trabajo = await _context.tbl_integrantes
+                .Include(x => x.id_estudiante1)
+                .FirstOrDefaultAsync(x => x.id_estudiante.Equals(idUser));
+
             var _integranes = await _context.tbl_integrantes
-                .Include( x=> x.id_estudiante1)
-                .Where(x => x.id_estudiante.Equals(idUser)).ToListAsync();
+                .Include(x => x.id_estudiante1)
+                .Where(x => x.id_trabajo.Equals(_trabajo.id_trabajo)).ToListAsync();
+
             return View(_integranes);
         }
 
@@ -193,8 +200,31 @@ namespace SIPI_web.Controllers
         [HttpPost]
         public async Task<tbl_persona> buscaIntegranteCedula([FromBody] datosEstudiante _datosEstudiante)
         {
-            var _result = await _context.tbl_personas.FirstOrDefaultAsync(x => x.persona_identificacion.Contains(_datosEstudiante.identificacion));
+            var _result = await _context.tbl_personas
+                .Include(x => x.tbl_integrantes)
+                .FirstOrDefaultAsync(x => x.persona_identificacionNormalizada
+            .Contains(_datosEstudiante.identificacion) || x.persona_identificacion.Contains(_datosEstudiante.identificacion));
+
+
             return _result;
+        }
+
+        [HttpPost]
+        public async Task<tbl_integrante> agregaIntegranteCedula([FromBody] datosEstudiante _datosEstudiante)
+        {
+            tbl_integrante _nuevoIntegrante = new();
+
+            _nuevoIntegrante.id_estudiante = _datosEstudiante.idUser;
+            _nuevoIntegrante.id_trabajo = _datosEstudiante.idTrabajo;
+            _nuevoIntegrante.integrantes_fechaCarga = DateTime.Now;
+            _nuevoIntegrante.integrantes_confirmado = false;
+            
+
+            _context.tbl_integrantes.Add(_nuevoIntegrante);
+            await _context.SaveChangesAsync();
+
+
+            return _nuevoIntegrante;
         }
     }
 }

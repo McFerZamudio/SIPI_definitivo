@@ -4,12 +4,37 @@
 
 </head>
 <body>
-    <label>Identificacion del otro Integrante:</label><input type="text" name="identificacion" id="identificacion" /><button onclick="buscaIdentificacion()">Buscar Integrante</button>
-    <label>Nombre del Integrante:</label><input type="text" name="nombreIntegrante" id="nombreIntegrante" value="" />
+    <div>
+        <label for="identificacion">Identificacion del otro Integrante a anexar:</label>
+        <input type="text" name="identificacion" id="identificacion" onkeydown="limpiaNombre();" />
+        <button onclick="buscaIdentificacion()">Buscar Integrante</button>
+    </div>
+    <div>
+        <label>Nombre del Integrante:</label><input type="text" name="nombreIntegrante" id="nombreIntegrante" value="" readonly />
+    </div>
+    <div>
+        <button onclick="agregaIdentificacion()">Buscar Integrante</button>
+    </div>
+    <input type="hidden" id="id_estudiante" name="id_estudiante" asp-for="id_estudiante" />
+    <input type="hidden" id="id_trabajo" name="id_trabajo" asp-for="id_trabajo" />
 </body>
 </html>
 
 <script type="text/javascript">
+
+    obtieneIdTrabajo();
+
+    function limpiaNombre() {
+        document.getElementById('nombreIntegrante').value = '';
+    }
+
+    function obtieneIdTrabajo() {
+        var paramsString = window.location.href.replace("?", "&");
+        var searchParams = new URLSearchParams(paramsString);
+
+        var _trabajo = document.getElementById('id_trabajo');
+        _trabajo.value = searchParams.get("id_trabajo");
+    }
 
     async function buscaIdentificacion() {
         var identificacion = document.getElementById('identificacion').value;
@@ -30,19 +55,34 @@
         const _result = await res.json();
         var _nombre = document.getElementById('nombreIntegrante');
 
+        var _id_estudiante = document.getElementById('id_estudiante');
+
+        _id_estudiante.value = _result.id_persona;
         _nombre.value = _result.peresona_nombreCompleto;
+        
+
+        
+
+
     };
 
-    async function llenaCiudad(estado) {
-        document.getElementById("listaCiudad").innerHTML = "";
-        limpiaCiudad();
-        var url = '/ciudad/listaCiudad/';
-       // var data = { idEstado: estado };
-        var data = estado;
+    async function agregaIdentificacion() {
+        var identificacion = document.getElementById('identificacion');
+
+        if (identificacion == '') {
+            alert('Debe buscar un companero de TEG');
+            return;
+        }
+
+        var idUser = document.getElementById('id_estudiante').value;
+        var idTrabajo = document.getElementById('id_trabajo').value;
+
+        var url = '/integrante/agregaIntegranteCedula/';
+
+        var data = { idUser: idUser, idTrabajo: idTrabajo };
         var res = await fetch(url, {
             method: 'POST',
-            //body: JSON.stringify(data),
-            body: data,
+            body: JSON.stringify(data),
             headers: {
                 'Accept': 'application/json; charset=utf-8',
                 'Content-Type': 'application/json;charset=UTF-8'
@@ -50,41 +90,9 @@
         });
 
         const _result = await res.json();
-        var sel = document.getElementById('listaCiudad');
+        window.opener.location.reload();
+        window.close();
 
-        var opt = document.createElement('option');
-        opt.innerHTML = "Seleccione una Ciudad";
-        opt.value = 0;
-        sel.appendChild(opt);
-
-        for (var i = 0; i < _result.length; i++) {
-            var opt = document.createElement('option');
-            opt.innerHTML = _result[i].ciudad_nombre;
-            opt.value = _result[i].id_ciudad;
-            sel.appendChild(opt);
-        }
     };
-
-    function seleccionaCiudad(ciudad) {
-            document.getElementById("ciudadSeleccionada").value = ciudad.options[ciudad.selectedIndex].text;
-            document.getElementById("id_ciudad").value = ciudad.value;
-    }
-
-    function limpiaCiudad() {
-        document.getElementById("ciudadSeleccionada").value ="Sin Ciudad seleccionada";
-        document.getElementById("id_ciudad").value = 0;
-    }
-
-    function enviaDatos() {
-        if (document.getElementById("id_ciudad").value > 0) {
-            var paramsString = window.location.href.replace("?", "&");
-            var searchParams = new URLSearchParams(paramsString);
-
-            window.opener.document.getElementById(searchParams.get("ciudad")).value = document.getElementById("ciudadSeleccionada").value;
-            window.opener.document.getElementById(searchParams.get("idCiudad")).value = document.getElementById("id_ciudad").value;
-            window.close();
-        } else {
-            alert('Debe seleccionar una opcion');
-        }
-    }
+ 
 </script>

@@ -14,7 +14,7 @@
     <div>
         <h5>Datos Basicos</h5>
         <hr />
-        <table >
+        <table>
             <thead>
                 <tr>
                     <th>
@@ -51,23 +51,27 @@
                                     <label>Confirmado</label>
                                 }
                             }
-
                         </td>
                     </tr>
                 }
             </tbody>
-            <tr>
-                <td>
-                    <button class="btn btn-primary" onclick="agregaIntegrante()">Agregar Nuevo Integrante</button>
-                </td>
-            </tr>
+            @{ if (Model.Count() == 1)
+                {
+                    <tr>
+                        <td>
+                            <button class="btn btn-primary" onclick="agregaIntegrante()">Agregar Nuevo Integrante</button>
+                        </td>
+                    </tr>
+                }
+
+            }
         </table>
     </div>
 </div>
 
 <script>
     function agregaIntegrante() {
-        window.open("../agregaIntegrante.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+        window.open("../agregaIntegrante.html?id_trabajo=@Model.ElementAt(0).id_trabajo&id_estudiante=@Model.ElementAt(0).id_estudiante", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
     }
 </script>
 

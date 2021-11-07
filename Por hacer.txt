@@ -1,0 +1,9 @@
+* GENERAL		Cofigurar envio de emails
+* LOGIN 		Que se pueda entrar por login o email
+* /persona/create	Quitar simbolos a la identificacion
+* Que el administrador NO le pida datos de estudiante
+* estudiante/create quitarle si esta aprobada o no a todo
+* estudiante/create incluir el origen del estudiante
+* 
+
+PS0(q)X7*o:

@@ -5,53 +5,33 @@
     Layout = "~/Views/Shared/_LayoutPublico.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>tbl_inscrito</h4>
+<h5>Inscribir en el Portal</h5>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="inscrito_email" class="control-label"></label>
-                <input asp-for="inscrito_email" class="form-control" />
+                <input asp-for="inscrito_email" placeholder="Email Principal del Usuario" class="form-control" />
                 <span asp-validation-for="inscrito_email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="inscrito_nombre" class="control-label"></label>
-                <input asp-for="inscrito_nombre" class="form-control" />
+                <input asp-for="inscrito_nombre" placeholder="Nombre de Persona o Empresa" class="form-control" />
                 <span asp-validation-for="inscrito_nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="inscrito_equipo" class="control-label"></label>
-                <input asp-for="inscrito_equipo" class="form-control" />
+                <input asp-for="inscrito_equipo" placeholder="Equipo o Proyecto" class="form-control" />
                 <span asp-validation-for="inscrito_equipo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="inscrito_sipiActivo" class="control-label"></label>
-                <input asp-for="inscrito_sipiActivo" class="form-control" />
-                <span asp-validation-for="inscrito_sipiActivo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="inscrito_fechaCreacion" class="control-label"></label>
-                <input asp-for="inscrito_fechaCreacion" class="form-control" />
-                <span asp-validation-for="inscrito_fechaCreacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="inscrito_fechaActualizacion" class="control-label"></label>
-                <input asp-for="inscrito_fechaActualizacion" class="form-control" />
-                <span asp-validation-for="inscrito_fechaActualizacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Realizar Inscripción" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Cancelar</a>
 </div>
 
 @section Scripts {

@@ -52,6 +52,7 @@ namespace SIPI_web.Servicios
         public async Task<object> buscarRegistro(string id)
         {
             var _registro = await _context.tbl_usuarios
+                .Include("AspNetRole")
                 .Include(t => t.id_usuarioNavigation)
                 .Include(t => t.usuario_ciudadNacimientoNavigation)
                 .Include(t => t.usuario_ciudadUbicacionNavigation)
@@ -75,6 +76,12 @@ namespace SIPI_web.Servicios
         public bool existeRegistro(string id)
         {
             return _context.tbl_usuarios.Any(e => e.id_usuario == id);
+        }
+
+        public async Task<bool> validaRoleUsuario(string idUser, string Roles)
+        {
+            var _result = await _context.AspNetUserRoles.AnyAsync(x => x.UserId.Equals(idUser) && x.Role.Name.Equals(Roles));
+            return _result;
         }
 
         public async Task<bool> existeUsuario(string _email)

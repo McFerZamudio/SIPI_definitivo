@@ -26,7 +26,7 @@ namespace SIPI_web.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, 
+        public LoginModel(SignInManager<IdentityUser> signInManager,
             ILogger<LoginModel> logger,
             UserManager<IdentityUser> userManager, SIPI_dbContext context)
         {
@@ -83,7 +83,7 @@ namespace SIPI_web.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        
+
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -97,6 +97,7 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                     HttpContext.Session.SetString("idUser", idUser);
                     HttpContext.Session.SetString("userName", Input.userName);
 
+                    // *** Validacion Universal para todos los usuarios HUMANOS o NO HUMANOS *** //
                     usuarioServices _usuario = new();
                     var _existeUsuario = await ((Iusuario)_usuario).existeUsuario(idUser, _context);
                     if (_existeUsuario == false)
@@ -104,12 +105,14 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                         return RedirectToAction("create", "Usuario");
                     }
 
+                    // *** TODO: Se debe validar si es HUMANO y entre aqui *** //
                     personaServices _persona = new();
                     var _existePersona = await ((Ipersona)_persona).existePersona(idUser, _context);
                     if (_existePersona == false)
                     {
                         return RedirectToAction("create", "persona");
                     }
+
 
                     estudianteServices _estudiante = new();
                     var _existeEstudiante = await ((Iestudiante)_estudiante).existeEstudiante(idUser, _context);
@@ -121,10 +124,12 @@ namespace SIPI_web.Areas.Identity.Pages.Account
 
                     return LocalRedirect(returnUrl);
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
+
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");

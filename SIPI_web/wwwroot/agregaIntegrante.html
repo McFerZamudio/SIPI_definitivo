@@ -13,31 +13,45 @@
         <label>Nombre del Integrante:</label><input type="text" name="nombreIntegrante" id="nombreIntegrante" value="" readonly />
     </div>
     <div>
-        <button onclick="agregaIdentificacion()">Buscar Integrante</button>
+        <button onclick="agregaIdentificacion()">Agrega Integrante</button>
+        <button onclick="window.close();">Cancelar</button>
     </div>
     <input type="hidden" id="id_estudiante" name="id_estudiante" asp-for="id_estudiante" />
     <input type="hidden" id="id_trabajo" name="id_trabajo" asp-for="id_trabajo" />
+    <input type="hidden" id="PersonaIdentificacion" name="PersonaIdentificacion" asp-for="PersonaIdentificacion" />
 </body>
 </html>
 
 <script type="text/javascript">
 
-    obtieneIdTrabajo();
+    obtieneIdVarios();
 
     function limpiaNombre() {
         document.getElementById('nombreIntegrante').value = '';
     }
 
-    function obtieneIdTrabajo() {
+    function obtieneIdVarios() {
         var paramsString = window.location.href.replace("?", "&");
         var searchParams = new URLSearchParams(paramsString);
 
         var _trabajo = document.getElementById('id_trabajo');
         _trabajo.value = searchParams.get("id_trabajo");
+
+        var _PersonaIdentificacion = document.getElementById('PersonaIdentificacion');
+        _PersonaIdentificacion.value = searchParams.get("PersonaIdentificacion");
     }
 
     async function buscaIdentificacion() {
         var identificacion = document.getElementById('identificacion').value;
+        var PersonaIdentificacion = document.getElementById('PersonaIdentificacion').value;
+
+        if (identificacion == PersonaIdentificacion) {
+            document.getElementById('identificacion').value = '';
+            alert('Ya este integrante fue ingresado, favor incluir otro');
+        }
+
+
+
         document.getElementById('nombreIntegrante').value = '';
 
         var url = '/integrante/buscaIntegranteCedula/';

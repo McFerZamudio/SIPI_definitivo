@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using SIPI_web.Data;
 using SIPI_web.Models;
 using System;
@@ -41,12 +42,18 @@ namespace SIPI_web
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //.AddRoleManager<RoleManager<IdentityRole>>()
+            //.AddEntityFrameworkStores<ApplicationDbContext>()
+            //.AddDefaultUI()
+            //.AddDefaultTokenProviders();
+
             services.AddControllersWithViews();
 
             services.AddSession();
 
         }
-
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

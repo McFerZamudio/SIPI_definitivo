@@ -189,6 +189,8 @@ namespace SIPI_web.Controllers
                 .Include(x => x.id_estudiante1)
                 .Where(x => x.id_trabajo.Equals(_trabajo.id_trabajo)).ToListAsync();
 
+            ViewData["idUser"] = idUser;
+
             return View(_integranes);
         }
 

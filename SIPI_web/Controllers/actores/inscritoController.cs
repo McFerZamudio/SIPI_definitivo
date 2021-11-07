@@ -56,6 +56,10 @@ namespace SIPI_web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id_inscrito,inscrito_email,inscrito_nombre,inscrito_equipo,inscrito_sipiActivo,inscrito_fechaCreacion,inscrito_fechaActualizacion")] tbl_inscrito tbl_inscrito)
         {
+            tbl_inscrito.inscrito_fechaActualizacion = DateTime.Now;
+            tbl_inscrito.inscrito_fechaCreacion = DateTime.Now;
+            tbl_inscrito.inscrito_sipiActivo = false;
+
             if (ModelState.IsValid)
             {
                 tbl_inscrito.id_inscrito = Guid.NewGuid();

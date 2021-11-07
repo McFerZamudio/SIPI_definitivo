@@ -37,14 +37,24 @@
                             @Html.DisplayFor(modelItem => item.id_estudiante1.persona_nombre)
                         </td>
                         <td>
-                            <b>Fecha Carga: </b>@item.integrantes_fechaCarga <br />
+                            <b>Fecha Carga: </b>@item.integrantes_fechaCarga.Value.ToShortDateString() <br />
                             <b>Ultima Actualizacion: </b>@Html.DisplayFor(modelItem => item.integrandes_fechaConfirmado)
                         </td>
                         <td>
                             @{
                                 if (item.integrantes_confirmado == false)
                                 {
-                                    <button>Confirmar</button>
+                                    if (item.id_estudiante != ViewData["idUser"].ToString())
+                                    {
+
+                                        <label>Por Confirmar</label>
+                                    }
+                                    else
+                                    {
+                                        <button>Confirmar</button>
+                                    }
+
+
                                 }
                                 else
                                 {
@@ -71,7 +81,7 @@
 
 <script>
     function agregaIntegrante() {
-        window.open("../agregaIntegrante.html?id_trabajo=@Model.ElementAt(0).id_trabajo&id_estudiante=@Model.ElementAt(0).id_estudiante", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+        window.open("../agregaIntegrante.html?id_trabajo=@Model.ElementAt(0).id_trabajo&PersonaIdentificacion=@Model.ElementAt(0).id_estudiante1.persona_identificacion", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
     }
 </script>
 

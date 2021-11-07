@@ -15,8 +15,6 @@ namespace SIPI_web.Controllers
     public class usuarioController : Controller
     {
 
-
-
         private string idUser;
         private void cargaIdUser()
         {

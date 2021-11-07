@@ -2,16 +2,24 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SIPI_web.Models;
+using SIPI_web.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SIPI_web.Controllers
 {
     public class HomeController : Controller
     {
+        private string idUser;
+        private void cargaIdUser()
+        {
+            idUser = HttpContext.Session.GetString("idUser");
+        }
+
         private readonly ILogger<HomeController> _logger;
         private readonly SIPI_dbContext _context;
 
@@ -21,11 +29,16 @@ namespace SIPI_web.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("homeEstudiante", "estudiante");
+                cargaIdUser();
+
+                usuarioServices _usuarioServices = new(_context);
+                if (await _usuarioServices.validaRoleUsuario(idUser,"estudiante")) return RedirectToAction("homeEstudiante", "estudiante");
+                if (await _usuarioServices.validaRoleUsuario(idUser, "proyectos")) return RedirectToAction("homeAdministrador", "administrador");
+
             }
             return View();
         }

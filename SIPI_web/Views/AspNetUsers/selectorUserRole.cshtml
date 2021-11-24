@@ -1,47 +1,25 @@
-﻿@model SIPI_web.Models.AspNetUser
+﻿@model List<SIPI_web.Models.AspNetUserRole>
 
 @{
     ViewData["Title"] = "selectorUserRole";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    //Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
-<h1>selectorUserRole</h1>
 <form action="/aspnetusers/guardaUserRole" method="post">
-    <div>
-        <h4>tbl_persona</h4>
-        <hr />
-        <dl class="row">
-            <dd class="col-sm-10">
-                Nombre Completo
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayFor(model => model.tbl_usuario.tbl_persona.peresona_nombreCompleto)
-            </dt>
-            <dd class="col-sm-10">
-                Identificacion
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayFor(model => model.tbl_usuario.tbl_persona.persona_identificacion)
-            </dt>
+    @{
+        bool _rolselected = false;
+        var _rolesLista = ViewData["roles"] as List<AspNetRole>;
 
-            <dt>
-                @{
-                    bool _rolselected = false;
-                    var _rolesLista = ViewData["roles"] as List<AspNetRole>;
-                    var _rolesUser = Model.tbl_usuario.AspNetUserRoles;
-                    foreach (var item2 in _rolesLista)
-                    {
-                        _rolselected = _rolesUser.Any(x => x.RoleId.Equals(item2.Id));
+        var _idAsignar = Model.ElementAt(0).UserId;
 
-                        <input type="checkbox" id="@item2.Name" name="@item2.Name" checked="@_rolselected" />
-                        <label>@item2.Name</label><br />
-                    }
-                }
-            </dt>
+        <input type="hidden" id="idAsignar" name="idAsignar" value="@_idAsignar" />
 
-        </dl>
-    </div>
-    <div>
-    </div>
-    <button type="submit">enviar</button>
+        foreach (var item2 in _rolesLista)
+        {
+            _rolselected = Model.Any(x => x.RoleId.Equals(item2.Id));
+
+            <input type="checkbox" id="@item2.Name" name="@item2.Name" checked="@_rolselected" />
+            <label>@item2.Name</label><br />
+        }
+    }
+    <button type="submit">Guardar Roles</button>
 </form>

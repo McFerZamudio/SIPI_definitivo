@@ -5,9 +5,8 @@
     Layout = "~/Views/Shared/_LayoutPublico.cshtml";
 }
 
-<h1>Edit</h1>
 
-<h4>tbl_inscrito</h4>
+<h5>Modificar Usuario autorizado en SIPI</h5>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,17 +14,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id_inscrito" />
             <div class="form-group">
-                <label asp-for="inscrito_email" class="control-label"></label>
+                <label asp-for="inscrito_email" class="control-label">Email Principal del Usuario</label>
                 <input asp-for="inscrito_email" class="form-control" />
                 <span asp-validation-for="inscrito_email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="inscrito_nombre" class="control-label"></label>
+                <label asp-for="inscrito_nombre" class="control-label">Nombre de Persona o Empresa</label>
                 <input asp-for="inscrito_nombre" class="form-control" />
                 <span asp-validation-for="inscrito_nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="inscrito_equipo" class="control-label"></label>
+                <label asp-for="inscrito_equipo" class="control-label">Origen del Usuario</label>
                 <input asp-for="inscrito_equipo" class="form-control" />
                 <span asp-validation-for="inscrito_equipo" class="text-danger"></span>
             </div>
@@ -35,24 +34,24 @@
                 <span asp-validation-for="inscrito_sipiActivo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="inscrito_fechaCreacion" class="control-label"></label>
-                <input asp-for="inscrito_fechaCreacion" class="form-control" />
+                <label asp-for="inscrito_fechaCreacion" class="control-label">Fecha de Autorización</label>
+                <input asp-for="inscrito_fechaCreacion" class="form-control" readonly />
                 <span asp-validation-for="inscrito_fechaCreacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="inscrito_fechaActualizacion" class="control-label"></label>
-                <input asp-for="inscrito_fechaActualizacion" class="form-control" />
+                <label asp-for="inscrito_fechaActualizacion" class="control-label">Ingreso a SIPI por primera vez:</label>
+                <input asp-for="inscrito_fechaActualizacion" class="form-control" readonly />
                 <span asp-validation-for="inscrito_fechaActualizacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Modificar Inscripción" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar a Listado General</a>
 </div>
 
 @section Scripts {

@@ -52,7 +52,6 @@ namespace SIPI_web.Servicios
         public async Task<object> buscarRegistro(string id)
         {
             var _registro = await _context.tbl_usuarios
-                .Include("AspNetRole")
                 .Include(t => t.id_usuarioNavigation)
                 .Include(t => t.usuario_ciudadNacimientoNavigation)
                 .Include(t => t.usuario_ciudadUbicacionNavigation)

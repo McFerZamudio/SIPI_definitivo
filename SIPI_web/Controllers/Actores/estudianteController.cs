@@ -80,6 +80,12 @@ namespace SIPI_web.Controllers
             {
                 return RedirectToAction("edit", new { id = idUser });
             }
+
+            if (!_estudiante.validaRolEstudiantre(idUser))
+            {
+                return RedirectToPage("/Account/Manage/Index");
+            }
+
             ViewData["id_estudiante"] = idUser;
             ViewData["UserName"] = ((Iusuario)_estudiante).buscaNombreUsuario(idUser, _context);
             ViewData["id_equipo"] = new SelectList(_context.tbl_equipos, "id_equipo", "equipo_nombre");
@@ -125,6 +131,12 @@ namespace SIPI_web.Controllers
             if (id == null)
             {
                 return NotFound();
+            }
+
+            if (!_estudiante.validaRolEstudiantre(id))
+            {
+                return Redirect("/Identity/Account/Manage/Index");
+                //return new RedirectToPageResult("Identity/Account/Manage");
             }
 
             var tbl_estudiante = await _context.tbl_estudiantes.FindAsync(id);

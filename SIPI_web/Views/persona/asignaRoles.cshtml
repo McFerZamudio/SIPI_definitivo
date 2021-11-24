@@ -1,0 +1,20 @@
+﻿@model SIPI_web.Models.tbl_persona
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LayoutPublico.cshtml";
+}
+
+<br />
+<div>
+    <h4><b style="color:blue">Datos Agregados en el Portal: </b>@Html.DisplayFor(model => model.peresona_nombreCompleto)</h4>
+    <hr />
+</div>
+<h5>Roles Asignados</h5>
+<div>
+    <partial name="../AspNetUsers/selectorUserRole" model="@ViewData["personaRoles"]" />
+</div>
+<br/>
+<div>
+    <a asp-action="index" asp-controller="persona">Regresar a Lista</a>
+</div>

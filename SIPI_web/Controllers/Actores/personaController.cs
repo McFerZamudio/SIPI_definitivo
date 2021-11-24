@@ -181,7 +181,30 @@ namespace SIPI_web.Controllers
             return Json(new { existe = _existe });
         }
 
+        public async Task<IActionResult> asignaRoles(string id)
+        {
 
+            var _personaRol = await _context.AspNetUserRoles
+                .Where(m => m.UserId.Equals(id)).ToListAsync();
+
+            ViewData["roles"] = _context.AspNetRoles.ToList();
+            ViewData["personaRoles"] = _personaRol;
+            ViewData["idAsignar"] = id;
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tbl_persona = await _persona.buscarRegistro(id);
+            if (tbl_persona == null)
+            {
+                return NotFound();
+            }
+
+            return View(tbl_persona);
+
+        }
 
 
 

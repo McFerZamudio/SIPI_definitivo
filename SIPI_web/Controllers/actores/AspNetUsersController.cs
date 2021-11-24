@@ -205,44 +205,36 @@ namespace SIPI_web.Controllers
             return View(_persona);
         }
 
-        public async Task<IActionResult> guardaUserRole(IFormCollection collection)
+        public async Task<IActionResult> guardaUserRole(IFormCollection collection, string idAsignar)
         {
             if (collection is not null)
             {
                 cargaIdUser();
-
+                idUser = idAsignar;
                 var _elimina = _context.AspNetUserRoles.Where(x => x.UserId.Equals(idUser));
                 _context.AspNetUserRoles.RemoveRange(_elimina);
                 await _context.SaveChangesAsync();
 
                 foreach (var item in collection)
                 {
+                    if (item.Value == "on")
+                    {
+                        var _tipo = item.Value;
+                        var _idRole = await _context.AspNetRoles.FirstOrDefaultAsync(x => x.Name.Equals(item.Key));
 
+                        AspNetUserRole agregaRole = new();
 
-                    var _idRole = await _context.AspNetRoles.FirstOrDefaultAsync(x => x.Name.Equals(item.Key));
-
-                    AspNetUserRole agregaRole = new();
-
-                    agregaRole.RoleId = _idRole.Id;
-                    agregaRole.UserId = idUser;
+                        agregaRole.RoleId = _idRole.Id;
+                        agregaRole.UserId = idUser;
 
                         _context.AddRange(agregaRole);
+                    }
                 }
                 await _context.SaveChangesAsync();
 
             }
 
-            //ViewData["roles"] = _context.AspNetRoles.ToList();
-            //var _persona = await _context.AspNetUsers
-            //    .Include(t => t.tbl_usuario.tbl_persona)
-            //    .Include(t => t.tbl_usuario.AspNetUserRoles)
-            //    .FirstOrDefaultAsync(m => m.tbl_usuario.tbl_persona.id_persona == id);
-            //if (_persona == null)
-            //{
-            //    return NotFound();
-            //}
-
-            return View();
+            return RedirectToAction("index","persona");
         }
 
 

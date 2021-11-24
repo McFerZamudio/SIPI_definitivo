@@ -79,6 +79,12 @@ namespace SIPI_web.Servicios
             return _context.tbl_estudiantes.Any(e => e.id_estudiante == id);
         }
 
+        public bool validaRolEstudiantre(string id)
+        {
+            var _result = _context.AspNetUserRoles.Any(x => x.UserId.Equals(id) && x.Role.Name.Equals("estudiante"));
+            return _result;
+        }
+
         public bool existeInscrito(string _email)
         {
            return _context.tbl_inscritos.Any(e => e.inscrito_email == _email);

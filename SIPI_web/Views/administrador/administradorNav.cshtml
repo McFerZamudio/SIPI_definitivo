@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http
 
 <ul class="nav flex-column">
-    <li class="nav-item"><a class="nav-link" id="Index" asp-action="index" asp-controller="inscrito">Permitir Registro en el Portal</a></li>
-    <li class="nav-item"><a class="nav-link" id="email" asp-action="listaIntegrante" asp-controller="integrante">Integrantes del TEG</a></li>
+    <li class="nav-item"><a class="nav-link" id="Index" asp-action="index" asp-controller="inscrito">Autorizar en el Portal</a></li>
+    <li class="nav-item"><a class="nav-link" id="email" asp-action="index" asp-controller="persona">Definir Roles</a></li>
     <li class="nav-item"><a class="nav-link" id="change-password" asp-action="./ChangePassword">Consultores</a></li>
     <li class="nav-item"><a class="nav-link" id="actualizaDatos" asp-action="edit" asp-controller="usuario" asp-route-id="@Context.Session.GetString("idUser")">Actualizar mis Datos</a></li>
 </ul>

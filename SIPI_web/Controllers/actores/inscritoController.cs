@@ -65,7 +65,7 @@ namespace SIPI_web.Controllers
                 tbl_inscrito.id_inscrito = Guid.NewGuid();
                 _context.Add(tbl_inscrito);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("details",new { id = tbl_inscrito.id_inscrito });
             }
             return View(tbl_inscrito);
         }
@@ -116,7 +116,7 @@ namespace SIPI_web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("details", new { id = tbl_inscrito.id_inscrito });
             }
             return View(tbl_inscrito);
         }

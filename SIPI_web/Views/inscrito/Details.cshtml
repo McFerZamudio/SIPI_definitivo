@@ -5,51 +5,57 @@
     Layout = "~/Views/Shared/_LayoutPublico.cshtml";
 }
 
-<h1>Details</h1>
 
 <div>
-    <h4>tbl_inscrito</h4>
+    <h5>Usuario Autorizado en el portal</h5>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.inscrito_email)
+        <dt class="col-sm-2">
+            Correo del Usuario:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.inscrito_email)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.inscrito_nombre)
+        <dt class="col-sm-2">
+            Nombre del Usuario:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.inscrito_nombre)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.inscrito_equipo)
+        <dt class="col-sm-2">
+            Origen del Usuario
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.inscrito_equipo)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.inscrito_sipiActivo)
+        <dt class="col-sm-2">
+            Ya se registro en SIPI
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.inscrito_sipiActivo)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.inscrito_fechaCreacion)
+        <dt class="col-sm-2">
+            Fecha de Autorización
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.inscrito_fechaCreacion)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.inscrito_fechaActualizacion)
+        <dt class="col-sm-2">
+            Ingreso a SIPI por primera vez:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.inscrito_fechaActualizacion)
         </dd>
     </dl>
 </div>
+<hr />
+@*<div>
+    @{
+        var _roles = (List<SIPI_web.Models.AspNetRole>) ViewData["persona"];
+    }
+            <partial name="../AspNetUsers/selectorUserRole" model="@ViewData["_roles"]" />
+</div>*@
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.id_inscrito">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.id_inscrito">Modificar</a> |
+    <a asp-action="Index">Regresar a Lista de Autorizados</a>
 </div>

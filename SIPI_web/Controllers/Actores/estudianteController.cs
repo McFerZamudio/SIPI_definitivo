@@ -81,10 +81,10 @@ namespace SIPI_web.Controllers
                 return RedirectToAction("edit", new { id = idUser });
             }
 
-            if (!_estudiante.validaRolEstudiantre(idUser))
-            {
-                return RedirectToPage("/Account/Manage/Index");
-            }
+            //if (!_estudiante.validaRolEstudiantre(idUser))
+            //{
+            //    return RedirectToPage("/Account/Manage/Index");
+            //}
 
             ViewData["id_estudiante"] = idUser;
             ViewData["UserName"] = ((Iusuario)_estudiante).buscaNombreUsuario(idUser, _context);

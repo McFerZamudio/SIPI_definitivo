@@ -14,7 +14,7 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" id="email" class="form-control" onblur="existeUserEmail();" />
+                <input asp-for="Input.Email" id="email" class="form-control" onblur="existeUserEmail();" autocomplete="off" />
                 <label id="validarEmail" class="form-control" style="border:solid; border-width:1px; text-align:center">Sin Validar email !</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                 <input type="hidden" id="emailValido" value="false" />
@@ -22,18 +22,18 @@
             <div class="form-group">
                 <label asp-for="Input.Password"></label>
                 <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <span asp-validation-for="Input.Password" class="text-danger" autocomplete="off" ></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.ConfirmPassword"></label>
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger" autocomplete="off" ></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.nombreUsuario">Nombre Usuario - Todos vera este nombre</label><br />
-                <input asp-for="Input.nombreUsuario" id="nombreUsuario" value="" class="form-control" onblur="existeUserName();" />
+                <label asp-for="Input.nombreUsuario">Nombre Usuario - Todos veran este nombre</label><br />
+                <input asp-for="Input.nombreUsuario" id="nombreUsuario" value="" class="form-control" onblur="existeUserName();" autocomplete="off"  />
                 <label id="validarNombreUsuario" class="form-control" style="border:solid; border-width:1px; text-align:center">Sin Validar Nombre Usuario !</label>
-                <span asp-validation-for="Input.nombreUsuario" class="text-danger"></span>
+                <span asp-validation-for="Input.nombreUsuario" class="text-danger" autocomplete="off" ></span>
                 <input type="hidden" id="nombreUsuarioValido" value="false" />
 
             </div>

@@ -13,12 +13,10 @@ namespace SIPI_web.Interface
         {
             return _context.AspNetUsers.FirstOrDefault (x => x.Id.Equals(id)).UserName.ToString();
         }
-
         public async Task<bool> existeUsuario(string id, SIPI_dbContext _context)
         {
             return await _context.tbl_usuarios.AnyAsync(x => x.id_usuario.Equals(id));
         }
-
     }
 
     interface Ipersona : Iusuario
@@ -27,7 +25,6 @@ namespace SIPI_web.Interface
         {
             return _context.tbl_personas.FirstOrDefault(x => x.id_persona.Equals(id)).peresona_nombreCompleto.ToString();
         }
-
         public async Task<bool> existePersona(string id, SIPI_dbContext _context)
         {
             return await _context.tbl_personas.AnyAsync(x => x.id_persona.Equals(id));

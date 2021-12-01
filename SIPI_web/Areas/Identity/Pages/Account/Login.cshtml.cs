@@ -15,6 +15,8 @@ using SIPI_web.Servicios;
 using SIPI_web.Interface;
 using SIPI_web.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace SIPI_web.Areas.Identity.Pages.Account
 {
@@ -93,13 +95,19 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
 
-                    var idUser = _context.AspNetUsers.Where(x => x.UserName.Equals(Input.userName)).FirstOrDefault().Id;
-                    HttpContext.Session.SetString("idUser", idUser);
+                    var idUser = _context.AspNetUsers
+                    .Include(x => x.AspNetUserRoles)
+                    .Where(x => x.UserName.Equals(Input.userName)).FirstOrDefault();
+
+                    string jsonUser = JsonSerializer.Serialize(idUser);
+
+                    HttpContext.Session.SetString("User", jsonUser);
+                    HttpContext.Session.SetString("idUser", idUser.Id);
                     HttpContext.Session.SetString("userName", Input.userName);
 
                     // *** Validacion Universal para todos los usuarios HUMANOS o NO HUMANOS *** //
                     usuarioServices _usuario = new();
-                    var _existeUsuario = await ((Iusuario)_usuario).existeUsuario(idUser, _context);
+                    var _existeUsuario = await ((Iusuario)_usuario).existeUsuario(idUser.Id, _context);
                     if (_existeUsuario == false)
                     {
                         return RedirectToAction("create", "Usuario");
@@ -107,7 +115,7 @@ namespace SIPI_web.Areas.Identity.Pages.Account
 
                     // *** TODO: Se debe validar si es HUMANO y entre aqui *** //
                     personaServices _persona = new();
-                    var _existePersona = await ((Ipersona)_persona).existePersona(idUser, _context);
+                    var _existePersona = await ((Ipersona)_persona).existePersona(idUser.Id, _context);
                     if (_existePersona == false)
                     {
                         return RedirectToAction("create", "persona");
@@ -115,7 +123,7 @@ namespace SIPI_web.Areas.Identity.Pages.Account
 
 
                     estudianteServices _estudiante = new();
-                    var _existeEstudiante = await ((Iestudiante)_estudiante).existeEstudiante(idUser, _context);
+                    var _existeEstudiante = await ((Iestudiante)_estudiante).existeEstudiante(idUser.Id, _context);
                     if (_existeEstudiante == false)
                     {
                         return RedirectToAction("create", "estudiante");

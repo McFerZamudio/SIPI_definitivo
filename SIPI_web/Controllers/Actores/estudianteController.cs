@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -68,23 +71,32 @@ namespace SIPI_web.Controllers
                 return NotFound();
             }
 
-           ViewData["userName"] = HttpContext.Session.GetString("userName");
+            ViewData["userName"] = HttpContext.Session.GetString("userName");
             return View(tbl_estudiante);
         }
 
         // GET: estudiante/Create
+        
         public IActionResult Create()
         {
+  
+            var _userRolesJson = HttpContext.Session.GetString("userRoles");
+
+                   JsonSerializerOptions options = new()
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        WriteIndented = true
+                    };
+
+            //var _userRoles = JsonSerializer.Deserialize<AspNetUserRole>(_userRolesJson, options);
+
+
+
             cargaIdUser();
             if (_estudiante.existeRegistro(idUser) == true)
             {
                 return RedirectToAction("edit", new { id = idUser });
             }
-
-            //if (!_estudiante.validaRolEstudiantre(idUser))
-            //{
-            //    return RedirectToPage("/Account/Manage/Index");
-            //}
 
             ViewData["id_estudiante"] = idUser;
             ViewData["UserName"] = ((Iusuario)_estudiante).buscaNombreUsuario(idUser, _context);
@@ -105,14 +117,14 @@ namespace SIPI_web.Controllers
         public async Task<IActionResult> Create([Bind("id_estudiante,estudiante_fechaIngreaso,estudiante_fechaActualizacion,id_equipo,id_sede,id_metodologiaEstatus,id_pasantiaEstatus,id_informeAcademicoEstatus,estudiante_cohorte,id_estudianteEstatus")] tbl_estudiante tbl_estudiante)
         {
 
- 
+
             tbl_estudiante.estudiante_fechaActualizacion = DateTime.Now;
 
             if (ModelState.IsValid)
             {
                 _context.Add(tbl_estudiante);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("details", "estudiante", new { id = tbl_estudiante.id_estudiante});
+                return RedirectToAction("details", "estudiante", new { id = tbl_estudiante.id_estudiante });
             }
 
             ViewData["id_equipo"] = new SelectList(_context.tbl_equipos, "id_equipo", "equipo_nombre", tbl_estudiante.id_equipo);
@@ -179,13 +191,13 @@ namespace SIPI_web.Controllers
                     if (!tbl_estudianteExists(tbl_estudiante.id_estudiante))
                     {
                         return NotFound();
-                    } 
+                    }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction("details", new { id = tbl_estudiante.id_estudiante } );
+                return RedirectToAction("details", new { id = tbl_estudiante.id_estudiante });
             }
             ViewData["id_equipo"] = new SelectList(_context.tbl_equipos, "id_equipo", "equipo_nombre", tbl_estudiante.id_equipo);
             ViewData["id_estudianteEstatus"] = new SelectList(_context.tbl_estudianteEstatuses, "id_estudianteEstatus", "estudianteEstatus_codigo", tbl_estudiante.id_estudianteEstatus);

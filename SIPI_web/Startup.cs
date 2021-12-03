@@ -14,6 +14,7 @@ using SIPI_web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SIPI_web
@@ -36,22 +37,20 @@ namespace SIPI_web
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
-        Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDatabaseDeveloperPageExceptionFilter();
+                options.UseSqlServer(
+                Configuration.GetConnectionString("DefaultConnection")));
+                services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //.AddRoleManager<RoleManager<IdentityRole>>()
-            //.AddEntityFrameworkStores<ApplicationDbContext>()
-            //.AddDefaultUI()
-            //.AddDefaultTokenProviders();
+
 
             services.AddControllersWithViews();
 
             services.AddSession();
+
+ 
 
         }
 

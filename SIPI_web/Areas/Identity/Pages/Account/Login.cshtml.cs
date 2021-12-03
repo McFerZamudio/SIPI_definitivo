@@ -17,6 +17,7 @@ using SIPI_web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SIPI_web.Areas.Identity.Pages.Account
 {
@@ -99,9 +100,15 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                     .Include(x => x.AspNetUserRoles)
                     .Where(x => x.UserName.Equals(Input.userName)).FirstOrDefault();
 
-                    string jsonUser = JsonSerializer.Serialize(idUser);
+                      JsonSerializerOptions options = new()
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve,
+                        WriteIndented = true
+                    };
 
-                    HttpContext.Session.SetString("User", jsonUser);
+                    string jsonUser = JsonSerializer.Serialize(idUser.AspNetUserRoles, options);
+
+                    HttpContext.Session.SetString("userRoles", jsonUser);
                     HttpContext.Session.SetString("idUser", idUser.Id);
                     HttpContext.Session.SetString("userName", Input.userName);
 
@@ -121,13 +128,16 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                         return RedirectToAction("create", "persona");
                     }
 
-
-                    estudianteServices _estudiante = new();
-                    var _existeEstudiante = await ((Iestudiante)_estudiante).existeEstudiante(idUser.Id, _context);
-                    if (_existeEstudiante == false)
+                    if (personaServices.esEstudiante(idUser.Id, _context) == true)
                     {
-                        return RedirectToAction("create", "estudiante");
+                        estudianteServices _estudiante = new();
+                        var _existeEstudiante = await ((Iestudiante)_estudiante).existeEstudiante(idUser.Id, _context);
+                        if (_existeEstudiante == false)
+                        {
+                            return RedirectToAction("create", "estudiante");
+                        }
                     }
+
 
 
                     return LocalRedirect(returnUrl);

@@ -1,0 +1,48 @@
+﻿@model SIPI_web.Models.tbl_trabajo
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutEstudiante.cshtml";
+}
+
+<h4>Trabajo Especial de Grado</h4>
+<hr />
+<div class="row">
+    <div>
+        <partial name="../teg/tegNav" />
+    </div>
+    <div>
+        <h5>Datos Basicos</h5>
+        <hr />
+        <form asp-action="seleccionaConsultores">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Consultor Academico
+                        </th>
+                        <th>
+                            Consultor Medotologico
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select class="form-control" asp-items="ViewBag.consultoresAcademicos"></select>
+                        </td>
+                        <td>
+                            <select class="form-control" asp-items="ViewBag.consultoresMetodologicos"></select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

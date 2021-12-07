@@ -189,7 +189,7 @@ namespace SIPI_web.Controllers.trabajos
             cargaIdUser();
             var _verificaTeg = _misTrabajos.buscaTrabajoPorUser(idUser, 1);
 
-            if (_verificaTeg.Result.Count() ==0)
+            if (_verificaTeg.Result.Count() == 0)
             {
                 tbl_trabajo trabajo = new();
 
@@ -198,11 +198,28 @@ namespace SIPI_web.Controllers.trabajos
                 trabajo.id_tipoTrabajo = 1;
                 return View(trabajo);
             }
-            
-            var _miTeg = _misTrabajos.buscaTrabajoPorID(_verificaTeg.Result[0].id_trabajo);
-             return View(_miTeg);
 
-           
+            var _miTeg = _misTrabajos.buscaTrabajoPorID(_verificaTeg.Result[0].id_trabajo);
+            return View(_miTeg);
+
+
+        }
+
+        public IActionResult asignaConsultores()
+        {
+            var consultoresAcademicos = _context.AspNetUserRoles
+                .Include(x => x.UserNavigation.tbl_persona)
+                .Where(x => x.Role.Name.Equals("consultor academico"));
+
+            var consultoresMetodologicos = _context.AspNetUserRoles
+                .Include(x => x.UserNavigation.tbl_persona)
+                .Where(x => x.Role.Name.Equals("consultor metodologico"));
+
+
+            ViewData["consultoresAcademicos"] = new SelectList(consultoresAcademicos, "UserNavigation.tbl_persona.id_persona", "UserNavigation.tbl_persona.peresona_nombreCompleto");
+            ViewData["consultoresMetodologicos"] = new SelectList(consultoresMetodologicos, "UserNavigation.tbl_persona.id_persona", "UserNavigation.tbl_persona.peresona_nombreCompleto");
+
+            return View();
         }
 
     }

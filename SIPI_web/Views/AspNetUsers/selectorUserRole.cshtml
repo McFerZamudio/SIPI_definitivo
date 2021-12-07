@@ -9,9 +9,9 @@
         bool _rolselected = false;
         var _rolesLista = ViewData["roles"] as List<AspNetRole>;
 
-        var _idAsignar = Model.ElementAt(0).UserId;
+        var _idAsignar = Context.Request.RouteValues["id"];
 
-        <input type="hidden" id="idAsignar" name="idAsignar" value="@_idAsignar" />
+    <input type="hidden" id="idAsignar" name="idAsignar" value="@_idAsignar" />
 
         foreach (var item2 in _rolesLista)
         {

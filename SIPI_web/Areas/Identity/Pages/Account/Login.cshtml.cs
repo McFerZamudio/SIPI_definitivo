@@ -100,15 +100,8 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                     .Include(x => x.AspNetUserRoles)
                     .Where(x => x.UserName.Equals(Input.userName)).FirstOrDefault();
 
-                      JsonSerializerOptions options = new()
-                    {
-                        ReferenceHandler = ReferenceHandler.Preserve,
-                        WriteIndented = true
-                    };
+                    asignaRolEstudiante(idUser.Id);
 
-                    string jsonUser = JsonSerializer.Serialize(idUser.AspNetUserRoles, options);
-
-                    HttpContext.Session.SetString("userRoles", jsonUser);
                     HttpContext.Session.SetString("idUser", idUser.Id);
                     HttpContext.Session.SetString("userName", Input.userName);
 
@@ -162,6 +155,26 @@ namespace SIPI_web.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private void asignaRolEstudiante(string _idUser)
+        {
+
+            var _validaRoles = _context.AspNetUserRoles.Any(x => x.UserId.Equals(_idUser));
+
+            if (_validaRoles == false)
+            {
+                AspNetUserRole agregaRole = new();
+
+                agregaRole.RoleId = "15b55cf3-dd3f-4a43-8647-39ce15986988";
+                agregaRole.UserId = _idUser;
+
+                _context.Add(agregaRole);
+                _context.SaveChanges();
+
+            }
+
+
         }
     }
 }

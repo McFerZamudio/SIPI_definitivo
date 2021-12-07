@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SIPI_web.Models;
 using SIPI_web.Servicios;
 using System;
@@ -18,7 +19,7 @@ namespace SIPI_web.Controllers
 
         public IActionResult validaRuta()
         {
-            var user = User.Claims.ToList();
+            var user = HttpContext.Session.GetString("idUser");
             if (personaServices.esEstudiante(user.ElementAt(0).ToString(), _context))
             {
                 return RedirectToAction("create", "estudiante");

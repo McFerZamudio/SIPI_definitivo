@@ -22,7 +22,7 @@ namespace SIPI_web.Controllers
         // GET: AspNetRoles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AspNetRoles.ToListAsync());
+            return View(await _context.AspNetRoles.OrderBy(x => x.Name).ToListAsync());
         }
 
         // GET: AspNetRoles/Details/5

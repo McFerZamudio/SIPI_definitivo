@@ -100,7 +100,7 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                     .Include(x => x.AspNetUserRoles)
                     .Where(x => x.UserName.Equals(Input.userName)).FirstOrDefault();
 
-                    asignaRolEstudiante(idUser.Id);
+                    
 
                     HttpContext.Session.SetString("idUser", idUser.Id);
                     HttpContext.Session.SetString("userName", Input.userName);
@@ -113,6 +113,7 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                         return RedirectToAction("create", "Usuario");
                     }
 
+                    asignaRolEstudiante(idUser.Id);
                     // *** TODO: Se debe validar si es HUMANO y entre aqui *** //
                     personaServices _persona = new();
                     var _existePersona = await ((Ipersona)_persona).existePersona(idUser.Id, _context);

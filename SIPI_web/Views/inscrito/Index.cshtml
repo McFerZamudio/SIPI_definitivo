@@ -46,8 +46,7 @@
                 Fecha Ingreso: @Html.DisplayFor(modelItem => item.inscrito_fechaActualizacion)
             </td>
             <td>
-                @*<a asp-action="Details" asp-route-id="@item.id_inscrito">Detalles</a>*@
-                @*<a asp-action="Delete" asp-route-id="@item.id_inscrito">Delete</a>*@
+                <a asp-action="asignaRoles" asp-route-id="@item.id_inscrito">Asigna Roles</a> |
             </td>
         </tr>
 }

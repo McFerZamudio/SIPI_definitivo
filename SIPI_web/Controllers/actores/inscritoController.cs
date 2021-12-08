@@ -46,6 +46,7 @@ namespace SIPI_web.Controllers
         // GET: inscrito/Create
         public IActionResult Create()
         {
+            ViewBag["roles"] = new SelectList(_context.AspNetUserRoles.Include(x => x.Role).ToList(), "Role.id", "Role.name");
             return View();
         }
 

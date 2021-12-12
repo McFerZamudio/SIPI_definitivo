@@ -1,4 +1,7 @@
-﻿using SIPI_web.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SIPI_web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +11,32 @@ namespace SIPI_web.Servicios
 {
     public class aspNetUserRolesServices
     {
+        public void agregaRolPrimario(AspNetUser idUser, SIPI_dbContext _context)
+        {
+            var _validaRol = _context.AspNetUserRoles.Any(x => x.UserId.Equals(idUser.Id));
 
-        private async void agregaUserRole(string myUser, string myRole, SIPI_dbContext _context)
+            if (_validaRol == false)
+            {
+                var _rol = _context.tbl_inscritos.FirstOrDefault(x => x.inscrito_email.Equals(idUser.Email));
+                if (_rol is not null)
+                {
+                    agregaUserRole(idUser.Id, _rol.inscrito_rol, _context);
+                }
+            }
+
+
+        }
+
+        private void agregaUserRole(string myUser, string myRole, SIPI_dbContext _context)
         {
             AspNetUserRole _row = new();
-
+            
             _row.RoleId = myRole;
             _row.UserId = myUser;
 
-            _context.AspNetUserRoles.Add(_row);
-            await _context.SaveChangesAsync();
-         }
+            _context.AddRange(_row);
+             _context.SaveChanges();
+        }
 
         public void agregaUserRoleByName(string nameUser, string nameRole, SIPI_dbContext _context)
         {

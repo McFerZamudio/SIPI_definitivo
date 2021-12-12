@@ -12,33 +12,45 @@
         <partial name="../teg/tegNav" />
     </div>
     <div>
-        <h5>Datos Basicos</h5>
-        <hr />
-        <form asp-action="seleccionaConsultores">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            Consultor Academico
-                        </th>
-                        <th>
-                            Consultor Medotologico
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <select class="form-control" asp-items="ViewBag.consultoresAcademicos"></select>
-                        </td>
-                        <td>
-                            <select class="form-control" asp-items="ViewBag.consultoresMetodologicos"></select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
+        @{
+            if (Model is not null)
+            {
+                <h5>Datos Basicos: @Model.trabajo_titulo</h5>
+                <form asp-action="seleccionaConsultores">
+                    <input type="hidden" name="idTrabajo" id="idTrabajo" value="@Model.id_trabajo" />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Consultor Academico
+                                </th>
+                                <th>
+                                    Consultor Medotologico
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="form-control" id="consultoresAcademicos" name="consultoresAcademicos" asp-items="ViewBag.consultoresAcademicos"></select>
+                                </td>
+                                <td>
+                                    <select class="form-control" id="consultoresMetodologicos" name="consultoresMetodologicos" asp-items="ViewBag.consultoresMetodologicos"></select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="submit" name="actualizaConsultores" value="actualizaConsultores" />
+                </form>
+            }
+            else
+            {
+                <label>Debe tener datos Basicos e Integrantes</label>
+            }
+        }
+
+
     </div>
 </div>
 

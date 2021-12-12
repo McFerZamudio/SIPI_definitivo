@@ -207,6 +207,8 @@ namespace SIPI_web.Controllers.trabajos
 
         public IActionResult asignaConsultores()
         {
+            var _idUser = HttpContext.Session.GetString("idUser");
+
             var consultoresAcademicos = _context.AspNetUserRoles
                 .Include(x => x.UserNavigation.tbl_persona)
                 .Where(x => x.Role.Name.Equals("consultor academico"));
@@ -215,9 +217,33 @@ namespace SIPI_web.Controllers.trabajos
                 .Include(x => x.UserNavigation.tbl_persona)
                 .Where(x => x.Role.Name.Equals("consultor metodologico"));
 
+            var _trabajo = _context.tbl_integrantes
+                .Include(x => x.id_trabajoNavigation)
+                .FirstOrDefault(x => x.id_estudiante.Equals(_idUser));
 
             ViewData["consultoresAcademicos"] = new SelectList(consultoresAcademicos, "UserNavigation.tbl_persona.id_persona", "UserNavigation.tbl_persona.peresona_nombreCompleto");
             ViewData["consultoresMetodologicos"] = new SelectList(consultoresMetodologicos, "UserNavigation.tbl_persona.id_persona", "UserNavigation.tbl_persona.peresona_nombreCompleto");
+
+            var _temp = _trabajo.id_trabajoNavigation;
+
+            return View(_temp);
+        }
+
+        public async Task<IActionResult> seleccionaConsultores(int idTrabajo, string consultoresAcademicos, string consultoresMetodologicos)
+        {
+            var _teg = _context.tbl_tegs.FirstOrDefault(x => x.id_teg.Equals(idTrabajo));
+
+            if (_teg is null)
+            {
+
+            }
+
+            _teg.id_teg = idTrabajo;
+            _teg.id_consultorAcademico = consultoresAcademicos;
+            _teg.id_consultorMetodologia = consultoresMetodologicos;
+
+            _context.Update(_teg);
+            await _context.SaveChangesAsync();
 
             return View();
         }

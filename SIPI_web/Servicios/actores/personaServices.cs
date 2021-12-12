@@ -124,7 +124,7 @@ namespace SIPI_web.Servicios
 
         public static bool esEstudiante(string id, SIPI_dbContext _context)
         {
-            var result = _context.AspNetUserRoles.Any(x => x.UserId.Equals(id) && x.RoleId.Equals("estudiante"));
+            var result = _context.AspNetUserRoles.Any(x => x.UserId.Equals(id) && x.Role.Name.Equals("estudiante"));
             return result;
         }
     }

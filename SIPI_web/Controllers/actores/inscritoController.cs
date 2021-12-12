@@ -46,7 +46,7 @@ namespace SIPI_web.Controllers
         // GET: inscrito/Create
         public IActionResult Create()
         {
-            ViewBag["roles"] = new SelectList(_context.AspNetUserRoles.Include(x => x.Role).ToList(), "Role.id", "Role.name");
+            ViewData["roles"] = new SelectList(_context.AspNetRoles.ToList(), "Id", "Name");
             return View();
         }
 
@@ -55,7 +55,7 @@ namespace SIPI_web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id_inscrito,inscrito_email,inscrito_nombre,inscrito_equipo,inscrito_sipiActivo,inscrito_fechaCreacion,inscrito_fechaActualizacion")] tbl_inscrito tbl_inscrito)
+        public async Task<IActionResult> Create([Bind("id_inscrito,inscrito_email,inscrito_nombre,inscrito_equipo,inscrito_sipiActivo,inscrito_fechaCreacion,inscrito_fechaActualizacion, inscrito_rol")] tbl_inscrito tbl_inscrito)
         {
             tbl_inscrito.inscrito_fechaActualizacion = DateTime.Now;
             tbl_inscrito.inscrito_fechaCreacion = DateTime.Now;

@@ -24,5 +24,7 @@ namespace SIPI_web.Models
         public DateTime? inscrito_fechaCreacion { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? inscrito_fechaActualizacion { get; set; }
+        [StringLength(450)]
+        public string inscrito_rol { get; set; }
     }
 }

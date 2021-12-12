@@ -11,77 +11,93 @@
     <div>
         <partial name="../teg/tegNav" />
     </div>
-    <div>
-        <h5>Datos Basicos</h5>
-        <hr />
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        Nombre de Integrante de TEG
-                    </th>
-                    <th>
-                        Fechas Importantes
-                    </th>
-                    <th>
-                        Participante
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.id_estudiante1.persona_apellido) <br />
-                            @Html.DisplayFor(modelItem => item.id_estudiante1.persona_nombre)
-                        </td>
-                        <td>
-                            <b>Fecha Carga: </b>@item.integrantes_fechaCarga.Value.ToShortDateString() <br />
-                            <b>Ultima Actualizacion: </b>@Html.DisplayFor(modelItem => item.integrandes_fechaConfirmado)
-                        </td>
-                        <td>
-                            @{
-                                if (item.integrantes_confirmado == false)
-                                {
-                                    if (item.id_estudiante != ViewData["idUser"].ToString())
-                                    {
+    @{
+        long _idTrabajo = 0;
+        string _idIntegrante = string.Empty;
+        if (Model is not null)
+        {
+            _idTrabajo = Model.ElementAt(0).id_trabajo;
+            _idIntegrante = Model.ElementAt(0).id_estudiante1.persona_identificacion;
+            <div>
+                <h5>Datos Basicos</h5>
+                <hr />
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Nombre de Integrante de TEG
+                            </th>
+                            <th>
+                                Fechas Importantes
+                            </th>
+                            <th>
+                                Participante
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.id_estudiante1.persona_apellido) <br />
+                                    @Html.DisplayFor(modelItem => item.id_estudiante1.persona_nombre)
+                                </td>
+                                <td>
+                                    <b>Fecha Carga: </b>@item.integrantes_fechaCarga.Value.ToShortDateString() <br />
+                                    <b>Ultima Actualizacion: </b>@Html.DisplayFor(modelItem => item.integrandes_fechaConfirmado)
+                                </td>
+                                <td>
+                                    @{
+                                        if (item.integrantes_confirmado == false)
+                                        {
+                                            if (item.id_estudiante != ViewData["idUser"].ToString())
+                                            {
 
-                                        <label>Por Confirmar</label>
+                                                <label>Por Confirmar</label>
+                                            }
+                                            else
+                                            {
+                                                <button>Confirmar</button>
+                                            }
+
+
+                                        }
+                                        else
+                                        {
+                                            <label>Confirmado</label>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <button>Confirmar</button>
-                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    @{ if (Model.Count() == 1)
+                        {
+                            <tr>
+                                <td>
+                                    <button class="btn btn-primary" onclick="agregaIntegrante()">Agregar Nuevo Integrante</button>
+                                </td>
+                            </tr>
+                        }
 
 
-                                }
-                                else
-                                {
-                                    <label>Confirmado</label>
-                                }
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-            @{ if (Model.Count() == 1)
-                {
-                    <tr>
-                        <td>
-                            <button class="btn btn-primary" onclick="agregaIntegrante()">Agregar Nuevo Integrante</button>
-                        </td>
-                    </tr>
-                }
 
+}
+                </table>
+            </div>
             }
-        </table>
-    </div>
+            else
+            {
+                <label>Debe Ingresar primero los Datos Basicos del Trabajo Especial de Grado</label>
+            }
+    }
+
 </div>
 
 <script>
     function agregaIntegrante() {
-        window.open("../agregaIntegrante.html?id_trabajo=@Model.ElementAt(0).id_trabajo&PersonaIdentificacion=@Model.ElementAt(0).id_estudiante1.persona_identificacion", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+        window.open("../agregaIntegrante.html?id_trabajo=@_idTrabajo&PersonaIdentificacion=@_idIntegrante", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
     }
 </script>
 

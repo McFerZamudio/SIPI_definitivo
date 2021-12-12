@@ -60,6 +60,14 @@ namespace SIPI_web.Models
                     .HasFilter("([NormalizedName] IS NOT NULL)");
             });
 
+            modelBuilder.Entity<AspNetRoleClaim>(entity =>
+            {
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AspNetRoleClaims)
+                    .HasForeignKey(d => d.RoleId)
+                    .HasConstraintName("Las reglas poseen privilegios");
+            });
+
             modelBuilder.Entity<AspNetUser>(entity =>
             {
                 entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
@@ -67,14 +75,37 @@ namespace SIPI_web.Models
                     .HasFilter("([NormalizedUserName] IS NOT NULL)");
             });
 
+            modelBuilder.Entity<AspNetUserClaim>(entity =>
+            {
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserClaims)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("Un User tiene privilegios");
+            });
+
             modelBuilder.Entity<AspNetUserLogin>(entity =>
             {
                 entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserLogins)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("Un User tiene logins");
             });
 
             modelBuilder.Entity<AspNetUserRole>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.RoleId });
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AspNetUserRoles)
+                    .HasForeignKey(d => d.RoleId)
+                    .HasConstraintName("Las reglas se aplican a un usuario");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserRoles)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("Un User tiene Reglas");
 
                 entity.HasOne(d => d.UserNavigation)
                     .WithMany(p => p.AspNetUserRoles)
@@ -86,6 +117,11 @@ namespace SIPI_web.Models
             modelBuilder.Entity<AspNetUserToken>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserTokens)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("Los Usuarios tienen tokens");
             });
 
             modelBuilder.Entity<tbl_carrera>(entity =>

@@ -25,7 +25,6 @@
             <th>
                 Fechas Importantes
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -44,9 +43,6 @@
             <td>
                 Fecha Creacion: @Html.DisplayFor(modelItem => item.inscrito_fechaCreacion) <br />
                 Fecha Ingreso: @Html.DisplayFor(modelItem => item.inscrito_fechaActualizacion)
-            </td>
-            <td>
-                <a asp-action="asignaRoles" asp-route-id="@item.id_inscrito">Asigna Roles</a> |
             </td>
         </tr>
 }

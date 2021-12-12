@@ -100,8 +100,6 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                     .Include(x => x.AspNetUserRoles)
                     .Where(x => x.UserName.Equals(Input.userName)).FirstOrDefault();
 
-                    
-
                     HttpContext.Session.SetString("idUser", idUser.Id);
                     HttpContext.Session.SetString("userName", Input.userName);
 
@@ -113,7 +111,17 @@ namespace SIPI_web.Areas.Identity.Pages.Account
                         return RedirectToAction("create", "Usuario");
                     }
 
-                    asignaRolEstudiante(idUser.Id);
+                    //var _rol = _context.tbl_inscritos.AsNoTracking().SingleOrDefault(x => x.inscrito_email.Equals(idUser.Email));
+                    //HttpContext.Session.SetString("rol", _rol.inscrito_rol);
+
+                    //AspNetUserRole _row = new();
+
+                    //_row.RoleId = HttpContext.Session.GetString("rol");
+                    //_row.UserId = idUser.Id;
+
+                    //_context.Add(_row);
+                    //_context.SaveChanges();
+
                     // *** TODO: Se debe validar si es HUMANO y entre aqui *** //
                     personaServices _persona = new();
                     var _existePersona = await ((Ipersona)_persona).existePersona(idUser.Id, _context);
@@ -158,24 +166,6 @@ namespace SIPI_web.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private void asignaRolEstudiante(string _idUser)
-        {
-
-            var _validaRoles = _context.AspNetUserRoles.Any(x => x.UserId.Equals(_idUser));
-
-            if (_validaRoles == false)
-            {
-                AspNetUserRole agregaRole = new();
-
-                agregaRole.RoleId = "15b55cf3-dd3f-4a43-8647-39ce15986988";
-                agregaRole.UserId = _idUser;
-
-                _context.Add(agregaRole);
-                _context.SaveChanges();
-
-            }
-
-
-        }
+        
     }
 }

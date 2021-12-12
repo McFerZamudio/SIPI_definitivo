@@ -185,6 +185,11 @@ namespace SIPI_web.Controllers
                 .Include(x => x.id_estudiante1)
                 .FirstOrDefaultAsync(x => x.id_estudiante.Equals(idUser));
 
+            if (_trabajo is null)
+            {
+                return View();
+            }
+
             var _integranes = await _context.tbl_integrantes
                 .Include(x => x.id_estudiante1)
                 .Where(x => x.id_trabajo.Equals(_trabajo.id_trabajo)).ToListAsync();

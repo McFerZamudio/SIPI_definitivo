@@ -1,0 +1,71 @@
+﻿@model SIPI_web.Models.tbl_trabajo
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutEstudiante.cshtml";
+}
+
+<h4>Informacion Proyetos</h4>
+<hr />
+<div class="row">
+    <div>
+        <partial name="../teg/tegNav" />
+    </div>
+    <div>
+        @{
+            if (Model is not null)
+            {
+                <h5>Datos de Proyectos: @Model.trabajo_titulo</h5>
+                <form asp-action="seleccionaConsultores">
+                    <input type="hidden" name="idTrabajo" id="idTrabajo" value="@Model.id_trabajo" />
+                    <div class="form-group">
+                        <label asp-for="tbl_teg.teg_codigoInterno" class="control-label">Codigo Interno</label>
+                        <input asp-for="tbl_teg.teg_codigoInterno" class="form-control" readonly />
+                        <span asp-validation-for="tbl_teg.teg_codigoInterno" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="tbl_teg.teg_codigoTeg" class="control-label">Codigo TEG</label>
+                        <input asp-for="tbl_teg.teg_codigoTeg" class="form-control" readonly />
+                        <span asp-validation-for="tbl_teg.teg_codigoTeg" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="tbl_teg.teg_porcentaje" class="control-label">Porcentaje Obtenido</label>
+                        <input asp-for="tbl_teg.teg_porcentaje" class="form-control" readonly />
+                        <span asp-validation-for="tbl_teg.teg_porcentaje" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="tbl_teg.teg_puntuacion" class="control-label">Puntuacion</label>
+                        <input asp-for="tbl_teg.teg_puntuacion" class="form-control" readonly />
+                        <span asp-validation-for="tbl_teg.teg_puntuacion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="tbl_teg.teg_fechaDefensa" class="control-label">Fecha Defensa</label>
+                        <input asp-for="tbl_teg.teg_fechaDefensa" class="form-control" readonly />
+                        <span asp-validation-for="tbl_teg.teg_fechaDefensa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="tbl_teg.teg_fechaRecepcionDocumento" class="control-label"> Fecha Recepcion Documentos</label>
+                        <input asp-for="tbl_teg.teg_fechaRecepcionDocumento" class="form-control" readonly/>
+                        <span asp-validation-for="tbl_teg.teg_fechaRecepcionDocumento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="tbl_teg.teg_observacionRecepcionDocumento" class="control-label">Observacion Entrega</label>
+                        <input asp-for="tbl_teg.teg_observacionRecepcionDocumento" class="form-control" readonly />
+                        <span asp-validation-for="tbl_teg.teg_observacionRecepcionDocumento" class="text-danger"></span>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <label>Debe tener datos Basicos e Integrantes</label>
+            }
+        }
+
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

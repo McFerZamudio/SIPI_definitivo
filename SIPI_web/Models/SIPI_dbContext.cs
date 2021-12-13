@@ -45,6 +45,7 @@ namespace SIPI_web.Models
         public virtual DbSet<tbl_rolesTeg> tbl_rolesTegs { get; set; }
         public virtual DbSet<tbl_sede> tbl_sedes { get; set; }
         public virtual DbSet<tbl_teg> tbl_tegs { get; set; }
+        public virtual DbSet<tbl_tegEstatus> tbl_tegEstatuses { get; set; }
         public virtual DbSet<tbl_tipoTrabajo> tbl_tipoTrabajos { get; set; }
         public virtual DbSet<tbl_trabajo> tbl_trabajos { get; set; }
         public virtual DbSet<tbl_usuario> tbl_usuarios { get; set; }
@@ -310,6 +311,12 @@ namespace SIPI_web.Models
                     .HasForeignKey<tbl_teg>(d => d.id_teg)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Un TEG es un trabajo de Investigacion");
+
+                entity.HasOne(d => d.id_tegEstatusNavigation)
+                    .WithMany(p => p.tbl_tegs)
+                    .HasForeignKey(d => d.id_tegEstatus)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Una TEGsis tierne un Estatus");
             });
 
             modelBuilder.Entity<tbl_trabajo>(entity =>

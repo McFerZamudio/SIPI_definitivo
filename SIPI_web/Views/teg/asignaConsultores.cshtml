@@ -33,15 +33,15 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <select class="form-control" id="consultoresAcademicos" name="consultoresAcademicos" asp-items="ViewBag.consultoresAcademicos"></select>
+                                    <select class="form-control" id="consultoresAcademicos" name="consultoresAcademicos" asp-for="tbl_teg.id_consultorAcademico" asp-items="ViewBag.consultoresAcademicos"></select>
                                 </td>
                                 <td>
-                                    <select class="form-control" id="consultoresMetodologicos" name="consultoresMetodologicos" asp-items="ViewBag.consultoresMetodologicos"></select>
+                                    <select class="form-control" id="consultoresMetodologicos" name="consultoresMetodologicos" asp-for="tbl_teg.id_consultorMetodologia" asp-items="ViewBag.consultoresMetodologicos"></select>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <input type="submit" name="actualizaConsultores" value="actualizaConsultores" />
+                    <input type="submit" class="btn btn-primary" name="actualizaConsultores" value="Actualiza Consultores" />
                 </form>
             }
             else

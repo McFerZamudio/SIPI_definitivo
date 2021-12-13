@@ -1,9 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Http
 
 <ul class="nav flex-column">
-    <li class="nav-item"><a class="nav-link" id="Index" asp-action="createTeg" asp-controller="teg">Datos Basicos</a></li>
-    <li class="nav-item"><a class="nav-link" id="email" asp-action="listaIntegrante" asp-controller="integrante">Integrantes del TEG</a></li>
-    <li class="nav-item"><a class="nav-link" id="change-password" asp-action="asignaConsultores" asp-controller="teg">Consultores</a></li>
-    <li class="nav-item"><a class="nav-link" id="actualizaDatos" asp-action="edit" asp-controller="usuario" asp-route-id="@Context.Session.GetString("idUser")">Actualizar mis Datos</a></li>
+    <li class="nav-item"><a class="nav-link" id="createTeg" asp-action="createTeg" asp-controller="teg">Datos Basicos</a></li>
+    <li class="nav-item"><a class="nav-link" id="listaIntegrante" asp-action="listaIntegrante" asp-controller="integrante">Integrantes del TEG</a></li>
+    <li class="nav-item"><a class="nav-link" id="asignaConsultores" asp-action="asignaConsultores" asp-controller="teg">Consultores</a></li>
+    <li class="nav-item"><a class="nav-link" id="datosProyectos" asp-action="datosProyectos" asp-controller="teg" asp-route-id="@Context.Session.GetString("idUser")">Informacion de Proyectos</a></li>
 </ul>
 

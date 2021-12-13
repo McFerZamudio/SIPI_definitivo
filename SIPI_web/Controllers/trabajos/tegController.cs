@@ -218,7 +218,7 @@ namespace SIPI_web.Controllers.trabajos
                 .Where(x => x.Role.Name.Equals("consultor metodologico"));
 
             var _trabajo = _context.tbl_integrantes
-                .Include(x => x.id_trabajoNavigation)
+                .Include(x => x.id_trabajoNavigation.tbl_teg)
                 .FirstOrDefault(x => x.id_estudiante.Equals(_idUser));
 
             ViewData["consultoresAcademicos"] = new SelectList(consultoresAcademicos, "UserNavigation.tbl_persona.id_persona", "UserNavigation.tbl_persona.peresona_nombreCompleto");
@@ -235,17 +235,41 @@ namespace SIPI_web.Controllers.trabajos
 
             if (_teg is null)
             {
-
+                _teg = new();
+                _teg.id_consultorAcademico = consultoresAcademicos;
+                _teg.id_consultorMetodologia = consultoresMetodologicos;
+                _teg.id_teg = idTrabajo;
+                _teg.id_tegEstatus = 1;
+                _context.Add(_teg);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                _teg.id_consultorAcademico = consultoresAcademicos;
+                _teg.id_consultorMetodologia = consultoresMetodologicos;
+                _context.Update(_teg);
+                await _context.SaveChangesAsync();
             }
 
             _teg.id_teg = idTrabajo;
-            _teg.id_consultorAcademico = consultoresAcademicos;
-            _teg.id_consultorMetodologia = consultoresMetodologicos;
 
-            _context.Update(_teg);
-            await _context.SaveChangesAsync();
 
-            return View();
+
+
+            return RedirectToAction("asignaConsultores","teg");
+        }
+
+        public IActionResult datosProyectos()
+        {
+            var _idUser = HttpContext.Session.GetString("idUser");
+
+            var _trabajo = _context.tbl_integrantes
+                .Include(x => x.id_trabajoNavigation.tbl_teg)
+                .FirstOrDefault(x => x.id_estudiante.Equals(_idUser));
+
+            var _temp = _trabajo.id_trabajoNavigation;
+
+            return View(_temp);
         }
 
     }

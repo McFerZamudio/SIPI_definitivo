@@ -1,85 +1,42 @@
-﻿@model SIPI_web.Models.tbl_teg
+﻿@model SIPI_web.Models.tbl_trabajo
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_LayoutEstudiante.cshtml";
+    Layout = "";
 }
 
-<h1>Details</h1>
+<body>
+    <table class="table">
+        <tr>
+            <td><b>Codigo Interno:</b> @Html.DisplayFor(model => model.tbl_teg.teg_codigoInterno)</td>
+            <td><b>Codigo Teg:</b> @Html.DisplayFor(model => model.tbl_teg.teg_codigoTeg)</td>
+            <td><b>Fecha Carga Teg: </b>@Model.tbl_teg.id_tegNavigation.trabajo_fechaCreacion.ToString("dd/MM/yyyy")</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <br />
+                <b>Titulo del Trabajo Especial de Grado:</b><br />
+                @Html.DisplayFor(model => model.tbl_teg.id_tegNavigation.trabajo_titulo)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <br /><b>Integrantes:</b><br />
+                @foreach (var estudiante in Model.tbl_integrantes)
+                {
+                    <label>@estudiante.id_estudiante1.peresona_nombreCompleto</label><br/>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <textarea asp-for="trabajo_planteamientoProblema" rows="20" cols="100%"></textarea>
+            </td>
+        </tr>
+    </table>
+</body>
 
 <div>
-    <h4>tbl_teg</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.teg_codigoInterno)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.teg_codigoInterno)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.teg_codigoTeg)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.teg_codigoTeg)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.teg_porcentaje)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.teg_porcentaje)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.teg_puntuacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.teg_puntuacion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.teg_fechaDefensa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.teg_fechaDefensa)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_tegEstatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_tegEstatus)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.teg_fechaRecepcionDocumento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.teg_fechaRecepcionDocumento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.teg_observacionRecepcionDocumento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.teg_observacionRecepcionDocumento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_consultorAcademicoNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_consultorAcademicoNavigation.id_persona)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_consultorMetodologiaNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_consultorMetodologiaNavigation.id_persona)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id_tegNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id_tegNavigation.trabajo_planteamientoProblema)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.id_teg">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.tbl_teg.id_teg">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

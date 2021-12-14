@@ -58,7 +58,11 @@
                                             }
                                             else
                                             {
-                                                <button>Confirmar</button>
+                                                <form asp-controller="integrante" asp-action="confirmaIntegrante">
+                                                    <input hidden id="idEstudiante" name="idEstudiante" value="@ViewData["idUser"].ToString()" />
+                                                    <button type="submit">Confirmar</button>
+                                                </form>
+                                                
                                             }
 
 

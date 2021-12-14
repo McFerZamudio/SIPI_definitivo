@@ -233,5 +233,18 @@ namespace SIPI_web.Controllers
 
             return _nuevoIntegrante;
         }
+
+        public async Task<IActionResult> confirmaIntegrante(string idEstudiante)
+        {
+            var _integrante = await _context.tbl_integrantes.FirstOrDefaultAsync(x => x.id_estudiante.Equals(idEstudiante));
+
+            _integrante.integrantes_confirmado = true;
+
+            _context.Update(_integrante);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("listaIntegrante","integrante");
+        }
+
     }
 }

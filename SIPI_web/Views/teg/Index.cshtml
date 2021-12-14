@@ -1,97 +1,44 @@
-﻿@model IEnumerable<SIPI_web.Models.tbl_teg>
+﻿@model IEnumerable<SIPI_web.Models.tbl_trabajo>
 
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutEstudiante.cshtml";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.teg_codigoInterno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.teg_codigoTeg)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.teg_porcentaje)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.teg_puntuacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.teg_fechaDefensa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.id_tegEstatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.teg_fechaRecepcionDocumento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.teg_observacionRecepcionDocumento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.id_consultorAcademicoNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.id_consultorMetodologiaNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.id_tegNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+<table class="table" style="width:100%">
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.teg_codigoInterno)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.teg_codigoTeg)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.teg_porcentaje)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.teg_puntuacion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.teg_fechaDefensa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.id_tegEstatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.teg_fechaRecepcionDocumento)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.teg_observacionRecepcionDocumento)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.id_consultorAcademicoNavigation.id_persona)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.id_consultorMetodologiaNavigation.id_persona)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.id_tegNavigation.trabajo_planteamientoProblema)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.id_teg">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.id_teg">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.id_teg">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <b>Cod Interno:</b> @Html.DisplayFor(modelItem => item.tbl_teg.teg_codigoInterno) <br />
+                <b>Cod TEG: </b>@Html.DisplayFor(modelItem => item.tbl_teg.teg_codigoTeg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_teg.id_tegEstatusNavigation.tegEstatus_nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_teg.id_consultorAcademicoNavigation.peresona_nombreCompleto) <br />
+                @Html.DisplayFor(modelItem => item.tbl_teg.id_consultorMetodologiaNavigation.peresona_nombreCompleto)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.tbl_teg.id_teg">Datos de Proyectos</a> <br />
+                <a onclick="abreDetalle(@item.tbl_teg.id_teg)">Detalles TEG</a>
+                <a asp-action="Details" asp-route-id="@item.tbl_teg.id_teg">Detalles</a> |
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <label><B>INTEGRANTES:</B></label>
+                @{
+                    foreach (var estudiante in item.tbl_integrantes)
+                    {
+                        <label>@estudiante.id_estudiante1.peresona_nombreCompleto    </label>
+                    }
+                }
+            </td>
+        </tr>
         }
     </tbody>
 </table>
+
+<script>
+    function abreDetalle(valor) {
+        window.open('Details/' + valor,'_blank', 'toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400');
+    }
+</script>

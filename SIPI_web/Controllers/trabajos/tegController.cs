@@ -41,6 +41,15 @@ namespace SIPI_web.Controllers.trabajos
                 return NotFound();
             }
 
+            var _listaTeg = await _context.tbl_trabajos
+                .Include(x => x.tbl_teg.id_consultorAcademicoNavigation)
+                .Include(x => x.tbl_teg.id_consultorMetodologiaNavigation)
+                .Include(x => x.tbl_teg.id_tegEstatusNavigation)
+                .Include(x => x.tbl_integrantes).ThenInclude(x => x.id_estudiante1)
+                .Include(x => x.tbl_teg)
+                .FirstOrDefaultAsync(m => m.tbl_teg.id_teg == id);
+                
+
             var tbl_teg = await _context.tbl_tegs
                 .Include(t => t.id_consultorAcademicoNavigation)
                 .Include(t => t.id_consultorMetodologiaNavigation)
@@ -51,7 +60,7 @@ namespace SIPI_web.Controllers.trabajos
                 return NotFound();
             }
 
-            return View(tbl_teg);
+            return View(_listaTeg);
         }
 
         // GET: teg/Create
@@ -95,9 +104,21 @@ namespace SIPI_web.Controllers.trabajos
             {
                 return NotFound();
             }
-            ViewData["id_consultorAcademico"] = new SelectList(_context.tbl_personas, "id_persona", "id_persona", tbl_teg.id_consultorAcademico);
-            ViewData["id_consultorMetodologia"] = new SelectList(_context.tbl_personas, "id_persona", "id_persona", tbl_teg.id_consultorMetodologia);
+
+            var _id_consultorAcademico = _context.AspNetUserRoles
+                .Where(x => x.Role.Name.Equals("consultor academico"))
+                .Include(x => x.UserNavigation.tbl_persona).ToList();
+
+            var _id_consultorMetodologia = _context.AspNetUserRoles
+            .Where(x => x.Role.Name.Equals("consultor metodologico"))
+            .Include(x => x.UserNavigation.tbl_persona).ToList();
+
+            ViewData["id_tegEstatus"] = new SelectList(_context.tbl_tegEstatuses.ToList(), "id_tegEstatus", "tegEstatus_nombre", tbl_teg.id_tegEstatus);
+            ViewData["id_consultorAcademico"] = new SelectList(_id_consultorAcademico, "UserNavigation.tbl_persona.id_persona", "UserNavigation.tbl_persona.peresona_nombreCompleto", tbl_teg.id_consultorAcademico);
+            ViewData["id_consultorMetodologia"] = new SelectList(_id_consultorMetodologia, "UserNavigation.tbl_persona.id_persona", "UserNavigation.tbl_persona.peresona_nombreCompleto", tbl_teg.id_consultorMetodologia);
             ViewData["id_teg"] = new SelectList(_context.tbl_trabajos, "id_trabajo", "trabajo_planteamientoProblema", tbl_teg.id_teg);
+
+
             return View(tbl_teg);
         }
 
@@ -106,7 +127,7 @@ namespace SIPI_web.Controllers.trabajos
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("id_teg,teg_codigoInterno,teg_codigoTeg,id_consultorMetodologia,id_consultorAcademico,teg_porcentaje,teg_puntuacion,teg_fechaDefensa,id_statusTeg,teg_fechaRecepcionDocumento,teg_observacionRecepcionDocumento")] tbl_teg tbl_teg)
+        public async Task<IActionResult> Edit(long id, [Bind("id_teg,teg_codigoInterno,teg_codigoTeg,id_consultorMetodologia,id_consultorAcademico,teg_porcentaje,teg_puntuacion,teg_fechaDefensa,id_statusTeg,teg_fechaRecepcionDocumento,teg_observacionRecepcionDocumento, id_tegEstatus")] tbl_teg tbl_teg)
         {
             if (id != tbl_teg.id_teg)
             {
@@ -256,7 +277,7 @@ namespace SIPI_web.Controllers.trabajos
 
 
 
-            return RedirectToAction("asignaConsultores","teg");
+            return RedirectToAction("asignaConsultores", "teg");
         }
 
         public IActionResult datosProyectos()
@@ -270,6 +291,27 @@ namespace SIPI_web.Controllers.trabajos
             var _temp = _trabajo.id_trabajoNavigation;
 
             return View(_temp);
+        }
+
+        public IActionResult listaTeg()
+        {
+            //var _listaTeg = _context.tbl_tegs
+            //    .Include(x => x.id_consultorAcademicoNavigation)
+            //    .Include(x => x.id_consultorMetodologiaNavigation)
+            //    .Include(x => x.id_tegEstatusNavigation)
+            //    .Include(x => x.id_tegNavigation)
+            //    .ToList();
+
+            var _listaTeg = _context.tbl_trabajos
+                .Include(x => x.tbl_teg.id_consultorAcademicoNavigation)
+                .Include(x => x.tbl_teg.id_consultorMetodologiaNavigation)
+                .Include(x => x.tbl_teg.id_tegEstatusNavigation)
+                .Include(x => x.tbl_integrantes).ThenInclude(x => x.id_estudiante1)
+                .Include(x => x.tbl_teg)
+                .Where(x => x.tbl_teg.id_teg > 0)
+                .ToList();
+
+            return View(_listaTeg);
         }
 
     }

@@ -29,6 +29,21 @@
                         <span asp-validation-for="tbl_teg.teg_codigoTeg" class="text-danger"></span>
                     </div>
                     <div class="form-group">
+                        <label asp-for="tbl_teg.teg_fechaRecepcionDocumento" class="control-label"> Fecha Recepcion Documentos</label>
+                        <input asp-for="tbl_teg.teg_fechaRecepcionDocumento" class="form-control" readonly />
+                        <span asp-validation-for="tbl_teg.teg_fechaRecepcionDocumento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="tbl_teg.teg_fechaDefensa" class="control-label">Fecha Defensa</label>
+                        <input asp-for="tbl_teg.teg_fechaDefensa" class="form-control" readonly />
+                        <span asp-validation-for="tbl_teg.teg_fechaDefensa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="tbl_teg.teg_observacionRecepcionDocumento" class="control-label">Observacion Entrega</label>
+                        <input asp-for="tbl_teg.teg_observacionRecepcionDocumento" class="form-control" readonly />
+                        <span asp-validation-for="tbl_teg.teg_observacionRecepcionDocumento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="tbl_teg.teg_porcentaje" class="control-label">Porcentaje Obtenido</label>
                         <input asp-for="tbl_teg.teg_porcentaje" class="form-control" readonly />
                         <span asp-validation-for="tbl_teg.teg_porcentaje" class="text-danger"></span>
@@ -38,21 +53,7 @@
                         <input asp-for="tbl_teg.teg_puntuacion" class="form-control" readonly />
                         <span asp-validation-for="tbl_teg.teg_puntuacion" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="tbl_teg.teg_fechaDefensa" class="control-label">Fecha Defensa</label>
-                        <input asp-for="tbl_teg.teg_fechaDefensa" class="form-control" readonly />
-                        <span asp-validation-for="tbl_teg.teg_fechaDefensa" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="tbl_teg.teg_fechaRecepcionDocumento" class="control-label"> Fecha Recepcion Documentos</label>
-                        <input asp-for="tbl_teg.teg_fechaRecepcionDocumento" class="form-control" readonly/>
-                        <span asp-validation-for="tbl_teg.teg_fechaRecepcionDocumento" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="tbl_teg.teg_observacionRecepcionDocumento" class="control-label">Observacion Entrega</label>
-                        <input asp-for="tbl_teg.teg_observacionRecepcionDocumento" class="form-control" readonly />
-                        <span asp-validation-for="tbl_teg.teg_observacionRecepcionDocumento" class="text-danger"></span>
-                    </div>
+
                 </form>
             }
             else
